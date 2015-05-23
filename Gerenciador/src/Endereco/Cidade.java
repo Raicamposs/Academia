@@ -3,55 +3,53 @@ package Endereco;
 public class Cidade {
 
     /**
-     * Método construtor. Você deve utiliza-lo para criar o registro de uma nova
-     * Cidade .
-     *
+     * Método construtor. Você deve utiliza-lo para criar o registro de uma nova Cidade .
      * @param cidadeId id da Cidade
      * @param cidadeNome nome da Cidade
-     * @author Raiane Campos, Jackson Brambati, Alexandre Ribeiro,Wagner Lemos
+     * Raiane Campos, Jackson Brambati, Alexandre Ribeiro,Wagner Lemos
      */
-    private int cidadeId;
-    private String cidadeNome;
+    private int id;
+    private String nome;
     
  
     // Declaração do construtor da classe cidade//
-    public Cidade(int cidadeId, String cidadeNome) {
+    public Cidade(int id, String nome) {
 
-        this.cidadeId = cidadeId;
-        this.cidadeNome = cidadeNome;
+        this.id = id;
+        this.nome = nome;
     }
 // Declaração do construtor da classe cidade//
 
-    public Cidade(String cidadeNome) {
+    public Cidade(String nome) {
 
-        this.cidadeNome = cidadeNome;
+        this.nome = nome;
     }
 
     //Declaração do método cidadeId
 
-    public void setCidadeId(int cidadeId) {
-        this.cidadeId = cidadeId;
+    public void setId(int id) {
+        this.id = id;
         // Altera a variavel cidadeId da classe Cidade para o parametro passado
     }
 
     //Declaração do método setCidadeNome
 
-    public void setCidadeNome(String cidadeNome) {
-        this.cidadeNome = cidadeNome;
+    public void setNome(String nome) {
+        this.nome = nome;
         // Altera a variavel cidadeNome da classe Cidade para o parametro passado
     }
 
     //Declaração do método getCidadeId 
 
-    public int getCidadeId() {
-        return cidadeId;
+    public int getId() {
+        return id;
         //retorna o Valor da Variavel  cidadeId
     }
 
     //Declaração do método getCidadeNome
 
-    public String getCidadeNome() {
-        return cidadeNome;
+    public String getNome() {
+        return nome;
         //retorna o Valor da Variavel  cidadeNome
     }
 

@@ -39,7 +39,7 @@ public class Endereco {
     }
 
     public String getCidade() {
-        return cidade.getCidadeNome();
+        return cidade.getNome();
     }
 
     public String getUf() {
