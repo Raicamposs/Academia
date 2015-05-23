@@ -3,8 +3,8 @@ package Endereco;
 public class Cidade {
 
     /**
-     * Método construtor. Você deve utiliza-lo para criar o registro de um novo
-     * author .
+     * Método construtor. Você deve utiliza-lo para criar o registro de uma nova
+     * Cidade .
      *
      * @param cidadeId id da Cidade
      * @param cidadeNome nome da Cidade
