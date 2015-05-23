@@ -12,19 +12,19 @@ package Endereco;
 public class Endereco {
 
     private String endereco, cep;
-//    Bairro bairro;
-//    Cidade cidade;
-//    Estado uf;
-//
-//    public Endereco(String endereco, String cep, Bairro bairro, Cidade cidade, Estado uf) {
-//
-//        this.endereco = endereco;
-//        this.cep = cep;
-//        this.bairro = bairro;
-//        this.cidade = cidade;
-//        this.uf = uf;
-//
-//    }
+    Bairro bairro;
+    Cidade cidade;
+    Estado uf;
+
+    public Endereco(String endereco, String cep, Bairro bairro, Cidade cidade, Estado uf) {
+
+        this.endereco = endereco;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.uf = uf;
+
+    }
 
     public String getEndereco() {
         return endereco;
@@ -33,18 +33,18 @@ public class Endereco {
     public String getCEP() {
         return cep;
     }
-//
-//    public String getBairro() {
-//        return bairro.getNome();
-//    }
-//
-//    public String getCidade() {
-//        return cidade.getNome();
-//    }
-//
-//    public String getUf() {
-//        return uf.getNome();
-//    }
+
+    public String getBairro() {
+        return bairro.getBairroNome();
+    }
+
+    public String getCidade() {
+        return cidade.getCidadeNome();
+    }
+
+    public String getUf() {
+        return uf.getEstadoNome();
+    }
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
@@ -54,15 +54,15 @@ public class Endereco {
         this.cep = cep;
     }
 
-//    public void setBairro(String bairro) {
-//        this.bairro = bairro;
-//    }
-//
-//    public void setCidade(String cidade) {
-//        this.cidade = cidade;
-//    }
-//
-//    public void setUf(String uf) {
-//        this.uf = uf;
-//    }
+    public void setBairro(Bairro bairro) {
+        this.bairro = bairro;
+    }
+
+    public void setCidade(Cidade cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setUf(Estado uf) {
+        this.uf = uf;
+    }
 }

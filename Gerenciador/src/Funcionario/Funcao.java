@@ -4,8 +4,8 @@ package Funcionario;
 public class Funcao {
 
     /**
-     * Método construtor. Você deve utiliza-lo para criar o registro de um novo
-     * author .
+     * Método construtor. Você deve utiliza-lo para criar o registro de um nova
+     * Funcao .
      *
      * @param funcaoId id da Funcao
      * @param funcaoNome nome da Funcao
