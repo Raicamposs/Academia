@@ -35,7 +35,7 @@ public class Endereco {
     }
 
     public String getBairro() {
-        return bairro.getBairroNome();
+        return bairro.getNome();
     }
 
     public String getCidade() {

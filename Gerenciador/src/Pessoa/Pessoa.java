@@ -11,10 +11,10 @@ package Pessoa;
  */
 public class Pessoa {
 
-    private int id;
+    private final int id;
     private EstadoCivil estadoCivil;
-    private String cpf;
-    private String rg;
+    private final String cpf;
+    private final String rg;
     private String nome;
     private String dataNascimento;
     private String email;

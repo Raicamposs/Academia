@@ -11,43 +11,43 @@ public class Bairro{
  *
  * @author wagner
  */
-    private int bairroId;
-    private String bairroNome;
+    private int id;
+    private String nome;
    
 
  // Declaração do construtor da classe Bairro 
 
 public Bairro(String bairroNome, int bairroId) {
 
-        this.bairroNome = bairroNome;
-        this.bairroId=bairroId;
+        this.nome = bairroNome;
+        this.id=bairroId;
 }
 // Declaração de outro construtor da classe Bairro 
-    public Bairro(String bairroNome) {
+    public Bairro(String nome) {
 
-        this.bairroNome = bairroNome;
+        this.nome = nome;
         
 }
   //Declaração do método getBairroNome
-    public String getBairroNome() {
-        return this.bairroNome;
+    public String getNome() {
+        return this.nome;
         //retorna o nome do bairro
     }
 
  //Declaração do método getBairroId
-    public int getBairroId() {
-        return this.bairroId;
+    public int getId() {
+        return this.id;
         //retorna o Id do bairro
 }
  //Declaração do método setBairroNome
-    public void setBairroNome(String bairroNome) {
-        this.bairroNome = bairroNome;
+    public void setNome(String nome) {
+        this.nome = nome;
         // Altera o nome para o parametro passado 
     }
 
     //Declaração do método setBairroId
-    public void setBairroId(int bairroId) {
-        this.bairroId = bairroId;
+    public void setId(int id) {
+        this.id = id;
         // Altera o Id para o paramtro passado
     }
 

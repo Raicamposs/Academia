@@ -20,43 +20,43 @@ public class EstadoCivil {
  *
  * @author wagner
  */
-    private int estadoCivilId;
-    private String estadoCivilDescricao;
+    private int id;
+    private String descricao;
    
 
  // Declaração do construtor da classe Estado Civil 
 
-public EstadoCivil(String estadoCivilDescricao, int estadoCivilId) {
+public EstadoCivil(String descricao, int id) {
 
-        this.estadoCivilDescricao = estadoCivilDescricao;
-        this.estadoCivilId= estadoCivilId;
+        this.descricao = descricao;
+        this.id= id;
 }
 // Declaração de outro construtor da classe Estado Civil 
-    public EstadoCivil(String estadoCivilDescricao) {
+    public EstadoCivil(String descricao) {
 
-        this.estadoCivilDescricao = estadoCivilDescricao;
+        this.descricao = descricao;
         
 }
   //Declaração do método getBairroNome
-    public String getEstadoCivilDescricao() {
-        return this.estadoCivilDescricao;
+    public String getdescricao() {
+        return this.descricao;
         //retorna o nome do Estado Civil
     }
 
  //Declaração do método getEstadoCivilId
-    public int getEstadoCivilId() {
-        return this.estadoCivilId;
+    public int getid() {
+        return this.id;
         //retorna o Id do Estado Civil
 }
  //Declaração do método setestadoCivilDescricao
-    public void setEstadoCivilDescricao(String estadoCivilDescricao) {
-        this.estadoCivilDescricao = estadoCivilDescricao;
+    public void setdescricao(String descricao) {
+        this.descricao = descricao;
         // Altera o Estado Civil para o parametro passado 
     }
 
     //Declaração do método setEstadoCivilId
-    public void setEstadoCivilId(int estadoCivilId) {
-        this.estadoCivilId = estadoCivilId;
+    public void setid(int id) {
+        this.id = id;
         // Altera o Id para o paramtro passado
     }
 

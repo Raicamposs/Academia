@@ -1,4 +1,7 @@
 package Funcionario;
+
+import Pessoa.Pessoa;
+
 /*
  * @author Evolute Jackson
  */
