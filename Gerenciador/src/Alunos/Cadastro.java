@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Objetos.Alunos;
+package Alunos;
+
+import Pessoa.Telefones;
+import Endereco.Endereco;
 
 public class Cadastro {
 
