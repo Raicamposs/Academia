@@ -50,5 +50,5 @@ public class DiasSemana {
     public String nome() {
         return nome;
         //retorna o Valor da Variavel diaNome
-    }
+    } 
 }
