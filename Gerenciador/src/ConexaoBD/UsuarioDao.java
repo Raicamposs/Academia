@@ -27,21 +27,6 @@ public class UsuarioDao {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
     }
 
-    public void trasNome() {
-        String sql = "{call getUsuName(Raiane)}";
-
-        try ( 
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            rs = stmt.executeQuery();
-            if (!rs.wasNull()) {
-                JOptionPane.showMessageDialog(null, "nome " + rs.getString("name"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void setUsuarioLogado(String nome, int nivel) {
         this.nameLogado = nome;
         this.nivelLogado = nivel;
@@ -56,7 +41,7 @@ public class UsuarioDao {
     }
 
     public boolean compara(String usuario, String senha) {
-        String sql = "select * from usuario Where login like ? and senha like ?";
+        String sql = "{call ComparaUsuario(?,?)}";
         try {
             // seta os valores
             try ( // prepared statement para inserção
@@ -80,14 +65,14 @@ public class UsuarioDao {
     }
 
     private boolean verifcaUsuario(Usuario usuario) {
-        String sql = "select * from usuario Where ? like ?";
+        String sql = "{call WhereLike(?,?)}";
         try {
             // seta os valores
             try ( // prepared statement para inserção
                     PreparedStatement stmt = connection.prepareStatement(sql)) {
                 // seta os valores
-                stmt.setString(1, "name");
-                stmt.setString(2, usuario.getNome().toUpperCase());
+
+                stmt.setString(1, usuario.getNome().toUpperCase());
 
                 rs = stmt.executeQuery();
                 if (!rs.wasNull()) {
@@ -118,9 +103,7 @@ public class UsuarioDao {
     public Boolean adicionaUsuario(Usuario usuario) {
 
         if (verifcaUsuario(usuario)) {
-            String sql = "insert into usuario "
-                    + "(name, senha, login) "
-                    + "values (?,?,?)";
+            String sql = "{call insertUsuario(?,?,?)}";
 
             try {
                 // seta os valores
