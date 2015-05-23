@@ -10,40 +10,40 @@ public class Turno {
      * @param turnoNome nome do Turno
      * @author Raiane Campos, Jackson Brambati, Alexandre Ribeiro,Wagner Lemos
      */
-    private int turnoId;
-    private String turnoNome;
+    private int id;
+    private String nome;
 
     // Declaração do construtor da classe turno//
-    public Turno(int turnoId, String turnoNome) {
+    public Turno(int id, String nome) {
 
-        this.turnoId = turnoId;
-        this.turnoNome = turnoNome;
+        this.id = id;
+        this.nome = nome;
     }
 // Declaração do construtor da classe turno//
 
-    public Turno(String turnoNome) {
+    public Turno(String nome) {
 
-        this.turnoNome = turnoNome;
+        this.nome = nome;
     }
 
     //Declaração do método setTurnoId
 
-    public void setTurnoId(int turnoId) {
-        this.turnoId = turnoId;
+    public void setid(int id) {
+        this.id = id;
         // Altera a variavel turnoId da classe turno para o parametro passado
     }
 
     //Declaração do método setTurnoNome
 
-    public void setTurnoNome(String turnoNome) {
-        this.turnoNome = turnoNome;
+    public void setnome(String nome) {
+        this.nome = nome;
         // Altera a variavel turnoNome da classe Turno para o parametro passado
     }
 
     //Declaração do método getTurnoId 
 
     public int getTurnoId() {
-        return turnoId;
+        return id;
         //retorna o Valor da Variavel turnoId
     }
 
