@@ -13,9 +13,9 @@ public class Funcionario {
     private float salario;
 
     // Declaração do construtor da classe Funcionario//
-    public Funcionario(int funcionarioId, Funcao funcao, Pessoa pessoa, Turno turno, String cnt, float salario) {
+    public Funcionario(int Id, Funcao funcao, Pessoa pessoa, Turno turno, String cnt, float salario) {
 
-        this.id = funcionarioId;
+        this.id = Id;
         this.funcao = funcao;
         this.pessoa = pessoa;
         this.turno = turno;
