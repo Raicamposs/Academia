@@ -9,19 +9,19 @@ package Pessoa;
  *
  * @author wagner
  */
-public class Pessoa {
+public abstract class Pessoa extends Telefones {
 
     private final int id;
-    private EstadoCivil estadoCivil;
-    private final String cpf;
-    private final String rg;
+    private int estadoCivil;
+    private String cpf;
+    private String rg;
     private String nome;
     private String dataNascimento;
     private String email;
     private char sexo;
 
     // Declaração do construtor da classe Pessoa
-    public Pessoa(int id, EstadoCivil estadoCivil, String cpf, String rg, String nome, String dataNascimento, String email, char sexo) {
+    public Pessoa(int id, int estadoCivil, String cpf, String rg, String nome, String dataNascimento, String email, char sexo) {
 
         this.id = id;
         this.estadoCivil = estadoCivil;
@@ -31,66 +31,62 @@ public class Pessoa {
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.sexo = sexo;
+        EstadoCivil novo = new EstadoCivil(estadoCivil);
     }
-         //Declaração do método get
+    //Declaração do método get
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setRG(String rg) {
+        this.rg = rg;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public char getSexo() {
+        return this.sexo;
+    }
 
     public int getId() {
         return this.id;
     }
 
-    public String getcpf() {
+    public String getCpf() {
         return this.cpf;
     }
 
-    public String getrg() {
+    public String getRG() {
         return this.rg;
     }
 
-    public String getnome() {
+    public String getNome() {
         return this.nome;
 
     }
 
-    public String getdataNascimento() {
+    public String getDataNascimento() {
         return this.dataNascimento;
     }
 
-    public String getemail() {
+    public String getEmail() {
         return this.email;
 
     }
 
-    public char getsexo() {
-        return this.sexo;
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
     }
 
-    public int setId() {
-        return this.id;
-    }
-
-    public String setcpf() {
-        return this.cpf;
-    }
-
-    public String setrg() {
-        return this.rg;
-    }
-
-    public String setnome() {
-        return this.nome;
-
-    }
-
-    public String setdataNascimento() {
-        return this.dataNascimento;
-    }
-
-    public String setemail() {
-        return this.email;
-
-    }
-
-    public char setsexo() {
-        return this.sexo;
-    }
 }

@@ -28,29 +28,29 @@ public class Turno {
 
     //Declaração do método setTurnoId
 
-    public void setid(int id) {
+    public void setId(int id) {
         this.id = id;
         // Altera a variavel turnoId da classe turno para o parametro passado
     }
 
     //Declaração do método setTurnoNome
 
-    public void setnome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
         // Altera a variavel turnoNome da classe Turno para o parametro passado
     }
 
     //Declaração do método getTurnoId 
 
-    public int getTurnoId() {
+    public int getId() {
         return id;
         //retorna o Valor da Variavel turnoId
     }
 
     //Declaração do método getTurnoNome
 
-    public String getTurnoNome() {
-        return turnoNome;
+    public String getNome() {
+        return nome;
         //retorna o Valor da Variavel turnoNome
     }
 }

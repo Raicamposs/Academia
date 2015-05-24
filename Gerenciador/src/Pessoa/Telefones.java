@@ -9,15 +9,11 @@ package Pessoa;
  *
  * @author Raiane
  */
-public class Telefones {
+abstract class Telefones {
 
-    String foneComercial, foneResidencial, foneCelular;
+    protected String foneComercial, foneResidencial, foneCelular;
 
-    public Telefones(String foneComercial, String foneResidencial, String foneCelular) {
-        this.foneComercial = foneComercial;
-        this.foneResidencial = foneResidencial;
-        this.foneCelular = foneCelular;
-    }
+   
 
     public String getFoneComercial() {
         return foneComercial;

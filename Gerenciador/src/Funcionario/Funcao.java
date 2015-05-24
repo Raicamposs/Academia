@@ -7,51 +7,51 @@ public class Funcao {
      * Método construtor. Você deve utiliza-lo para criar o registro de um nova
      * Funcao .
      *
-     * @param funcaoId id da Funcao
-     * @param funcaoNome nome da Funcao
+     * @param id id da Funcao
+     * @param nome nome da Funcao
      * @author 
      */
-    private int funcaoId;
-    private String funcaoNome;
+    private int id;
+    private String nome;
 
     // Declaração do construtor da classe funcao//
-    public Funcao(int funcaoId, String funcaoNome) {
+    public Funcao(int id, String nome) {
 
-        this.funcaoId = funcaoId;
-        this.funcaoNome = funcaoNome;
+        this.id = id;
+        this.nome = nome;
     }
 // Declaração do construtor da classe funcao//
 
-    public Funcao(String funcaoNome) {
+    public Funcao(String nome) {
 
-        this.funcaoNome = funcaoNome;
+        this.nome = nome;
     }
 
     //Declaração do método funcaoId
 
-    public void setFuncaoId(int funcaoId) {
-        this.funcaoId = funcaoId;
+    public void setId(int id) {
+        this.id = id;
         // Altera a variavel funcaoId da classe Funcao para o parametro passado
     }
 
     //Declaração do método setFuncaoNome
 
-    public void setFuncaoNome(String funcaoNome) {
-        this.funcaoNome = funcaoNome;
+    public void setNome(String nome) {
+        this.nome = nome;
         // Altera a variavel funcaoNome da classe Funcao para o parametro passado
     }
 
     //Declaração do método getFuncaoId 
 
-    public int getFuncaoId() {
-        return funcaoId;
+    public int getId() {
+        return id;
         //retorna o Valor da Variavel  funcaoId
     }
 
     //Declaração do método getFuncaoNome
 
-    public String getFuncaoNome() {
-        return funcaoNome;
+    public String getNome() {
+        return nome;
         //retorna o Valor da Variavel  funcaoNome
     }
 

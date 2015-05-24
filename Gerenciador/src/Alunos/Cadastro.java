@@ -5,18 +5,13 @@
  */
 package Alunos;
 
-import Pessoa.Telefones;
+
 import Endereco.Endereco;
 
 public class Cadastro {
 
     Aluno aluno;
-    Telefones telefones;
     Endereco endereco;
 
-    public Cadastro(Aluno aluno, Telefones telefones, Endereco endereco) {
-        this.aluno = aluno;
-        this.telefones = telefones;
-        this.endereco = endereco;
-    }
+  
 }

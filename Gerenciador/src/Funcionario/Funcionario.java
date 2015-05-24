@@ -1,31 +1,46 @@
 package Funcionario;
 
-import Pessoa.Pessoa;
+import Pessoa.*;
+
+
 
 /*
  * @author Evolute Jackson
  */
 
-public class Funcionario {
+public class Funcionario extends Pessoa {
 
     private int id;
-    private Funcao funcao;
-    private Pessoa pessoa;
-    private Turno turno;
+    private int funcao;
+    private int turno;
     private String cnt;
     private float salario;
 
-    // Declaração do construtor da classe Funcionario//
-    public Funcionario(int Id, Funcao funcao, Pessoa pessoa, Turno turno, String cnt, float salario) {
+    /**
+     *
+     * @param id
+     * @param estadoCivil
+     * @param cpf
+     * @param rg
+     * @param nome
+     * @param dataNascimento
+     * @param email
+     * @param sexo
+     * @param turno
+     * @param cnt
+     * @param funcao
+     */
+    public Funcionario(int id, int estadoCivil, String cpf, String rg, String nome,
+            String dataNascimento, String email, char sexo, Turno turno, String cnt, Funcao funcao) {
+        super(id, estadoCivil, cpf, rg, nome, dataNascimento, email, sexo);
 
-        this.id = Id;
-        this.funcao = funcao;
-        this.pessoa = pessoa;
-        this.turno = turno;
+        this.id = id;
+        this.funcao = funcao.getId();
+        this.turno = turno.getId();
         this.cnt = cnt;
         this.salario = salario;
     }
-    //Declaração do método setId
+
 
     public void setId(int Id) {
         this.id = Id;

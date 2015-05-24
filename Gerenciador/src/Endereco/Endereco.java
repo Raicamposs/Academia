@@ -9,41 +9,32 @@ package Endereco;
  *
  * @author Raiane
  */
-public class Endereco {
+public class Endereco extends Bairro {
 
     private String endereco, cep;
-    Bairro bairro;
-    Cidade cidade;
-    Estado uf;
+    private int id;
 
-    public Endereco(String endereco, String cep, Bairro bairro, Cidade cidade, Estado uf) {
-
+    public Endereco(String endereco, String cep, int id, int bairroId, int cidadeId, String estadoUf) {
+        super(bairroId, cidadeId, estadoUf);
         this.endereco = endereco;
         this.cep = cep;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.uf = uf;
+        this.id = id;
+    }
+
+    public Endereco(int id, String endereco, String cep, int bairroId, int cidadeId, String estadoUf) {
+        super(bairroId, cidadeId, estadoUf);
+        this.endereco = endereco;
+        this.cep = cep;
+        this.id = id;
 
     }
 
     public String getEndereco() {
-        return endereco;
+        return this.endereco;
     }
 
     public String getCEP() {
-        return cep;
-    }
-
-    public String getBairro() {
-        return bairro.getNome();
-    }
-
-    public String getCidade() {
-        return cidade.getNome();
-    }
-
-    public String getUf() {
-        return uf.getEstadoNome();
+        return this.cep;
     }
 
     public void setEndereco(String endereco) {
@@ -54,15 +45,4 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public void setBairro(Bairro bairro) {
-        this.bairro = bairro;
-    }
-
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
-    }
-
-    public void setUf(Estado uf) {
-        this.uf = uf;
-    }
 }
