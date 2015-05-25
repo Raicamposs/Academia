@@ -49,7 +49,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        timer_hora = new org.netbeans.modules.form.InvalidComponent();
+        timer_hora = new org.netbeans.examples.lib.timerbean.Timer();
         painelPrincipal = new javax.swing.JPanel();
         painelCentral = new javax.swing.JPanel();
         painelConsulta = new javax.swing.JPanel();
@@ -78,6 +78,12 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         meExit = new javax.swing.JMenu();
+
+        timer_hora.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
+            public void onTime(java.awt.event.ActionEvent evt) {
+                timer_horaOnTime(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Espaço Corpo");
@@ -501,6 +507,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel painelCentral;
     private javax.swing.JPanel painelConsulta;
     private javax.swing.JPanel painelPrincipal;
-    private org.netbeans.modules.form.InvalidComponent timer_hora;
+    private org.netbeans.examples.lib.timerbean.Timer timer_hora;
     // End of variables declaration//GEN-END:variables
 }
