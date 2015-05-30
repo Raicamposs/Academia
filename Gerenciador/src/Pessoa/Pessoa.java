@@ -21,7 +21,8 @@ public abstract class Pessoa extends Telefones {
     private char sexo;
 
     // Declaração do construtor da classe Pessoa
-    public Pessoa(int id, int estadoCivil, String cpf, String rg, String nome, String dataNascimento, String email, char sexo) {
+    public Pessoa(int id, int estadoCivil, String cpf, String rg, String nome,
+            String dataNascimento, String email, char sexo) {
 
         this.id = id;
         this.estadoCivil = estadoCivil;
