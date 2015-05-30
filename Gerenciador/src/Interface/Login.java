@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 import ConexaoBD.UsuarioDao;
 import Administrador.Usuario;
 import com.sun.glass.events.KeyEvent;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
