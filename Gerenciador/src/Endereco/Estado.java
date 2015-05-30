@@ -4,11 +4,11 @@ public class Estado {
 
     /**
      * Método construtor. Você deve utiliza-lo para criar o registro de um novo
-     * author.
+     * Estado.
      *
      * @param estadoId id do Estado
      * @param estadoNome nome do Estado
-     * @author
+     * @author G4 developers
      */
     private int estadoId;
     private String estadoNome;
@@ -21,6 +21,7 @@ public class Estado {
         this.estadoNome = estadoNome;
         this.estadoUf = estadoUf;
     }
+
 // Declaração do construtor da classe estado//
 
     public Estado(String estadoNome, String estadoUf) {
@@ -32,7 +33,6 @@ public class Estado {
     public Estado(String estadoUf) {
         this.estadoUf = estadoUf;
     }
-
    
     //Declaração do método getEstadoId 
     public int getEstadoId() {
@@ -53,5 +53,25 @@ public class Estado {
         //retorna o Valor da Variavel  estadoUf
 
     }
+    
+    //Declaração do método 
 
+    public void setEstadoId(int estadoId) {
+        this.estadoId = estadoId;
+        // Altera a variavel funcaoId da classe Funcao para o parametro passado
+    }
+
+    //Declaração do método 
+
+    public void setEstadoNome(String estadoNome) {
+        this.estadoNome = estadoNome;
+        // Altera a variavel funcaoNome da classe Funcao para o parametro passado
+    }
+    public void setEstadoUf(String estadoUf) {
+        this.estadoUf = estadoUf;
+        // Altera a variavel funcaoNome da classe Funcao para o parametro passado
+    }
+    
 }
+
+
