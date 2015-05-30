@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Pessoa/Pessoa.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Endereco/Bairro.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Pessoa/Telefones.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Endereco/Cidade.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Funcionario/Turno.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Alunos/Aluno.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Turma/Turma.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Alunos/Cadastro.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/Matricula/EstadoMensalidade.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/ConexaoBD/UsuarioDao.java</file>
+            <file>file:/C:/Users/Raiane/Documents/GitHub/Academia/Gerenciador/src/ConexaoBD/ConnectionFactory.java</file>
+        </group>
     </open-files>
 </project-private>
