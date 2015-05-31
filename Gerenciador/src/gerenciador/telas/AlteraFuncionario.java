@@ -78,7 +78,7 @@ public class AlteraFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_lblInicioMouseClicked
 
     private void lblAnteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseEntered
-        Ultilidades.Style.styleBorder(lblAnterior);
+        Ultilidades.Style.styleBorderEntered(lblAnterior);
     }//GEN-LAST:event_lblAnteriorMouseEntered
 
     private void lblAnteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseExited

@@ -30,6 +30,7 @@ public class AlteraAluno extends javax.swing.JFrame {
         lblAnterior = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
         lblConfirma = new javax.swing.JLabel();
+        lblPesquisa = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         lblEdita = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
@@ -45,6 +46,9 @@ public class AlteraAluno extends javax.swing.JFrame {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblAnteriorMouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblAnteriorMouseExited(evt);
+            }
         });
         getContentPane().add(lblAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 655, 117, 47));
 
@@ -53,18 +57,52 @@ public class AlteraAluno extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblInicioMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblInicioMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblInicioMouseExited(evt);
+            }
         });
         getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 655, 120, 47));
+
+        lblConfirma.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblConfirmaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblConfirmaMouseExited(evt);
+            }
+        });
         getContentPane().add(lblConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 655, 120, 47));
+        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 350, 156));
 
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setText("...");
         getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 730, 180, 30));
+
+        lblEdita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEditaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEditaMouseExited(evt);
+            }
+        });
         getContentPane().add(lblEdita, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 655, 117, 47));
 
         lblData.setForeground(new java.awt.Color(255, 255, 255));
         lblData.setText("...");
         getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 730, 160, 30));
+
+        lblProximo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblProximoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblProximoMouseExited(evt);
+            }
+        });
         getContentPane().add(lblProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 654, 117, 47));
 
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAltera.jpg"))); // NOI18N
@@ -79,8 +117,50 @@ public class AlteraAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblInicioMouseClicked
 
     private void lblAnteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseEntered
-    Ultilidades.
+Ultilidades.Style.styleBorderEntered(lblAnterior);
+
     }//GEN-LAST:event_lblAnteriorMouseEntered
+
+    private void lblEditaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseEntered
+        Ultilidades.Style.styleBorderEntered(lblEdita);
+
+    }//GEN-LAST:event_lblEditaMouseEntered
+
+    private void lblInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseEntered
+      Ultilidades.Style.styleBorderEntered(lblInicio);
+    }//GEN-LAST:event_lblInicioMouseEntered
+
+    private void lblConfirmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseEntered
+     Ultilidades.Style.styleBorderEntered(lblConfirma);
+    }//GEN-LAST:event_lblConfirmaMouseEntered
+
+    private void lblProximoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseEntered
+    Ultilidades.Style.styleBorderEntered(lblProximo);
+    }//GEN-LAST:event_lblProximoMouseEntered
+
+    private void lblAnteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseExited
+   Ultilidades.Style.styleBorderExited(lblAnterior);
+    }//GEN-LAST:event_lblAnteriorMouseExited
+
+    private void lblEditaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseExited
+      Ultilidades.Style.styleBorderExited(lblEdita);
+
+    }//GEN-LAST:event_lblEditaMouseExited
+
+    private void lblInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseExited
+       Ultilidades.Style.styleBorderExited(lblInicio);
+
+    }//GEN-LAST:event_lblInicioMouseExited
+
+    private void lblConfirmaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseExited
+         Ultilidades.Style.styleBorderExited(lblConfirma);
+
+    }//GEN-LAST:event_lblConfirmaMouseExited
+
+    private void lblProximoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseExited
+         Ultilidades.Style.styleBorderExited(lblProximo);
+
+    }//GEN-LAST:event_lblProximoMouseExited
 
     /**
      * @param args the command line arguments
@@ -125,6 +205,7 @@ public class AlteraAluno extends javax.swing.JFrame {
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblInicio;
+    private javax.swing.JLabel lblPesquisa;
     private javax.swing.JLabel lblProximo;
     // End of variables declaration//GEN-END:variables
 }
