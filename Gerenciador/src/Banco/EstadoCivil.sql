@@ -1,5 +1,6 @@
 create table estado_civil( 
-ec_id integer not null  auto_increment, 
-ec_nome varchar(20) not null unique , 
+ ec_id integer unsigned not null auto_increment,
+  ec_descricao varchar(20) null unique,
 primary key (ec_id) 
 ); 
+
