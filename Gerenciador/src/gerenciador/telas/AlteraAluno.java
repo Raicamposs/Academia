@@ -17,7 +17,7 @@ public class AlteraAluno extends javax.swing.JFrame {
     public AlteraAluno() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +27,13 @@ public class AlteraAluno extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblAnterior = new javax.swing.JLabel();
+        lblInicio = new javax.swing.JLabel();
+        lblConfirma = new javax.swing.JLabel();
+        lblHora = new javax.swing.JLabel();
+        lblEdita = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        lblProximo = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -35,24 +41,46 @@ public class AlteraAluno extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setToolTipText("");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+        lblAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblAnteriorMouseEntered(evt);
             }
         });
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 660, 120, 40));
+        getContentPane().add(lblAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 655, 117, 47));
+
+        lblInicio.setToolTipText("");
+        lblInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblInicioMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(471, 655, 120, 47));
+        getContentPane().add(lblConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 655, 120, 47));
+
+        lblHora.setForeground(new java.awt.Color(255, 255, 255));
+        lblHora.setText("...");
+        getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 730, 180, 30));
+        getContentPane().add(lblEdita, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 655, 117, 47));
+
+        lblData.setForeground(new java.awt.Color(255, 255, 255));
+        lblData.setText("...");
+        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 730, 160, 30));
+        getContentPane().add(lblProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 654, 117, 47));
 
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAltera.jpg"))); // NOI18N
         lblFundo.setToolTipText("");
-        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, -1));
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void lblInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseClicked
         this.dispose();
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_lblInicioMouseClicked
+
+    private void lblAnteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseEntered
+    Ultilidades.
+    }//GEN-LAST:event_lblAnteriorMouseEntered
 
     /**
      * @param args the command line arguments
@@ -90,7 +118,13 @@ public class AlteraAluno extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAnterior;
+    private javax.swing.JLabel lblConfirma;
+    private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblEdita;
     private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblInicio;
+    private javax.swing.JLabel lblProximo;
     // End of variables declaration//GEN-END:variables
 }
