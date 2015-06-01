@@ -65,9 +65,14 @@
       </Constraints>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPesquisa">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagens/Telas Pequenas/tela pesquisa.png"/>
+        </Property>
+      </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="280" y="190" width="350" height="156"/>
+          <AbsoluteConstraints x="360" y="220" width="350" height="156"/>
         </Constraint>
       </Constraints>
     </Component>

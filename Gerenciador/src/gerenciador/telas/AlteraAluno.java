@@ -75,7 +75,9 @@ public class AlteraAluno extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lblConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 655, 120, 47));
-        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 350, 156));
+
+        lblPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/tela pesquisa.png"))); // NOI18N
+        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 350, 156));
 
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setText("...");
