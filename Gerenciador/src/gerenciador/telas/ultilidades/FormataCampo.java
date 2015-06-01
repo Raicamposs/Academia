@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gerenciador.telas;
+package gerenciador.telas.ultilidades;
 
 /**
  *
  * @author Raiane
  */
-public class Inicial {
-    public static void main(String[] args) {
-        new LoginGUI().setVisible(true);
-
-    }
+public class FormataCampo {
+//
+//    MaskFormatter format = new MaskFormatter();
+//
+//    public String CPF(String cpf) {
+//        cpf = format.
+//        return cpf;
+//
+//    }
 }
