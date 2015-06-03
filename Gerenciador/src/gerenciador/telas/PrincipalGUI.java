@@ -45,12 +45,12 @@ public class PrincipalGUI extends javax.swing.JFrame {
         URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
         this.setIconImage(imagemTitulo);
-        disableMenuSelectCadastro();
         timerHora.setDelay(1000);
         timerHora.start();
         lblData.setText(Data.mostraData());
         disabledSelect();
         disableMenuSelectCadastro();
+        disableMenuSelectConsulAlter();
         // print(jPanel1.getGraphics());
 
     }
@@ -665,6 +665,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private void lblConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsulAlterMouseEntered
         disableMenuSelectCadastro();
+        enabledMenuSelectConsulAlter();
         mouseSai(lblMenuCadastro);
         mouseSai(lblMenuAniversariantes);
         mouseEntra(lblConsulAlter, "/Imagens/botões selecionados/selectBoConsulAlter.png");
