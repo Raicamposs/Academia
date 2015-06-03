@@ -16,6 +16,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import gerenciador.telas.ultilidades.Data;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 
@@ -35,16 +38,20 @@ public class PrincipalGUI extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public PrincipalGUI() {
+
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setUndecorated(true);
         initComponents();
-//        URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
-//        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-//        this.setIconImage(imagemTitulo);
-        disabledSelect();
+        URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
+        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(imagemTitulo);
+        disableMenuSelectCadastro();
         timerHora.setDelay(1000);
         timerHora.start();
         lblData.setText(Data.mostraData());
+        disabledSelect();
+        disableMenuSelectCadastro();
+        // print(jPanel1.getGraphics());
 
     }
 
@@ -56,7 +63,6 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
     private void mouseSai(JLabel label) {
         setCursor(Cursor.DEFAULT_CURSOR);
-
         label.setIcon(null);
     }
 
@@ -74,8 +80,9 @@ public class PrincipalGUI extends javax.swing.JFrame {
         mouseSai(lblMenuCadastro);
         mouseSai(lblMenuAniversariantes);
         mouseSai(lblMenu);
-
         disabledSelect();
+        disableMenuSelectCadastro();
+
     }
 
     private void disabledSelect() {
@@ -84,6 +91,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         lblSelectAniversariantes.setVisible(false);
         lblSelecFrequencia.setVisible(false);
         lblSelecPagamento.setVisible(false);
+
     }
 
     private void enabledSelect() {
@@ -92,6 +100,39 @@ public class PrincipalGUI extends javax.swing.JFrame {
         lblSelectAniversariantes.setVisible(true);
         lblSelecFrequencia.setVisible(true);
         lblSelecPagamento.setVisible(true);
+
+    }
+
+    private void enabledMenuSelectCadastro() {
+        lblSelectAlunoCadastro.setVisible(true);
+        lblSelectAulaCadastro.setVisible(true);
+        lblSelectFuncionarioCadastro.setVisible(true);
+        lblSelectTurmaCadastro.setVisible(true);
+
+    }
+
+    private void disableMenuSelectCadastro() {
+        lblSelectAlunoCadastro.setVisible(false);
+        lblSelectAulaCadastro.setVisible(false);
+        lblSelectFuncionarioCadastro.setVisible(false);
+        lblSelectTurmaCadastro.setVisible(false);
+
+    }
+
+    private void enabledMenuSelectConsulAlter() {
+        lblSelectAlunoConsulAlter.setVisible(true);
+        lblSelectAulaConsulAlter.setVisible(true);
+        lblSelectFuncionarioConsulAlter.setVisible(true);
+        lblSelectTurmaConsulAlter.setVisible(true);
+
+    }
+
+    private void disableMenuSelectConsulAlter() {
+        lblSelectAlunoConsulAlter.setVisible(false);
+        lblSelectAulaConsulAlter.setVisible(false);
+        lblSelectFuncionarioConsulAlter.setVisible(false);
+        lblSelectTurmaConsulAlter.setVisible(false);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -100,6 +141,14 @@ public class PrincipalGUI extends javax.swing.JFrame {
 
         timerHora = new org.netbeans.examples.lib.timerbean.Timer();
         jPanel1 = new javax.swing.JPanel();
+        lblSelectFuncionarioCadastro = new javax.swing.JLabel();
+        lblSelectAulaCadastro = new javax.swing.JLabel();
+        lblSelectAlunoCadastro = new javax.swing.JLabel();
+        lblSelectTurmaCadastro = new javax.swing.JLabel();
+        lblSelectAulaConsulAlter = new javax.swing.JLabel();
+        lblSelectAlunoConsulAlter = new javax.swing.JLabel();
+        lblSelectTurmaConsulAlter = new javax.swing.JLabel();
+        lblSelectFuncionarioConsulAlter = new javax.swing.JLabel();
         lblConsultaFuncionario = new javax.swing.JLabel();
         lblConsultaAluno = new javax.swing.JLabel();
         lblFacebbok = new javax.swing.JLabel();
@@ -108,13 +157,11 @@ public class PrincipalGUI extends javax.swing.JFrame {
         lblCadAluno = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
         lblCadFuncionario = new javax.swing.JLabel();
-        lblSelectTurma = new javax.swing.JLabel();
-        lblSelectFuncionario = new javax.swing.JLabel();
-        lblSelectAula = new javax.swing.JLabel();
-        lblSelectAluno = new javax.swing.JLabel();
         lblSelecPagamento = new javax.swing.JLabel();
-        lblAniversariantes = new javax.swing.JLabel();
         lblMenuCadastro = new javax.swing.JLabel();
+        lblAniversariantes = new javax.swing.JLabel();
+        lblFechar = new javax.swing.JLabel();
+        lblMinimiza = new javax.swing.JLabel();
         lblCadastro = new javax.swing.JLabel();
         lblMenuConsulAlter = new javax.swing.JLabel();
         lblConsulAlter = new javax.swing.JLabel();
@@ -141,6 +188,86 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblSelectFuncionarioCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectFuncionarioCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectFuncionarioCadastroMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectFuncionarioCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 392, 165, 25));
+
+        lblSelectAulaCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectAulaCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectAulaCadastroMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectAulaCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 425, 165, 25));
+
+        lblSelectAlunoCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectAlunoCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectAlunoCadastroMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectAlunoCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 165, 25));
+
+        lblSelectTurmaCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectTurmaCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectTurmaCadastroMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectTurmaCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 458, 165, 25));
+
+        lblSelectAulaConsulAlter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectAulaConsulAlterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectAulaConsulAlterMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectAulaConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 512, 165, 25));
+
+        lblSelectAlunoConsulAlter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectAlunoConsulAlterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectAlunoConsulAlterMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectAlunoConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 448, 165, 25));
+
+        lblSelectTurmaConsulAlter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectTurmaConsulAlterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectTurmaConsulAlterMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectTurmaConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 545, 165, 25));
+
+        lblSelectFuncionarioConsulAlter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblSelectFuncionarioConsulAlterMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblSelectFuncionarioConsulAlterMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblSelectFuncionarioConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, 165, 25));
 
         lblConsultaFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -240,46 +367,6 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
         jPanel1.add(lblCadFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 40, 150, 140));
 
-        lblSelectTurma.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSelectTurmaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSelectTurmaMouseExited(evt);
-            }
-        });
-        jPanel1.add(lblSelectTurma, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 458, 165, 25));
-
-        lblSelectFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSelectFuncionarioMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSelectFuncionarioMouseExited(evt);
-            }
-        });
-        jPanel1.add(lblSelectFuncionario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 392, 165, 25));
-
-        lblSelectAula.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSelectAulaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSelectAulaMouseExited(evt);
-            }
-        });
-        jPanel1.add(lblSelectAula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 425, 165, 25));
-
-        lblSelectAluno.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblSelectAlunoMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblSelectAlunoMouseExited(evt);
-            }
-        });
-        jPanel1.add(lblSelectAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, 165, 25));
-
         lblSelecPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblSelecPagamentoMouseClicked(evt);
@@ -293,6 +380,17 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
         jPanel1.add(lblSelecPagamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 599, 180, 50));
 
+        lblMenuCadastro.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblMenuCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblMenuCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblMenuCadastroMouseExited(evt);
+            }
+        });
+        jPanel1.add(lblMenuCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 190, 200));
+
         lblAniversariantes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblAniversariantesMouseEntered(evt);
@@ -303,13 +401,19 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
         jPanel1.add(lblAniversariantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(1197, 368, 170, 140));
 
-        lblMenuCadastro.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        lblMenuCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblMenuCadastroMouseExited(evt);
+        lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFecharMouseClicked(evt);
             }
         });
-        jPanel1.add(lblMenuCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 190, 200));
+        jPanel1.add(lblFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1345, 5, 15, 15));
+
+        lblMinimiza.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMinimizaMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblMinimiza, new org.netbeans.lib.awtextra.AbsoluteConstraints(1320, 5, 15, 15));
 
         lblCadastro.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCadastro.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
@@ -331,7 +435,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
                 lblMenuConsulAlterMouseExited(evt);
             }
         });
-        jPanel1.add(lblMenuConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 200, 190));
+        jPanel1.add(lblMenuConsulAlter, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 190, 190));
 
         lblConsulAlter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblConsulAlter.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
@@ -417,6 +521,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         jPanel1.add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 200, 390));
 
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/Fundo.jpg"))); // NOI18N
+        lblFundo.setToolTipText("");
         lblFundo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblFundoMouseClicked(evt);
@@ -533,7 +638,15 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFundoMouseEntered
 
     private void lblMenuCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuCadastroMouseExited
-        mouseSai(lblMenuCadastro);
+        if (!lblSelectAlunoCadastro.isBackgroundSet()
+                && !lblSelectAulaCadastro.isBackgroundSet()
+                && !lblSelectFuncionarioCadastro.isBackgroundSet()
+                && !lblSelectTurmaCadastro.isBackgroundSet()) {
+            disableMenuSelectCadastro();
+            mouseSai(lblMenuCadastro);
+        }
+
+
     }//GEN-LAST:event_lblMenuCadastroMouseExited
 
     private void lblCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroMouseClicked
@@ -541,16 +654,17 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastroMouseClicked
 
     private void lblCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastroMouseEntered
-
+        enabledMenuSelectCadastro();
         mouseSai(lblMenuConsulAlter);
         mouseSai(lblMenuAniversariantes);
         mouseEntra(lblCadastro, "/Imagens/botões selecionados/selectBoCadastro.png");
         mouseEntra(lblMenuCadastro, "/Imagens/Menu Lateral/menuCadastro.png");
 
+
     }//GEN-LAST:event_lblCadastroMouseEntered
 
     private void lblConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsulAlterMouseEntered
-
+        disableMenuSelectCadastro();
         mouseSai(lblMenuCadastro);
         mouseSai(lblMenuAniversariantes);
         mouseEntra(lblConsulAlter, "/Imagens/botões selecionados/selectBoConsulAlter.png");
@@ -559,11 +673,18 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblConsulAlterMouseEntered
 
     private void lblMenuConsulAlterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuConsulAlterMouseExited
-        mouseSai(lblMenuConsulAlter);
+
+        if (!lblSelectAlunoConsulAlter.isBackgroundSet()
+                && !lblSelectAulaConsulAlter.isBackgroundSet()
+                && !lblSelectFuncionarioConsulAlter.isBackgroundSet()
+                && !lblSelectTurmaConsulAlter.isBackgroundSet()) {
+            disableMenuSelectConsulAlter();
+            mouseSai(lblMenuConsulAlter);
+        }
     }//GEN-LAST:event_lblMenuConsulAlterMouseExited
 
     private void lblSelectAniversariantesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAniversariantesMouseEntered
-
+        disableMenuSelectCadastro();
         mouseSai(lblMenuConsulAlter);
         mouseSai(lblMenuCadastro);
         mouseEntra(lblSelectAniversariantes, "/Imagens/botões selecionados/selectBoAniversariantes.png");
@@ -584,7 +705,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMenuAniversariantesMouseExited
 
     private void lblSelecFrequenciaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelecFrequenciaMouseEntered
-
+        disableMenuSelectCadastro();
         mouseSai(lblMenuConsulAlter);
         mouseSai(lblMenuCadastro);
         mouseSai(lblMenuAniversariantes);
@@ -608,14 +729,6 @@ public class PrincipalGUI extends javax.swing.JFrame {
         Date le_hora = new Date();
         lblHora.setText(horaformatada.format(le_hora));
     }//GEN-LAST:event_timerHoraOnTime
-
-    private void lblSelectTurmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaMouseEntered
-        mouseEntra(lblSelectTurma, "/Imagens/botões selecionados/selectTurma.png");
-    }//GEN-LAST:event_lblSelectTurmaMouseEntered
-
-    private void lblSelectTurmaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaMouseExited
-        mouseSai(lblSelectTurma);
-    }//GEN-LAST:event_lblSelectTurmaMouseExited
 
     private void lblConsultaAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultaAlunoMouseClicked
         new AlteraAlunoGUI().setVisible(true);
@@ -658,6 +771,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAniversariantesMouseExited
 
     private void lblSelecPagamentoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelecPagamentoMouseEntered
+        disableMenuSelectCadastro();
         mouseEntra(lblSelecPagamento, "/Imagens/botões selecionados/selectBoPagamento.png");
     }//GEN-LAST:event_lblSelecPagamentoMouseEntered
 
@@ -673,29 +787,82 @@ public class PrincipalGUI extends javax.swing.JFrame {
         new FrequenciaGUI().setVisible(true);
     }//GEN-LAST:event_lblFrequenciaMouseClicked
 
-    private void lblSelectAlunoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoMouseEntered
-        mouseEntra(lblSelectAluno, "/Imagens/botões selecionados/selectAluno.png");
-    }//GEN-LAST:event_lblSelectAlunoMouseEntered
+    private void lblMenuCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMenuCadastroMouseEntered
 
-    private void lblSelectAlunoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoMouseExited
-        mouseSai(lblSelectAluno);
-    }//GEN-LAST:event_lblSelectAlunoMouseExited
+    }//GEN-LAST:event_lblMenuCadastroMouseEntered
 
-    private void lblSelectFuncionarioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioMouseExited
-        mouseSai(lblSelectFuncionario);
-    }//GEN-LAST:event_lblSelectFuncionarioMouseExited
+    private void lblSelectAlunoCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoCadastroMouseEntered
+        mouseEntra(lblSelectAlunoCadastro, "/Imagens/botões selecionados/selectAluno.png");
 
-    private void lblSelectFuncionarioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioMouseEntered
-        mouseEntra(lblSelectAluno, "/Imagens/botões selecionados/selectFuncionario.png");
-    }//GEN-LAST:event_lblSelectFuncionarioMouseEntered
+    }//GEN-LAST:event_lblSelectAlunoCadastroMouseEntered
 
-    private void lblSelectAulaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaMouseEntered
-        mouseEntra(lblSelectAula, "/Imagens/botões selecionados/selectAula.png");
-    }//GEN-LAST:event_lblSelectAulaMouseEntered
+    private void lblSelectFuncionarioCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioCadastroMouseEntered
+        mouseEntra(lblSelectFuncionarioCadastro, "/Imagens/botões selecionados/selectFuncionario.png");
+    }//GEN-LAST:event_lblSelectFuncionarioCadastroMouseEntered
 
-    private void lblSelectAulaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaMouseExited
-        mouseSai(lblSelectAula);
-    }//GEN-LAST:event_lblSelectAulaMouseExited
+    private void lblSelectAulaCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaCadastroMouseEntered
+        mouseEntra(lblSelectAulaCadastro, "/Imagens/botões selecionados/selectAula.png");
+    }//GEN-LAST:event_lblSelectAulaCadastroMouseEntered
+
+    private void lblSelectTurmaCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaCadastroMouseEntered
+        mouseEntra(lblSelectTurmaCadastro, "/Imagens/botões selecionados/selectTurma.png");
+    }//GEN-LAST:event_lblSelectTurmaCadastroMouseEntered
+
+    private void lblSelectAlunoCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoCadastroMouseExited
+        mouseSai(lblSelectAlunoCadastro);
+    }//GEN-LAST:event_lblSelectAlunoCadastroMouseExited
+
+    private void lblSelectFuncionarioCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioCadastroMouseExited
+        mouseSai(lblSelectFuncionarioCadastro);
+    }//GEN-LAST:event_lblSelectFuncionarioCadastroMouseExited
+
+    private void lblSelectAulaCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaCadastroMouseExited
+        mouseSai(lblSelectAulaCadastro);
+    }//GEN-LAST:event_lblSelectAulaCadastroMouseExited
+
+    private void lblSelectTurmaCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaCadastroMouseExited
+        mouseSai(lblSelectTurmaCadastro);
+    }//GEN-LAST:event_lblSelectTurmaCadastroMouseExited
+
+    private void lblFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFecharMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblFecharMouseClicked
+
+    private void lblMinimizaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizaMouseClicked
+        this.setExtendedState(LoginGUI.ICONIFIED);
+    }//GEN-LAST:event_lblMinimizaMouseClicked
+
+    private void lblSelectAulaConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaConsulAlterMouseEntered
+        mouseEntra(lblSelectAulaConsulAlter, "/Imagens/botões selecionados/selectAula.png");
+    }//GEN-LAST:event_lblSelectAulaConsulAlterMouseEntered
+
+    private void lblSelectAulaConsulAlterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaConsulAlterMouseExited
+        mouseSai(lblSelectAulaConsulAlter);
+    }//GEN-LAST:event_lblSelectAulaConsulAlterMouseExited
+
+    private void lblSelectAlunoConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoConsulAlterMouseEntered
+        mouseEntra(lblSelectAlunoConsulAlter, "/Imagens/botões selecionados/selectAluno.png");
+    }//GEN-LAST:event_lblSelectAlunoConsulAlterMouseEntered
+
+    private void lblSelectAlunoConsulAlterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAlunoConsulAlterMouseExited
+        mouseSai(lblSelectAlunoConsulAlter);
+    }//GEN-LAST:event_lblSelectAlunoConsulAlterMouseExited
+
+    private void lblSelectTurmaConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaConsulAlterMouseEntered
+        mouseEntra(lblSelectTurmaConsulAlter, "/Imagens/botões selecionados/selectAluno.png");
+    }//GEN-LAST:event_lblSelectTurmaConsulAlterMouseEntered
+
+    private void lblSelectTurmaConsulAlterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectTurmaConsulAlterMouseExited
+        mouseSai(lblSelectTurmaConsulAlter);
+    }//GEN-LAST:event_lblSelectTurmaConsulAlterMouseExited
+
+    private void lblSelectFuncionarioConsulAlterMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioConsulAlterMouseEntered
+        mouseEntra(lblSelectFuncionarioConsulAlter, "/Imagens/botões selecionados/selectFuncionario.png");
+    }//GEN-LAST:event_lblSelectFuncionarioConsulAlterMouseEntered
+
+    private void lblSelectFuncionarioConsulAlterMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectFuncionarioConsulAlterMouseExited
+        mouseSai(lblSelectFuncionarioConsulAlter);
+    }//GEN-LAST:event_lblSelectFuncionarioConsulAlterMouseExited
 
     /**
      * @param args the command line arguments
@@ -746,6 +913,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFacebbok;
+    private javax.swing.JLabel lblFechar;
     private javax.swing.JLabel lblFrequencia;
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblHora;
@@ -754,13 +922,18 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblMenuCadastro;
     private javax.swing.JLabel lblMenuConsulAlter;
     private javax.swing.JLabel lblMenuFrequencia;
+    private javax.swing.JLabel lblMinimiza;
     private javax.swing.JLabel lblSelecFrequencia;
     private javax.swing.JLabel lblSelecPagamento;
-    private javax.swing.JLabel lblSelectAluno;
+    private javax.swing.JLabel lblSelectAlunoCadastro;
+    private javax.swing.JLabel lblSelectAlunoConsulAlter;
     private javax.swing.JLabel lblSelectAniversariantes;
-    private javax.swing.JLabel lblSelectAula;
-    private javax.swing.JLabel lblSelectFuncionario;
-    private javax.swing.JLabel lblSelectTurma;
+    private javax.swing.JLabel lblSelectAulaCadastro;
+    private javax.swing.JLabel lblSelectAulaConsulAlter;
+    private javax.swing.JLabel lblSelectFuncionarioCadastro;
+    private javax.swing.JLabel lblSelectFuncionarioConsulAlter;
+    private javax.swing.JLabel lblSelectTurmaCadastro;
+    private javax.swing.JLabel lblSelectTurmaConsulAlter;
     private org.netbeans.examples.lib.timerbean.Timer timerHora;
     // End of variables declaration//GEN-END:variables
 }

@@ -22,7 +22,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setUndecorated(true);
         initComponents();
-        URL url = this.getClass().getResource("/Imagens/lg 25x25.jpg");
+        URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
         this.setIconImage(imagemTitulo);
     }
