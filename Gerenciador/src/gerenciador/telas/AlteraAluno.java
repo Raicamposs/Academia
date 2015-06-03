@@ -17,7 +17,7 @@ public class AlteraAluno extends javax.swing.JFrame {
     public AlteraAluno() {
         initComponents();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -119,48 +119,48 @@ public class AlteraAluno extends javax.swing.JFrame {
     }//GEN-LAST:event_lblInicioMouseClicked
 
     private void lblAnteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseEntered
-Ultilidades.Style.styleBorderEntered(lblAnterior);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblAnterior);
 
     }//GEN-LAST:event_lblAnteriorMouseEntered
 
     private void lblEditaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseEntered
-        Ultilidades.Style.styleBorderEntered(lblEdita);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblEdita);
 
     }//GEN-LAST:event_lblEditaMouseEntered
 
     private void lblInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseEntered
-      Ultilidades.Style.styleBorderEntered(lblInicio);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblInicio);
     }//GEN-LAST:event_lblInicioMouseEntered
 
     private void lblConfirmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseEntered
-     Ultilidades.Style.styleBorderEntered(lblConfirma);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblConfirma);
     }//GEN-LAST:event_lblConfirmaMouseEntered
 
     private void lblProximoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseEntered
-    Ultilidades.Style.styleBorderEntered(lblProximo);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblProximo);
     }//GEN-LAST:event_lblProximoMouseEntered
 
     private void lblAnteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseExited
-   Ultilidades.Style.styleBorderExited(lblAnterior);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblAnterior);
     }//GEN-LAST:event_lblAnteriorMouseExited
 
     private void lblEditaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseExited
-      Ultilidades.Style.styleBorderExited(lblEdita);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblEdita);
 
     }//GEN-LAST:event_lblEditaMouseExited
 
     private void lblInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseExited
-       Ultilidades.Style.styleBorderExited(lblInicio);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblInicio);
 
     }//GEN-LAST:event_lblInicioMouseExited
 
     private void lblConfirmaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseExited
-         Ultilidades.Style.styleBorderExited(lblConfirma);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblConfirma);
 
     }//GEN-LAST:event_lblConfirmaMouseExited
 
     private void lblProximoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseExited
-         Ultilidades.Style.styleBorderExited(lblProximo);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblProximo);
 
     }//GEN-LAST:event_lblProximoMouseExited
 
