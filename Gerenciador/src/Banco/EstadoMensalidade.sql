@@ -1,5 +1,5 @@
 create table estado_mensalidade( 
-eme_id integer not null  auto_increment, 
-eme_nome varchar(10) not null unique , 
+eme_id integer(2) not null  auto_increment,
+eme_descricao varchar(20) not null unique ,
 primary key (eme_id) 
 ); 
