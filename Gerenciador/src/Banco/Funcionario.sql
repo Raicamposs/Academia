@@ -5,6 +5,8 @@ create table funcionario (
   references pessoa(pes_id),
   fun_funcao_id integer unsigned not null
   references funcao(fun_id),
+  fun_usurio_id integer unsigned not null
+  references usurio(usu_id),
   fun_tur_id integer unsigned not null
   references turno(tur_id),
   fun_cnt varchar(15) not null unique,
