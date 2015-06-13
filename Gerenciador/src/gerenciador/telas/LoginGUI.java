@@ -5,8 +5,8 @@
  */
 package gerenciador.telas;
 
-import ConexaoBD.UsuarioDao;
-import Administrador.Usuario;
+import gerenciador.conexaoBD.UsuarioDao;
+import gerenciador.administrador.Usuario;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.awt.Toolkit;

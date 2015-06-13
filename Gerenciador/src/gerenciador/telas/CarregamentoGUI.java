@@ -5,7 +5,7 @@
  */
 package gerenciador.telas;
 
-import ConexaoBD.UsuarioDao;
+import gerenciador.conexaoBD.UsuarioDao;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
