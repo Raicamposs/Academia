@@ -6,11 +6,8 @@
 package gerenciador.telas;
 
 import gerenciador.conexaoBD.UsuarioDao;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import javax.swing.Timer;
 
 /**
@@ -26,10 +23,7 @@ public class CarregamentoGUI extends javax.swing.JFrame {
     public CarregamentoGUI() {
 
         con = new UsuarioDao();
-
-//        URL url = this.getClass().getResource("/Imagens/lg 25x25.jpg");
-//        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-//        this.setIconImage(imagemTitulo);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         this.setLocation(450, 150);
 
         tempo = new Timer(1, al);
@@ -80,9 +74,11 @@ public class CarregamentoGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 153, 0));
+        setMaximumSize(new java.awt.Dimension(472, 410));
+        setMinimumSize(new java.awt.Dimension(472, 410));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(472, 410));
         setResizable(false);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -96,10 +92,22 @@ public class CarregamentoGUI extends javax.swing.JFrame {
         laCarregamento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(laCarregamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 430, 20));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/BackgroudCarregamento472x415.jpg"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 410));
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setPreferredSize(new java.awt.Dimension(475, 415));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 410));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 420));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);

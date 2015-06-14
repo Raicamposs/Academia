@@ -5,19 +5,34 @@
  */
 package gerenciador.alunos;
 
+import gerenciador.conexaoBD.AlunoDao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
 /**
  *
  * @author Raiane
  */
 public class AlteraAlunoGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AlteraAluno
-     */
+    AlunoDao con;
+
     public AlteraAlunoGUI() {
         initComponents();
+        con = new AlunoDao();
+
     }
-    
+
+    public void preencherTblAluno(String nome, String matricula) {
+        try {
+            con.getAlunos(tblAluno, nome, matricula);
+        } catch (SQLException ex) {
+            Logger.getLogger(AlteraAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,20 +42,57 @@ public class AlteraAlunoGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frmPesquisa = new javax.swing.JInternalFrame();
+        edtMatricula = new javax.swing.JTextField();
+        edtNome = new javax.swing.JTextField();
+        lblPesquisar = new javax.swing.JLabel();
+        lblFundoPesquisa = new javax.swing.JLabel();
         lblAnterior = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
         lblConfirma = new javax.swing.JLabel();
-        lblPesquisa = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         lblEdita = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
         lblProximo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAluno = new javax.swing.JTable();
         lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        frmPesquisa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        frmPesquisa.setVisible(true);
+        frmPesquisa.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        edtMatricula.setBorder(null);
+        edtMatricula.setSelectionColor(new java.awt.Color(0, 153, 0));
+        frmPesquisa.getContentPane().add(edtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 72, 70, 20));
+
+        edtNome.setBorder(null);
+        edtNome.setSelectionColor(new java.awt.Color(0, 153, 0));
+        frmPesquisa.getContentPane().add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 47, 140, 20));
+
+        lblPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPesquisarMouseClicked(evt);
+            }
+        });
+        frmPesquisa.getContentPane().add(lblPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 60, 50));
+
+        lblFundoPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/tela pesquisa sem barra.png"))); // NOI18N
+        lblFundoPesquisa.setToolTipText("");
+        lblFundoPesquisa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        frmPesquisa.getContentPane().add(lblFundoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        getContentPane().add(frmPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 350, 180));
 
         lblAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -76,9 +128,6 @@ public class AlteraAlunoGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblConfirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(655, 655, 120, 47));
 
-        lblPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/tela pesquisa.png"))); // NOI18N
-        getContentPane().add(lblPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 350, 156));
-
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setText("...");
         getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 730, 180, 30));
@@ -107,6 +156,28 @@ public class AlteraAlunoGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(835, 654, 117, 47));
 
+        tblAluno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "CPF", "RG", "Data de Nascimento", "Email", "Estado Civil"
+            }
+        ));
+        tblAluno.setSelectionBackground(new java.awt.Color(0, 153, 0));
+        jScrollPane1.setViewportView(tblAluno);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 840, 410));
+
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAltera.jpg"))); // NOI18N
         lblFundo.setToolTipText("");
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -119,7 +190,7 @@ public class AlteraAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblInicioMouseClicked
 
     private void lblAnteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseEntered
-gerenciador.telas.ultilidades.Style.styleBorderEntered(lblAnterior);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblAnterior);
 
     }//GEN-LAST:event_lblAnteriorMouseEntered
 
@@ -129,40 +200,49 @@ gerenciador.telas.ultilidades.Style.styleBorderEntered(lblAnterior);
     }//GEN-LAST:event_lblEditaMouseEntered
 
     private void lblInicioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseEntered
-      gerenciador.telas.ultilidades.Style.styleBorderEntered(lblInicio);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblInicio);
     }//GEN-LAST:event_lblInicioMouseEntered
 
     private void lblConfirmaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseEntered
-     gerenciador.telas.ultilidades.Style.styleBorderEntered(lblConfirma);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblConfirma);
     }//GEN-LAST:event_lblConfirmaMouseEntered
 
     private void lblProximoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseEntered
-    gerenciador.telas.ultilidades.Style.styleBorderEntered(lblProximo);
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblProximo);
     }//GEN-LAST:event_lblProximoMouseEntered
 
     private void lblAnteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnteriorMouseExited
-   gerenciador.telas.ultilidades.Style.styleBorderExited(lblAnterior);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblAnterior);
     }//GEN-LAST:event_lblAnteriorMouseExited
 
     private void lblEditaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseExited
-      gerenciador.telas.ultilidades.Style.styleBorderExited(lblEdita);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblEdita);
 
     }//GEN-LAST:event_lblEditaMouseExited
 
     private void lblInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInicioMouseExited
-       gerenciador.telas.ultilidades.Style.styleBorderExited(lblInicio);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblInicio);
 
     }//GEN-LAST:event_lblInicioMouseExited
 
     private void lblConfirmaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmaMouseExited
-         gerenciador.telas.ultilidades.Style.styleBorderExited(lblConfirma);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblConfirma);
 
     }//GEN-LAST:event_lblConfirmaMouseExited
 
     private void lblProximoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblProximoMouseExited
-         gerenciador.telas.ultilidades.Style.styleBorderExited(lblProximo);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblProximo);
 
     }//GEN-LAST:event_lblProximoMouseExited
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+     
+    }//GEN-LAST:event_formWindowActivated
+
+    private void lblPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPesquisarMouseClicked
+        preencherTblAluno(edtNome.getText(),edtMatricula.getText());
+        frmPesquisa.dispose();
+    }//GEN-LAST:event_lblPesquisarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -201,14 +281,20 @@ gerenciador.telas.ultilidades.Style.styleBorderEntered(lblAnterior);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField edtMatricula;
+    private javax.swing.JTextField edtNome;
+    private javax.swing.JInternalFrame frmPesquisa;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAnterior;
     private javax.swing.JLabel lblConfirma;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblEdita;
     private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblFundoPesquisa;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblInicio;
-    private javax.swing.JLabel lblPesquisa;
+    private javax.swing.JLabel lblPesquisar;
     private javax.swing.JLabel lblProximo;
+    private javax.swing.JTable tblAluno;
     // End of variables declaration//GEN-END:variables
 }

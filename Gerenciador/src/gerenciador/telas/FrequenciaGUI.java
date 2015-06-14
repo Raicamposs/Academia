@@ -16,6 +16,8 @@ public class FrequenciaGUI extends javax.swing.JFrame {
      */
     public FrequenciaGUI() {
         initComponents();
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
+        this.setLocation(500, 300);
     }
 
     /**
@@ -30,7 +32,7 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         lblGravar = new javax.swing.JLabel();
         lblMinimiza = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        edtMatricula = new javax.swing.JTextField();
         lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -39,7 +41,6 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 70, 30));
 
-        lblMinimiza.setText("jLabel1");
         lblMinimiza.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimizaMouseClicked(evt);
@@ -47,7 +48,6 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblMinimiza, new org.netbeans.lib.awtextra.AbsoluteConstraints(304, 2, 15, 15));
 
-        lblFecha.setText("jLabel1");
         lblFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblFechaMouseClicked(evt);
@@ -55,12 +55,12 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 2, 15, 15));
 
-        jTextField1.setBorder(null);
-        jTextField1.setSelectionColor(new java.awt.Color(0, 153, 0));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 42, 140, 25));
+        edtMatricula.setBorder(null);
+        edtMatricula.setSelectionColor(new java.awt.Color(0, 153, 0));
+        getContentPane().add(edtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 44, 130, 20));
 
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/frequencia aluno.png"))); // NOI18N
-        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -110,7 +110,7 @@ public class FrequenciaGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField edtMatricula;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblGravar;

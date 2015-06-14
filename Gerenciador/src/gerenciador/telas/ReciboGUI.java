@@ -16,6 +16,7 @@ public class ReciboGUI extends javax.swing.JFrame {
      */
     public ReciboGUI() {
         initComponents();
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }
 
     /**

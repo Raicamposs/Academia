@@ -52,7 +52,9 @@ public class UsuarioDao {
 
                 rs = novoStmt.executeQuery();
                 if (rs.first()) {
-                    setUsuarioLogado(rs.getString("name"), rs.getInt("nivel_acesso"));
+                    setUsuarioLogado(
+                            rs.getString("nome"),
+                            rs.getInt("nivel_acesso"));
                     novoStmt.close();
                     return true;
                 }
@@ -76,13 +78,13 @@ public class UsuarioDao {
 
                 rs = stmt.executeQuery();
                 if (!rs.wasNull()) {
-                    if (rs.getString("name").equalsIgnoreCase(usuario.getNome())) {
+                    if (rs.getString("usu_login").equalsIgnoreCase(usuario.getNome())) {
                         stmt.close();
                         JOptionPane.showMessageDialog(null, "O usuario já está cadastrado!");
                         return false;
                     }
                 } else {
-                    stmt.setString(1, "login");
+                    stmt.setString(1, "usu_login");
                     stmt.setString(2, usuario.getLogin());
                     rs = stmt.executeQuery();
                     if (!rs.wasNull()) {

@@ -11,12 +11,9 @@ package gerenciador.pessoa;
  */
 abstract class Telefones {
 
-    protected String foneComercial, foneResidencial, foneCelular;
+    protected String foneResidencial, foneCelular;
 
-   
-
-    public String getFoneComercial() {
-        return foneComercial;
+    public Telefones() {
     }
 
     public String getFoneCelular() {
@@ -27,9 +24,6 @@ abstract class Telefones {
         return foneResidencial;
     }
 
-    public void setFoneComercial(String foneComercial) {
-        this.foneComercial = foneComercial;
-    }
 
     public void setFoneCelular(String foneCelular) {
         this.foneCelular = foneCelular;

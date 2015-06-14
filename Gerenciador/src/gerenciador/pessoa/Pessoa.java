@@ -11,7 +11,6 @@ package gerenciador.pessoa;
  */
 public abstract class Pessoa extends Telefones {
 
-    private final int id;
     private int estadoCivil;
     private String cpf;
     private String rg;
@@ -21,10 +20,18 @@ public abstract class Pessoa extends Telefones {
     private char sexo;
 
     // Declaração do construtor da classe Pessoa
-    public Pessoa(int id, int estadoCivil, String cpf, String rg, String nome,
+    public Pessoa(String cpf, String rg, String nome,
+            String email) {
+        this.cpf = cpf;
+        this.rg = rg;
+        this.nome = nome;
+        this.email = email;
+    }
+
+    // Declaração do construtor da classe Pessoa
+    public Pessoa(int estadoCivil, String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
 
-        this.id = id;
         this.estadoCivil = estadoCivil;
         this.cpf = cpf;
         this.rg = rg;
@@ -60,9 +67,7 @@ public abstract class Pessoa extends Telefones {
         return this.sexo;
     }
 
-    public int getId() {
-        return this.id;
-    }
+ 
 
     public String getCpf() {
         return this.cpf;
