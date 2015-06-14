@@ -108,7 +108,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        grupoNivelAcesso = new javax.swing.ButtonGroup();
         lblVoltar = new javax.swing.JLabel();
         pnlPrincipal = new javax.swing.JTabbedPane();
         pnlDados = new javax.swing.JPanel();
@@ -623,9 +623,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         lblNivelAcesso.setText("Nivél de acesso");
 
         rdbAdministrador.setBackground(new java.awt.Color(255, 255, 255));
+        grupoNivelAcesso.add(rdbAdministrador);
         rdbAdministrador.setText("Administrador");
 
         rdbUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        grupoNivelAcesso.add(rdbUsuario);
         rdbUsuario.setText("Usuário");
 
         javax.swing.GroupLayout pnlCadastrarLayout = new javax.swing.GroupLayout(pnlCadastrar);
@@ -675,6 +677,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         chbCadastrarUsuario.setBackground(new java.awt.Color(255, 255, 255));
         chbCadastrarUsuario.setText("Cadastrar Usuário");
+        chbCadastrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chbCadastrarUsuarioMouseClicked(evt);
+            }
+        });
         chbCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbCadastrarUsuarioActionPerformed(evt);
@@ -780,6 +787,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_chbCadastrarUsuarioActionPerformed
 
+    private void chbCadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbCadastrarUsuarioMouseClicked
+     if (chbCadastrarUsuario.isSelected()==true){
+         pnlCadastrar.setVisible(true);
+     }else{
+            pnlCadastrar.setVisible(false);     
+                 }
+     
+    }//GEN-LAST:event_chbCadastrarUsuarioMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -821,7 +837,6 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNovaBairro;
     private javax.swing.JButton btnNovaCidade;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox chbCadastrarUsuario;
     private javax.swing.JComboBox cmbBairro;
     private javax.swing.JComboBox cmbCidade;
@@ -836,6 +851,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JTextField edtNivelAcesso;
     private javax.swing.JTextArea edtObservacoes;
     private javax.swing.JTextField edtSalario;
+    private javax.swing.ButtonGroup grupoNivelAcesso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
