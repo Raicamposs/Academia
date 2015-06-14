@@ -8,9 +8,7 @@ package gerenciador.funcionario;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
+
 import gerenciador.conexaoBD.EnderecoDao;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -22,22 +20,20 @@ import java.util.logging.Logger;
  * @author Raiane
  */
 public class CadastroFuncionarioGUI extends javax.swing.JFrame {
-
+    
     EnderecoDao conEndereco;
     Cidade cidade = new Cidade("");
     Iterator iteratorEstado = null;
-
+    
     public CadastroFuncionarioGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setUndecorated(true);
         initComponents();
-        URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
-        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-        this.setIconImage(imagemTitulo);
-
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
+        pnlCadastrar.setVisible(false);
         conEndereco = new EnderecoDao();
     }
-
+    
     private void setCbmCidade() {
         cmbCidade.removeAllItems();
         try {
@@ -48,9 +44,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         while (iteratorEstado.hasNext()) {
             cmbCidade.addItem(String.valueOf(iteratorEstado.next()));
         }
-
+        
     }
-
+    
     private void setCbmEstado() {
         cmbEstado.removeAllItems();
         try {
@@ -268,7 +264,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         pnlInformacoesLayout.setHorizontalGroup(
             pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel8)
@@ -290,12 +286,12 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                                 .addGroup(pnlInformacoesLayout.createSequentialGroup()
                                     .addGap(18, 18, 18)
                                     .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txCPF)
                                         .addGroup(pnlInformacoesLayout.createSequentialGroup()
                                             .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(0, 0, Short.MAX_VALUE))
-                                        .addComponent(txCPF)))))
+                                                .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(0, 0, Short.MAX_VALUE))))))
                         .addGroup(pnlInformacoesLayout.createSequentialGroup()
                             .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,7 +439,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                         .addGroup(pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNovaBairro)
                             .addComponent(btnNovaCidade))))
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         pnlDadosLayout.setVerticalGroup(
             pnlDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,7 +499,6 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(cmbFuncao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(edtCnt, javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,7 +506,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                         .addComponent(lblCnt, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblTurno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                     .addComponent(lblSalario)
-                    .addComponent(edtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(149, 149, 149)
                 .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(llblAvaliacao)
