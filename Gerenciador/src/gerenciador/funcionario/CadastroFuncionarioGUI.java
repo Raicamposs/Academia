@@ -12,7 +12,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import gerenciador.conexaoBD.EnderecoDao;
-import gerenciador.conexaoBD.FuncionarioDao;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -25,7 +24,6 @@ import java.util.logging.Logger;
 public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     EnderecoDao conEndereco;
-    FuncionarioDao conFuncionario;
     Cidade cidade = new Cidade("");
     Iterator iteratorEstado = null;
 
@@ -36,21 +34,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         URL url = this.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
         this.setIconImage(imagemTitulo);
-        conFuncionario = new FuncionarioDao();
+
         conEndereco = new EnderecoDao();
-    }
-
-    private void setCbmEstadoCivil() {
-        try {
-            cmbEstadoCivil.removeAllItems();
-            Iterator iteratorEstadoCivil = conFuncionario.getArrayEstadoCivil().iterator();
-            while (iteratorEstadoCivil.hasNext()) {
-                cmbEstadoCivil.addItem(iteratorEstadoCivil.next());
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void setCbmCidade() {
@@ -740,8 +725,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovaBairroMouseClicked
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        setCbmEstado(); 
-        setCbmEstadoCivil();
+        setCbmEstado();
     }//GEN-LAST:event_formComponentShown
 
     private void edtNivelAcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNivelAcessoActionPerformed
