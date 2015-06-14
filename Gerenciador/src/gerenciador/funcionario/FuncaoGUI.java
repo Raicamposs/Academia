@@ -20,9 +20,7 @@ public class FuncaoGUI extends javax.swing.JFrame {
      */
     public FuncaoGUI() {
         initComponents();
-//        URL url = this.getClass().getResource("Imagens\\lg 25x25.jpg");
-//        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-//        this.setIconImage(imagemTitulo);
+gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }
 
     /**
