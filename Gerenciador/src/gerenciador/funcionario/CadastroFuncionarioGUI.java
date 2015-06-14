@@ -10,6 +10,7 @@ import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
 
 import gerenciador.conexaoBD.EnderecoDao;
+import gerenciador.conexaoBD.FuncionarioDao;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -20,11 +21,12 @@ import java.util.logging.Logger;
  * @author Raiane
  */
 public class CadastroFuncionarioGUI extends javax.swing.JFrame {
-    
+
     EnderecoDao conEndereco;
+    FuncionarioDao conFuncionario;
     Cidade cidade = new Cidade("");
     Iterator iteratorEstado = null;
-    
+
     public CadastroFuncionarioGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setUndecorated(true);
@@ -32,8 +34,44 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         pnlCadastrar.setVisible(false);
         conEndereco = new EnderecoDao();
+        conFuncionario = new FuncionarioDao();
+    }
+
+    private void setCbmFuncao() throws SQLException {
+        try {
+            cmbFuncao.removeAllItems();
+            Iterator iteratorFuncao = conFuncionario.getArrayFuncao().iterator();
+            while (iteratorFuncao.hasNext()) {
+                cmbFuncao.addItem(String.valueOf(iteratorFuncao.next()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+     private void setCbmTurno  () throws SQLException {
+        try {
+            cmbTurno.removeAllItems();
+            Iterator iteratorTurno = conFuncionario.getArrayTurno().iterator();
+            while (iteratorTurno.hasNext()) {
+                cmbTurno.addItem(String.valueOf(iteratorTurno.next()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     private void setCbmEstadoCivil  () throws SQLException {
+        try {
+            cmbEstadoCivil.removeAllItems();
+            Iterator iteratorEstadoCivil = conFuncionario.getArrayTurno().iterator();
+            while (iteratorEstadoCivil.hasNext()) {
+                cmbEstadoCivil.addItem(String.valueOf(iteratorEstadoCivil.next()));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void setCbmCidade() {
         cmbCidade.removeAllItems();
         try {
@@ -44,9 +82,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         while (iteratorEstado.hasNext()) {
             cmbCidade.addItem(String.valueOf(iteratorEstado.next()));
         }
-        
+
     }
-    
+
     private void setCbmEstado() {
         cmbEstado.removeAllItems();
         try {
@@ -721,7 +759,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovaBairroMouseClicked
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        setCbmEstado();
+    
+        try {
+            setCbmFuncao();
+                setCbmEstado();
+                    setCbmTurno();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_formComponentShown
 
     private void edtNivelAcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNivelAcessoActionPerformed
