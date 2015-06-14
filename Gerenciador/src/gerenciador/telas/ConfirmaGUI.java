@@ -5,6 +5,9 @@
  */
 package gerenciador.telas;
 
+import java.net.URL;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author J4CkS0N
@@ -38,7 +41,25 @@ public class ConfirmaGUI extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblConfirmar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblConfirmarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblConfirmarMouseExited(evt);
+            }
+        });
         getContentPane().add(lblConfirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 81, 55, 55));
+
+        lblCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCancelarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCancelarMouseExited(evt);
+            }
+        });
         getContentPane().add(lblCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 84, 55, 50));
 
         lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -67,7 +88,7 @@ public class ConfirmaGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFecharMouseClicked
-      this.dispose();
+        this.dispose();
     }//GEN-LAST:event_lblFecharMouseClicked
 
     private void lblFundoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFundoMouseClicked
@@ -75,8 +96,28 @@ public class ConfirmaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFundoMouseClicked
 
     private void lblMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizarMouseClicked
-     this.setExtendedState(ConfirmaGUI.ICONIFIED);
+        this.setExtendedState(ConfirmaGUI.ICONIFIED);
     }//GEN-LAST:event_lblMinimizarMouseClicked
+
+    private void lblConfirmarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmarMouseEntered
+   
+       
+
+    }//GEN-LAST:event_lblConfirmarMouseEntered
+
+    private void lblConfirmarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfirmarMouseExited
+      
+
+    }//GEN-LAST:event_lblConfirmarMouseExited
+
+    private void lblCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarMouseEntered
+       
+
+    }//GEN-LAST:event_lblCancelarMouseEntered
+
+    private void lblCancelarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCancelarMouseExited
+      
+    }//GEN-LAST:event_lblCancelarMouseExited
 
     /**
      * @param args the command line arguments
