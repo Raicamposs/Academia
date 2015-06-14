@@ -7,12 +7,12 @@ package gerenciador.aula;
 
 /**
  *
- * @author Raiane
+ * @author wagner
  */
 public class CadastroAulaGUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form AulaGUI
+     * Creates new form TurmaGui
      */
     public CadastroAulaGUI() {
         initComponents();
@@ -27,21 +27,73 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2 = new javax.swing.JLabel();
+        edtNome = new javax.swing.JTextField();
+        lblMinimizar = new javax.swing.JLabel();
+        edtValor = new javax.swing.JTextField();
+        lblGravar = new javax.swing.JLabel();
+        edtFechar = new javax.swing.JLabel();
+        lblFundo = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jLabel2.setText("jLabel2");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        edtNome.setBorder(null);
+        getContentPane().add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 49, 144, 20));
+
+        lblMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMinimizarMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 8, 14, 10));
+
+        edtValor.setBorder(null);
+        getContentPane().add(edtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 76, 84, 21));
+
+        lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblGravarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblGravarMouseExited(evt);
+            }
+        });
+        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 49, 60, 20));
+
+        edtFechar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                edtFecharMouseClicked(evt);
+            }
+        });
+        getContentPane().add(edtFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(329, 8, 12, 10));
+
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/tela aula.png"))); // NOI18N
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 160));
+        lblFundo.getAccessibleContext().setAccessibleName("lblFundo");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void edtFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtFecharMouseClicked
+       this.dispose();
+    }//GEN-LAST:event_edtFecharMouseClicked
+
+    private void lblMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizarMouseClicked
+      this.setExtendedState(CadastroAulaGUI.ICONIFIED);
+    }//GEN-LAST:event_lblMinimizarMouseClicked
+
+    private void lblGravarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseEntered
+       gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
+    }//GEN-LAST:event_lblGravarMouseEntered
+
+    private void lblGravarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseExited
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
+    }//GEN-LAST:event_lblGravarMouseExited
 
     /**
      * @param args the command line arguments
@@ -70,6 +122,12 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -80,5 +138,12 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel edtFechar;
+    private javax.swing.JTextField edtNome;
+    private javax.swing.JTextField edtValor;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblGravar;
+    private javax.swing.JLabel lblMinimizar;
     // End of variables declaration//GEN-END:variables
 }
