@@ -5,12 +5,7 @@
  */
 package gerenciador.endereco;
 
-import gerenciador.telas.LoginGUI;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
-import javax.swing.text.Utilities;
-import gerenciador.endereco.Cidade;
+
 import gerenciador.conexaoBD.EnderecoDao;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -26,9 +21,7 @@ public class BairroGUI extends javax.swing.JFrame {
 
     public BairroGUI() {
         initComponents();
-//        URL url = this.getClass().getResource("/Imagens/lg 25x25.jpg");
-//        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-//        this.setIconImage(imagemTitulo);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         this.setLocation(500, 300);
         con = new EnderecoDao();
     }
@@ -135,15 +128,24 @@ public class BairroGUI extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
            cmbCidade.removeAllItems();
+
    Iterator iteratorCidade = null;
         try {
-            iteratorCidade = con.getCidades("es").iterator();
+            iteratorCidade = con.getCidades("mg").iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-            while (iteratorCidade.hasNext()) {
+        while (iteratorCidade.hasNext()) {
                  cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
         }
+        try {
+            if (con.getCidades("mg").contains("Guarapari")) {
+                cmbCidade.setSelectedItem("Guarapari");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_formComponentShown
 
     /**

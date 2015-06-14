@@ -140,7 +140,7 @@ public class EnderecoDao {
     }
 
     public void getCidadesUf(String uf) throws SQLException {
-        String sql = ("call academia.getCidade(?);");
+        String sql = ("call academia.getCidadeUf(?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores

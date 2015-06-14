@@ -6,9 +6,6 @@
 package gerenciador.endereco;
 
 import gerenciador.conexaoBD.EnderecoDao;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -24,9 +21,7 @@ public class CidadeGUI extends javax.swing.JFrame {
 
     public CidadeGUI() {
         initComponents();
-//        URL url = this.getClass().getResource("/Imagens/lg 25x25.jpg");
-//        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
-//        this.setIconImage(imagemTitulo);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         this.setLocation(500, 300);
         con = new EnderecoDao();
     }
@@ -58,7 +53,7 @@ public class CidadeGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 90, 140, -1));
+        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 60, -1));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -123,6 +118,7 @@ public class CidadeGUI extends javax.swing.JFrame {
         while (iteratorCidade.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorCidade.next()));
         }
+         cmbEstado.setSelectedItem("ES");
     }//GEN-LAST:event_formComponentShown
 
     /**

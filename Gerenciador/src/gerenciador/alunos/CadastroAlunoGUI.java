@@ -25,6 +25,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     Aluno aluno;
     Iterator iteratorEstado;
     private char sexo;
+    String uf;
 
     public CadastroAlunoGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -59,7 +60,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         cmbCidade.removeAllItems();
         Iterator iteratorCidade = null;
         try {
-            iteratorCidade = conEndereco.getCidades((String) cmbEstado.getSelectedItem()).iterator();
+            iteratorCidade = conEndereco.getCidades(uf).iterator();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,6 +81,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
         cmbEstado.setSelectedIndex(6);
+        uf = (String) cmbEstado.getSelectedItem();
     }
 
     private void setCbmEstadoCivil() {
@@ -206,6 +208,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         lblEstado.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoActionPerformed(evt);
+            }
+        });
 
         cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -729,6 +736,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         new CadastroResponsavelGUI().setVisible(true);
     }//GEN-LAST:event_btnCadastrarMouseClicked
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+         setCbmCidade();
+        System.out.println((String) cmbEstado.getSelectedItem());
+    }//GEN-LAST:event_cmbEstadoActionPerformed
 
     /**
      * @param args the command line arguments
