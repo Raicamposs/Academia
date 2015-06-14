@@ -7,9 +7,12 @@ package gerenciador.telas.ultilidades;
 
 import gerenciador.telas.*;
 import java.awt.Desktop;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -30,5 +33,9 @@ public class FuncoesJanelas {
         frame.setExtendedState(LoginGUI.ICONIFIED);
     }
 
-
+    public static void setIncone(JFrame frame) {
+        URL url = frame.getClass().getResource("/Imagens/Logo/lg 25x25.jpg");
+        Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        frame.setIconImage(imagemTitulo);
+    }
 }
