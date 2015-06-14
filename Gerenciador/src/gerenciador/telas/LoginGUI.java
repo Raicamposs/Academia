@@ -33,11 +33,11 @@ public class LoginGUI extends javax.swing.JFrame {
 
         laAcessar = new javax.swing.JLabel();
         laLimpar = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblMinimizar = new javax.swing.JLabel();
+        lblFechar = new javax.swing.JLabel();
         txUsuario = new javax.swing.JTextField();
         txSenha = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
+        lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -59,19 +59,19 @@ public class LoginGUI extends javax.swing.JFrame {
         });
         getContentPane().add(laLimpar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 95, 70, 25));
 
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblMinimizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                lblMinimizarMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 6, 10, 10));
+        getContentPane().add(lblMinimizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 6, 10, 10));
 
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                lblFecharMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 6, 10, 10));
+        getContentPane().add(lblFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 6, 10, 10));
 
         txUsuario.setBorder(null);
         txUsuario.setSelectionColor(new java.awt.Color(0, 153, 0));
@@ -91,20 +91,20 @@ public class LoginGUI extends javax.swing.JFrame {
         });
         getContentPane().add(txSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 98, 100, 20));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/LoginNovo.png"))); // NOI18N
-        jLabel2.setLabelFor(this);
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, -1));
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/LoginNovo.png"))); // NOI18N
+        lblFundo.setLabelFor(this);
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void lblFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFecharMouseClicked
         System.exit(0);
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_lblFecharMouseClicked
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    private void lblMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizarMouseClicked
         this.setExtendedState(LoginGUI.ICONIFIED);
-    }//GEN-LAST:event_jLabel3MouseClicked
+    }//GEN-LAST:event_lblMinimizarMouseClicked
 
     private void laAcessarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laAcessarMouseClicked
         if (txUsuario.getText().equals("") || new String(txSenha.getPassword()).equals("")) {
@@ -187,11 +187,11 @@ public class LoginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel laAcessar;
     private javax.swing.JLabel laLimpar;
+    private javax.swing.JLabel lblFechar;
+    private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblMinimizar;
     private javax.swing.JPasswordField txSenha;
     private javax.swing.JTextField txUsuario;
     // End of variables declaration//GEN-END:variables
