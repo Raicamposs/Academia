@@ -5,17 +5,22 @@
  */
 package gerenciador.aula;
 
+import gerenciador.conexaoBD.AulaDao;
+import static java.lang.Double.parseDouble;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author wagner
  */
 public class CadastroAulaGUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TurmaGui
-     */
+AulaDao conAula;
     public CadastroAulaGUI() {
         initComponents();
+        conAula=new AulaDao();
+        
     }
 
     /**
@@ -56,6 +61,9 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
         getContentPane().add(edtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 76, 84, 21));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGravarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblGravarMouseEntered(evt);
             }
@@ -94,6 +102,14 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
     private void lblGravarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseExited
         gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
     }//GEN-LAST:event_lblGravarMouseExited
+
+    private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
+    try {
+        conAula.insertAula(edtNome.getText(),Double.parseDouble(edtValor.getText()));
+    } catch (SQLException ex) {
+        Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    }//GEN-LAST:event_lblGravarMouseClicked
 
     /**
      * @param args the command line arguments
