@@ -199,7 +199,8 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbEstadoActionPerformed"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmbEstadoMouseEntered"/>
+                    <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="cmbEstadoPropertyChange"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JComboBox" name="cmbCidade">
@@ -817,7 +818,7 @@
                                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                           <Component id="btnCadastrar" linkSize="1" min="-2" pref="99" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="edResponsavel" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <Component id="edtResponsavel" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
                               </Group>
@@ -830,7 +831,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lblResponsavel" min="-2" pref="14" max="-2" attributes="0"/>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
-                          <Component id="edResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="edtResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -847,7 +848,7 @@
                     <Property name="text" type="java.lang.String" value="Nome Responsavel:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="edResponsavel">
+                <Component class="javax.swing.JTextField" name="edtResponsavel">
                   <Properties>
                     <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="99" red="0" type="rgb"/>
@@ -911,11 +912,11 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblNomeResponsavel" min="-2" pref="49" max="-2" attributes="0"/>
                                       <Component id="lblSetNomeResponsavel" min="-2" pref="270" max="-2" attributes="0"/>
-                                      <Component id="lblCefResponsavel" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
-                                      <Component id="lblSetCefResponsavel" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
+                                      <Component id="lblCpfResponsavel" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="lblSetCpfResponsavel" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
                                       <Component id="lblTelefoneResponsavel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMatriculadoResponsavel" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <Component id="lblSetMatriculadoResponsavel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblRG" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblSetRG" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
                               </Group>
@@ -932,9 +933,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblSetNomeResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblCefResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCpfResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSetCefResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSetCpfResponsavel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblRG" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblSetRG" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="lblTelefoneResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -942,11 +947,7 @@
                               <Component id="lblSetTelResponsavel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblSetTelResponsavel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblMatriculadoResponsavel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSetMatriculadoResponsavel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -954,6 +955,9 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblNomeResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Nome:"/>
                   </Properties>
                 </Component>
@@ -962,18 +966,24 @@
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblCefResponsavel">
+                <Component class="javax.swing.JLabel" name="lblCpfResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="CPF"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSetCefResponsavel">
+                <Component class="javax.swing.JLabel" name="lblSetCpfResponsavel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTelefoneResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Telefone"/>
                   </Properties>
                 </Component>
@@ -987,12 +997,15 @@
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblMatriculadoResponsavel">
+                <Component class="javax.swing.JLabel" name="lblRG">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Matriculado"/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="RG"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSetMatriculadoResponsavel">
+                <Component class="javax.swing.JLabel" name="lblSetRG">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>

@@ -86,7 +86,7 @@ public class CadastroResponsavelGUI extends javax.swing.JFrame {
                             .addGroup(pnlInformacoesLayout.createSequentialGroup()
                                 .addComponent(lblTelCelular)
                                 .addGap(116, 116, 116))
-                            .addComponent(edtCel, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
+                            .addComponent(edtCel)))
                     .addGroup(pnlInformacoesLayout.createSequentialGroup()
                         .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlInformacoesLayout.createSequentialGroup()
@@ -141,7 +141,7 @@ public class CadastroResponsavelGUI extends javax.swing.JFrame {
                 .addGap(96, 96, 96))
         );
 
-        getContentPane().add(pnlInformacoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 380, 270));
+        getContentPane().add(pnlInformacoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 370, 300));
 
         lblSalvar.setToolTipText("Salvar");
         lblSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,7 +155,7 @@ public class CadastroResponsavelGUI extends javax.swing.JFrame {
                 lblSalvarMouseExited(evt);
             }
         });
-        getContentPane().add(lblSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 204, 80, 40));
+        getContentPane().add(lblSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(444, 204, 77, 33));
 
         lblCancela.setToolTipText("Cancelar");
         lblCancela.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,7 +169,7 @@ public class CadastroResponsavelGUI extends javax.swing.JFrame {
                 lblCancelaMouseExited(evt);
             }
         });
-        getContentPane().add(lblCancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 80, 40));
+        getContentPane().add(lblCancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(447, 243, 73, 40));
 
         lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -185,7 +185,7 @@ public class CadastroResponsavelGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblMinimiza, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 30, 20));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/CadastroResponsavel.jpg"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudResponsavel.jpg"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();

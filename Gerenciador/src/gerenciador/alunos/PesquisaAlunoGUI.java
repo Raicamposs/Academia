@@ -104,7 +104,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblInicioMouseExited(evt);
             }
         });
-        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 652, 120, 47));
+        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 655, 120, 47));
 
         lblImprimi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -117,7 +117,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblImprimiMouseExited(evt);
             }
         });
-        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(602, 651, 120, 47));
+        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(656, 656, 120, 47));
 
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
         lblHora.setText("...");

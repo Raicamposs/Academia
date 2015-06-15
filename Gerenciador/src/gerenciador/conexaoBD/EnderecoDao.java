@@ -25,7 +25,7 @@ public class EnderecoDao {
     private PreparedStatement stmt;
     private ResultSet rs;
     private Endereco endereco;
-    ArrayList cidades, estados;
+    ArrayList cidades, estados, bairro;
 
     public EnderecoDao() {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
@@ -139,8 +139,13 @@ public class EnderecoDao {
 
     }
 
+    public ArrayList getEstados() throws SQLException {
+        selectEstado();
+        return estados;
+    }
+
     public void getCidadesUf(String uf) throws SQLException {
-        String sql = ("call academia.getCidadeUf(?);");
+        String sql = ("call academia.getCidadevw(?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores
@@ -151,9 +156,10 @@ public class EnderecoDao {
 
             if (rs.first()) {
                 cidades = new ArrayList<>();
+                bairro = new ArrayList<>();
                 while (rs.next()) {
-                    cidades.add(rs.getString("cid_nome"));
-
+                    cidades.add(rs.getString("Cidade"));
+                    bairro.add(rs.getString("Bairro"));
                 }
             }
         } catch (SQLException e) {
@@ -167,10 +173,34 @@ public class EnderecoDao {
         return cidades;
     }
 
-    public ArrayList getEstados() throws SQLException {
-        selectEstado();
-        return estados;
+    public void getBairro(String cidade) throws SQLException {
+        String sql = ("call academia.getBairrovw(?)");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            // seta os valores
+            novoStmt.setString(1, cidade);
+            // executa
+
+            rs = novoStmt.executeQuery();
+
+            if (rs.first()) {
+                bairro = new ArrayList<>();
+                while (rs.next()) {
+                    bairro.add(rs.getString("Bairro"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
+    public ArrayList getArrayBairro(String cidade) throws SQLException {
+        getBairro(cidade);
+        return bairro;
+    }
+
+   
 
     public void closeConection() throws SQLException {
         try {

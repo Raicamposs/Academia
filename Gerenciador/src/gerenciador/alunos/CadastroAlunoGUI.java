@@ -7,8 +7,10 @@ package gerenciador.alunos;
 
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.AlunoDao;
+import gerenciador.conexaoBD.ResponsavelDao;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.responsavel.CadastroResponsavelGUI;
+import gerenciador.responsavel.Responsavel;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -22,10 +24,12 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
 
     private EnderecoDao conEndereco;
     private AlunoDao conAluno;
+    private ResponsavelDao conResponsavel;
     Aluno aluno;
+    Responsavel responsavel;
     Iterator iteratorEstado;
     private char sexo;
-    String uf;
+    String uf = "ES";
 
     public CadastroAlunoGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -35,9 +39,21 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         edtNome.grabFocus();
         conAluno = new AlunoDao();
         conEndereco = new EnderecoDao();
+        conResponsavel = new ResponsavelDao();
         pnlResponsavel.setVisible(false);
         pnlDadosResponsavel.setVisible(false);
 
+    }
+
+    private void setPanelResponsavel() {
+        responsavel = new Responsavel("", "", "", "");
+        conResponsavel.consultaNome(edtResponsavel.getText(), responsavel);
+        lblSetNomeResponsavel.setText(responsavel.getNome());
+        lblSetCpfResponsavel.setText(responsavel.getCpf());
+        lblSetRG.setText(responsavel.getRG());
+        lblSetTelResponsavel1.setText(responsavel.getFoneCelular());
+        lblSetTelResponsavel2.setText(responsavel.getFoneResidencial());
+        System.out.println("" + edtResponsavel.getText());
     }
 
     private void setCbmAula() {
@@ -81,7 +97,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
         cmbEstado.setSelectedIndex(6);
-        uf = (String) cmbEstado.getSelectedItem();
+
     }
 
     private void setCbmEstadoCivil() {
@@ -157,19 +173,19 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         cmbPacote2 = new javax.swing.JComboBox();
         pnlResponsavel = new javax.swing.JPanel();
         lblResponsavel = new javax.swing.JLabel();
-        edResponsavel = new javax.swing.JTextField();
+        edtResponsavel = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
         btnCadastrar = new javax.swing.JButton();
         pnlDadosResponsavel = new javax.swing.JPanel();
         lblNomeResponsavel = new javax.swing.JLabel();
         lblSetNomeResponsavel = new javax.swing.JLabel();
-        lblCefResponsavel = new javax.swing.JLabel();
-        lblSetCefResponsavel = new javax.swing.JLabel();
+        lblCpfResponsavel = new javax.swing.JLabel();
+        lblSetCpfResponsavel = new javax.swing.JLabel();
         lblTelefoneResponsavel = new javax.swing.JLabel();
         lblSetTelResponsavel1 = new javax.swing.JLabel();
         lblSetTelResponsavel2 = new javax.swing.JLabel();
-        lblMatriculadoResponsavel = new javax.swing.JLabel();
-        lblSetMatriculadoResponsavel = new javax.swing.JLabel();
+        lblRG = new javax.swing.JLabel();
+        lblSetRG = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -208,9 +224,14 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         lblEstado.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbEstadoActionPerformed(evt);
+        cmbEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cmbEstadoMouseEntered(evt);
+            }
+        });
+        cmbEstado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cmbEstadoPropertyChange(evt);
             }
         });
 
@@ -564,7 +585,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
 
         lblResponsavel.setText("Nome Responsavel:");
 
-        edResponsavel.setSelectionColor(new java.awt.Color(0, 153, 0));
+        edtResponsavel.setSelectionColor(new java.awt.Color(0, 153, 0));
 
         btnPesquisar.setBackground(new java.awt.Color(0, 102, 0));
         btnPesquisar.setForeground(new java.awt.Color(255, 255, 255));
@@ -600,7 +621,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                                 .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(52, 52, 52)
                                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(edResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(edtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 21, Short.MAX_VALUE))))
         );
 
@@ -611,7 +632,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             .addGroup(pnlResponsavelLayout.createSequentialGroup()
                 .addComponent(lblResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(edResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(edtResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlResponsavelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
@@ -623,23 +644,27 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
 
         pnlDadosResponsavel.setBackground(new java.awt.Color(255, 255, 255));
 
+        lblNomeResponsavel.setForeground(new java.awt.Color(0, 153, 0));
         lblNomeResponsavel.setText("Nome:");
 
         lblSetNomeResponsavel.setText("...");
 
-        lblCefResponsavel.setText("CPF");
+        lblCpfResponsavel.setForeground(new java.awt.Color(0, 153, 0));
+        lblCpfResponsavel.setText("CPF");
 
-        lblSetCefResponsavel.setText("...");
+        lblSetCpfResponsavel.setText("...");
 
+        lblTelefoneResponsavel.setForeground(new java.awt.Color(0, 153, 0));
         lblTelefoneResponsavel.setText("Telefone");
 
         lblSetTelResponsavel1.setText("...");
 
         lblSetTelResponsavel2.setText("...");
 
-        lblMatriculadoResponsavel.setText("Matriculado");
+        lblRG.setForeground(new java.awt.Color(0, 153, 0));
+        lblRG.setText("RG");
 
-        lblSetMatriculadoResponsavel.setText("...");
+        lblSetRG.setText("...");
 
         javax.swing.GroupLayout pnlDadosResponsavelLayout = new javax.swing.GroupLayout(pnlDadosResponsavel);
         pnlDadosResponsavel.setLayout(pnlDadosResponsavelLayout);
@@ -656,11 +681,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                         .addGroup(pnlDadosResponsavelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNomeResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSetNomeResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCefResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSetCefResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCpfResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSetCpfResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblTelefoneResponsavel)
-                            .addComponent(lblMatriculadoResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSetMatriculadoResponsavel))
+                            .addComponent(lblRG)
+                            .addComponent(lblSetRG))
                         .addGap(0, 18, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -672,20 +697,20 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSetNomeResponsavel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCefResponsavel)
+                .addComponent(lblCpfResponsavel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSetCefResponsavel)
+                .addComponent(lblSetCpfResponsavel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblRG)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSetRG)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTelefoneResponsavel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDadosResponsavelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSetTelResponsavel1)
                     .addComponent(lblSetTelResponsavel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblMatriculadoResponsavel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblSetMatriculadoResponsavel)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pnlInfAdicionais.add(pnlDadosResponsavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 270, -1, -1));
@@ -711,6 +736,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void btnPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarMouseClicked
+        setPanelResponsavel();
         pnlDadosResponsavel.setVisible(true);
     }//GEN-LAST:event_btnPesquisarMouseClicked
 
@@ -725,22 +751,25 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_rdbSexoFemMouseClicked
 
     private void chbMenorIdadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbMenorIdadeMouseClicked
-       if(chbMenorIdade.isSelected() == true){
-           pnlResponsavel.setVisible(true);
-       }else{
-        pnlResponsavel.setVisible(false);
-        pnlDadosResponsavel.setVisible(false);
-       }
+        if (chbMenorIdade.isSelected() == true) {
+            pnlResponsavel.setVisible(true);
+        } else {
+            pnlResponsavel.setVisible(false);
+            pnlDadosResponsavel.setVisible(false);
+        }
     }//GEN-LAST:event_chbMenorIdadeMouseClicked
 
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
         new CadastroResponsavelGUI().setVisible(true);
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
-    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
-         setCbmCidade();
-        System.out.println((String) cmbEstado.getSelectedItem());
-    }//GEN-LAST:event_cmbEstadoActionPerformed
+    private void cmbEstadoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbEstadoPropertyChange
+       
+    }//GEN-LAST:event_cmbEstadoPropertyChange
+
+    private void cmbEstadoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbEstadoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEstadoMouseEntered
 
     /**
      * @param args the command line arguments
@@ -788,7 +817,6 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbEstadoCivil;
     private javax.swing.JComboBox cmbPacote1;
     private javax.swing.JComboBox cmbPacote2;
-    private javax.swing.JTextField edResponsavel;
     private javax.swing.JTextField edtCPF;
     private javax.swing.JTextField edtCel;
     private javax.swing.JFormattedTextField edtCep;
@@ -798,6 +826,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JTextField edtIdentidade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextArea edtObs;
+    private javax.swing.JTextField edtResponsavel;
     private javax.swing.JTextField edtTelRes;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel laAvaliacao;
@@ -808,9 +837,9 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCadastra;
-    private javax.swing.JLabel lblCefResponsavel;
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblCidade;
+    private javax.swing.JLabel lblCpfResponsavel;
     private javax.swing.JLabel lblDataNascimento;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblEndereco;
@@ -819,14 +848,14 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblExame;
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblIdentidade;
-    private javax.swing.JLabel lblMatriculadoResponsavel;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNomeResponsavel;
     private javax.swing.JLabel lblNovo;
+    private javax.swing.JLabel lblRG;
     private javax.swing.JLabel lblResponsavel;
-    private javax.swing.JLabel lblSetCefResponsavel;
-    private javax.swing.JLabel lblSetMatriculadoResponsavel;
+    private javax.swing.JLabel lblSetCpfResponsavel;
     private javax.swing.JLabel lblSetNomeResponsavel;
+    private javax.swing.JLabel lblSetRG;
     private javax.swing.JLabel lblSetTelResponsavel1;
     private javax.swing.JLabel lblSetTelResponsavel2;
     private javax.swing.JLabel lblSexo;

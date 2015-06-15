@@ -20,7 +20,8 @@ AulaDao conAula;
     public CadastroAulaGUI() {
         initComponents();
         conAula=new AulaDao();
-         this.setLocation(500, 300);
+        this.setLocation(500, 300);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }
 
     /**
@@ -71,7 +72,7 @@ AulaDao conAula;
                 lblGravarMouseExited(evt);
             }
         });
-        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 49, 64, 22));
+        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(241, 46, 73, 25));
 
         edtFechar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -100,7 +101,7 @@ AulaDao conAula;
     }//GEN-LAST:event_lblGravarMouseEntered
 
     private void lblGravarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseExited
-        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblGravar);
     }//GEN-LAST:event_lblGravarMouseExited
 
     private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
