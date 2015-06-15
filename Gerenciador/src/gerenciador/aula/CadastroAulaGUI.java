@@ -20,7 +20,7 @@ AulaDao conAula;
     public CadastroAulaGUI() {
         initComponents();
         conAula=new AulaDao();
-        
+         this.setLocation(500, 300);
     }
 
     /**
@@ -71,7 +71,7 @@ AulaDao conAula;
                 lblGravarMouseExited(evt);
             }
         });
-        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 49, 60, 20));
+        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 49, 64, 22));
 
         edtFechar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
