@@ -6,10 +6,10 @@
 package gerenciador.aula;
 
 import gerenciador.conexaoBD.AulaDao;
-import static java.lang.Double.parseDouble;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -104,11 +104,17 @@ AulaDao conAula;
     }//GEN-LAST:event_lblGravarMouseExited
 
     private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
-    try {
+        if (!edtNome.getText().isEmpty() || !edtValor.getText().isEmpty()) {
+
+            try {
         conAula.insertAula(edtNome.getText(),Double.parseDouble(edtValor.getText()));
     } catch (SQLException ex) {
         Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
-    }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Estes campos são obrigatorios!");
+
+        }
     }//GEN-LAST:event_lblGravarMouseClicked
 
     /**

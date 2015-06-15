@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,7 +35,8 @@ public class AulaDao {
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             novoStmt.setString(1, nome);
             novoStmt.setDouble(2, valor);
-            novoStmt.executeQuery();
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
