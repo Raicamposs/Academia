@@ -108,7 +108,7 @@ AulaDao conAula;
         if (!edtNome.getText().isEmpty() || !edtValor.getText().isEmpty()) {
 
             try {
-        conAula.insertAula(edtNome.getText(),Double.parseDouble(edtValor.getText()));
+        conAula.insertAula(edtNome.getText(),Double.parseDouble(edtValor.getText().replace(",", ".")));
     } catch (SQLException ex) {
         Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
