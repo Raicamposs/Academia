@@ -116,7 +116,7 @@ public class CidadeGUI extends javax.swing.JFrame {
         cmbEstado.removeAllItems();
         Iterator iteratorCidade = null;
         try {
-            iteratorCidade = con.getEstados().iterator();
+            iteratorCidade = con.getArrayEstados().iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

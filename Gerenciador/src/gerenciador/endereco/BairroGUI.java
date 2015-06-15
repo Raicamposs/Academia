@@ -136,7 +136,7 @@ public class BairroGUI extends javax.swing.JFrame {
 
         Iterator iteratorCidade = null;
         try {
-            iteratorCidade = con.getCidades("mg").iterator();
+            iteratorCidade = con.getArrayCidade("es").iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,7 +144,7 @@ public class BairroGUI extends javax.swing.JFrame {
             cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
         }
         try {
-            if (con.getCidades("mg").contains("Guarapari")) {
+            if (con.getArrayCidade("mg").contains("Guarapari")) {
                 cmbCidade.setSelectedItem("Guarapari");
             }
         } catch (SQLException ex) {
