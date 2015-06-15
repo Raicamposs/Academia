@@ -38,7 +38,7 @@ public class RelatorioDao {
             rs = novoStmt.executeQuery();
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
             JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    "\\Relatorio\\RelatorioAluno.jasper\"", new HashMap(), jrRS);
+                    "/src/Relatorio/RelatorioAluno.jasper", new HashMap(), jrRS);
             JasperViewer.viewReport(jasperPrint);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "deu erro =" + erro);

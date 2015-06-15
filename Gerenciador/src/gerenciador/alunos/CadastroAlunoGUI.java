@@ -247,6 +247,12 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblCadastra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCadastraMouseClicked(evt);
+            }
+        });
         getContentPane().add(lblCadastra, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 660, 120, 42));
 
         lblVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -916,6 +922,13 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cmbBairroFocusGained
+
+    private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
+        aluno = new Aluno(cmbEstadoCivil.getSelectedIndex(), edtCPF.getText(), edtIdentidade.getText(),
+                edtDataNascimento.getText(), edtEmail.getText(), null, sexo);
+        aluno.setFoneCelular(edtCel.getText());
+        aluno.setFoneResidencial(edtTelRes.getText());
+    }//GEN-LAST:event_lblCadastraMouseClicked
 
     /**
      * @param args the command line arguments
