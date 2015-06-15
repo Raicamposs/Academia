@@ -128,7 +128,7 @@ public class EnderecoDao {
                 if (rs.first()) {
                     estados = new ArrayList<>();
                     while (rs.next()) {
-                        estados.add(rs.getString("est_uf"));
+                        estados.add(rs.getString("est_nome"));
 
                     }
                 }
@@ -200,7 +200,33 @@ public class EnderecoDao {
         return bairro;
     }
 
-   
+    public void insertBairro(String nome, String cidade) throws SQLException {
+        String sql = ("call academia.insertBairro(?,?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, nome);
+            novoStmt.setString(2, cidade);
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void insertCidade(String nome, String estado) throws SQLException {
+        String sql = ("call academia.insertCidade(?,?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, nome);
+            novoStmt.setString(2, estado);
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public void closeConection() throws SQLException {
         try {

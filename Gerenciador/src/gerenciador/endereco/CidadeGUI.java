@@ -5,11 +5,13 @@
  */
 package gerenciador.endereco;
 
+import gerenciador.aula.CadastroAulaGUI;
 import gerenciador.conexaoBD.EnderecoDao;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,9 +55,12 @@ public class CidadeGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 60, -1));
+        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 100, -1));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGravarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblGravarMouseEntered(evt);
             }
@@ -120,6 +125,20 @@ public class CidadeGUI extends javax.swing.JFrame {
         }
          cmbEstado.setSelectedItem("ES");
     }//GEN-LAST:event_formComponentShown
+
+    private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
+        if (!edtNome.getText().isEmpty()) {
+
+            try {
+                con.insertCidade(edtNome.getText(), (String) cmbEstado.getSelectedItem());
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Estes campos são obrigatorios!");
+
+        }
+    }//GEN-LAST:event_lblGravarMouseClicked
 
     /**
      * @param args the command line arguments

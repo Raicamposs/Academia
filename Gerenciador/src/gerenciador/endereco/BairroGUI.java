@@ -5,18 +5,20 @@
  */
 package gerenciador.endereco;
 
-
+import gerenciador.aula.CadastroAulaGUI;
 import gerenciador.conexaoBD.EnderecoDao;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author wagner
  */
 public class BairroGUI extends javax.swing.JFrame {
+
     EnderecoDao con;
 
     public BairroGUI() {
@@ -72,6 +74,9 @@ public class BairroGUI extends javax.swing.JFrame {
         getContentPane().add(edtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 46, 140, 21));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGravarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblGravarMouseEntered(evt);
             }
@@ -123,20 +128,20 @@ public class BairroGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimizarMouseClicked
 
     private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
-    
+
     }//GEN-LAST:event_cmbCidadeActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-           cmbCidade.removeAllItems();
+        cmbCidade.removeAllItems();
 
-   Iterator iteratorCidade = null;
+        Iterator iteratorCidade = null;
         try {
             iteratorCidade = con.getCidades("mg").iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         while (iteratorCidade.hasNext()) {
-                 cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
+            cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
         }
         try {
             if (con.getCidades("mg").contains("Guarapari")) {
@@ -147,6 +152,20 @@ public class BairroGUI extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_formComponentShown
+
+    private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
+        if (!edtNome.getText().isEmpty()) {
+
+            try {
+                con.insertBairro(edtNome.getText(), (String) cmbCidade.getSelectedItem());
+            } catch (SQLException ex) {
+                Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Estes campos são obrigatorios!");
+
+        }
+    }//GEN-LAST:event_lblGravarMouseClicked
 
     /**
      * @param args the command line arguments
