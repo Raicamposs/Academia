@@ -79,6 +79,7 @@ public class AlunoDao {
         return estadoCivil;
     }
 
+ 
     public void getAlunos(JTable tblAluno, String nome, String matricula) throws SQLException {
         String sql = ("call academia.getPessoaNomeORCpf(?,?);");
         try ( // prepared statement para inserção
@@ -87,11 +88,12 @@ public class AlunoDao {
             novoStmt.setString(2, matricula + "%");
             rs = novoStmt.executeQuery();
 
-            while (rs.next()) {
-                tblAluno.getColumnModel().getColumn(0).setPreferredWidth(50);
-                for (int i = 1; i < 6; i++) {
-                    tblAluno.getColumnModel().getColumn(i).setPreferredWidth(20);
-                }
+            tblAluno.getColumnModel().getColumn(0).setPreferredWidth(50);
+            for (int i = 1; i < 6; i++) {
+                tblAluno.getColumnModel().getColumn(i).setPreferredWidth(20);
+            }
+
+            if (rs.first()) {
 
                 DefaultTableModel modelo = (DefaultTableModel) tblAluno.getModel();
                 modelo.setNumRows(0);
@@ -101,17 +103,25 @@ public class AlunoDao {
                     rs.getString("Rg"),
                     rs.getString("Data_nascimento"),
                     rs.getString("Email"),
-                    rs.getString("Estado_Civil"), //                    rs.getString("Rua"),
-                //                    rs.getString("Bairro"),
-                //                    rs.getString("Estado"),
-                //                    rs.getString("Cidade"),
-                //                    rs.getString("Numero"),
-                //                    rs.getString("CEP"),
-                //                    rs.getString("Complemento")
+                    rs.getString("Estado_Civil")
                 });
-            }
-            rs.first();
-        }
-    }
+                while (rs.next()) {
+                    modelo.addRow(new Object[]{
+                        rs.getString("Nome"),
+                        rs.getString("Cpf"),
+                        rs.getString("Rg"),
+                        rs.getString("Data_nascimento"),
+                        rs.getString("Email"),
+                        rs.getString("Estado_Civil")
+                    }
+                    );
+                };
 
+            };
+
+        }
+
+    }
 }
+
+

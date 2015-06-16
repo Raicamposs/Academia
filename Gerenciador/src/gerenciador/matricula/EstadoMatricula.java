@@ -5,11 +5,11 @@ public class EstadoMatricula {
 
     /**
      * Método construtor. Você deve utiliza-lo para criar o registro de um novo
-     * author .
+     * EstadoMatricula do aluno.
      *
      * @param estadoMatriculaId id da EstadoMatricula
      * @param estadoMatriculaNome nome da EstadoMatricula
-     * @author 
+     * @author G4Developers
      */
     private int estadoMatriculaId;
     private String estadoMatriculaNome;
@@ -27,32 +27,36 @@ public class EstadoMatricula {
         this.estadoMatriculaNome = estadoMatriculaNome;
     }
 
-    //Declaração do método estadoMatriculaId
+    //Seta o Id do EstadoMatricula 
+//    @Param Um inteiro contendo o Id do estadoMatricula
 
     public void setEstadoMatriculaId(int estadoMatriculaId) {
         this.estadoMatriculaId = estadoMatriculaId;
-        // Altera a variavel estadoMatriculaId da classe EstadoMatricula para o parametro passado
+        
     }
 
-    //Declaração do método setEstadoMatriculaNome
+     //Seta o  Nome  do EstadoMatricula 
+//    @Param Uma String contendo o Nome do estadoMatricula
 
     public void setEstadoMatriculaNome(String estadoMatriculaNome) {
         this.estadoMatriculaNome = estadoMatriculaNome;
-        // Altera a variavel estadoMatriculaNome da classe EstadoMatricula para o parametro passado
+       
     }
 
-    //Declaração do método getEstadoMatriculaId 
+    //Retorna o Id  do EstadoMatricula 
+//    @return Uma String contendo o Id do estadoMatricula
 
     public int getEstadoMatriculaId() {
         return estadoMatriculaId;
-        //retorna o Valor da Variavel  estadoMatriculaId
+      
     }
 
-    //Declaração do método getEstadoMatriculaNome
+     //Retorna o  Nome  do EstadoMatricula 
+//    @return Uma String contendo o Nome do estadoMatricula
 
     public String getEstadoMatriculaNome() {
         return estadoMatriculaNome;
-        //retorna o Valor da Variavel  estadoMatriculaNome
+       
     }
 
 }

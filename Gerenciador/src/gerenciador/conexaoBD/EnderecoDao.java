@@ -25,96 +25,10 @@ public class EnderecoDao {
     private PreparedStatement stmt;
     private ResultSet rs;
     private Endereco endereco;
-    ArrayList cidades, estados;
+    ArrayList cidades, estados, bairro;
 
     public EnderecoDao() {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
-    }
-
-    public void adicionaBairro(Bairro bairro) {
-
-        String sql = "call academia.insertBairro(?, ?);";
-
-        try {
-            // seta os valores
-            try ( // prepared statement para inserção
-                    PreparedStatement novoStmt = connection.prepareStatement(sql)) {
-                // seta os valores
-                novoStmt.setString(1, bairro.getBairroNome());
-                novoStmt.setInt(2, bairro.getCidadeId());
-
-                // executa
-                novoStmt.execute();
-                JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
-                novoStmt.close();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void setBairro(Bairro bairro, ResultSet rs) throws SQLException {
-        bairro.setBairroNome(rs.getString("nome"));
-        bairro.setBairroId(rs.getInt("id"));
-    }
-
-    public void consultaBairro(int idCidade, Bairro bairro) {
-        String sql = "call academia.getBairro(?);";
-        try {
-            // seta os valores
-            try ( // prepared statement para inserção
-                    PreparedStatement novoStmt = connection.prepareStatement(sql)) {
-                // seta os valores
-
-                novoStmt.setInt(1, idCidade);
-
-                rs = novoStmt.executeQuery();
-                if (rs.first()) {
-                    setBairro(bairro, rs);
-                    novoStmt.close();
-                    rs.close();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Nenhum Resultado Encontrado!");
-                }
-
-                this.rs = stmt.executeQuery();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public void selectCidade(String uf) throws SQLException {
-        String sql = ("call academia.getCidade(?);");
-        try {
-            // seta os valores
-            try ( // prepared statement para inserção
-                    PreparedStatement novoStmt = connection.prepareStatement(sql)) {
-                // seta os valores
-                novoStmt.setString(1, uf);
-                // executa
-
-                rs = novoStmt.executeQuery();
-
-                if (rs.first()) {
-                    cidades = new ArrayList<>();
-                    while (rs.next()) {
-                        cidades.add(rs.getString("cid_nome"));
-
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public ArrayList getCidades(String uf) throws SQLException {
-        selectCidade(uf);
-
-        return cidades;
     }
 
     public void selectEstado() throws SQLException {
@@ -128,7 +42,7 @@ public class EnderecoDao {
                 if (rs.first()) {
                     estados = new ArrayList<>();
                     while (rs.next()) {
-                        estados.add(rs.getString("est_uf"));
+                        estados.add(rs.getString("est_nome"));
 
                     }
                 }
@@ -139,8 +53,13 @@ public class EnderecoDao {
 
     }
 
-    public void getCidadesUf(String uf) throws SQLException {
-        String sql = ("call academia.getCidadeUf(?);");
+    public ArrayList getArrayEstados() throws SQLException {
+        selectEstado();
+        return estados;
+    }
+
+    public void getCidades(String uf) throws SQLException {
+        String sql = ("call academia.getCidade(?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores
@@ -153,7 +72,37 @@ public class EnderecoDao {
                 cidades = new ArrayList<>();
                 while (rs.next()) {
                     cidades.add(rs.getString("cid_nome"));
+                }
+            } else {
 
+                cidades.add("Sem Registros");
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ArrayList getArrayCidade(String uf) throws SQLException {
+        getCidades(uf);
+        return cidades;
+    }
+
+    public void getBairro(String cidade) throws SQLException {
+        String sql = ("call academia.getBairro(?)");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            // seta os valores
+            novoStmt.setString(1, cidade);
+            // executa
+
+            rs = novoStmt.executeQuery();
+
+            if (rs.first()) {
+                bairro = new ArrayList<>();
+                while (rs.next()) {
+                    bairro.add(rs.getString("bai_nome"));
                 }
             }
         } catch (SQLException e) {
@@ -162,14 +111,37 @@ public class EnderecoDao {
 
     }
 
-    public ArrayList getCidade(String uf) throws SQLException {
-        selectCidade(uf);
-        return cidades;
+    public ArrayList getArrayBairro(String cidade) throws SQLException {
+        getBairro(cidade);
+        return bairro;
     }
 
-    public ArrayList getEstados() throws SQLException {
-        selectEstado();
-        return estados;
+    public void insertBairro(String nome, String cidade) throws SQLException {
+        String sql = ("call academia.insertBairro(?,?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, nome);
+            novoStmt.setString(2, cidade);
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void insertCidade(String nome, String estado) throws SQLException {
+        String sql = ("call academia.insertCidade(?,?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, nome);
+            novoStmt.setString(2, estado);
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void closeConection() throws SQLException {

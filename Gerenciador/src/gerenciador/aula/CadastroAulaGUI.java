@@ -5,17 +5,23 @@
  */
 package gerenciador.aula;
 
+import gerenciador.conexaoBD.AulaDao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author wagner
  */
 public class CadastroAulaGUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TurmaGui
-     */
+AulaDao conAula;
     public CadastroAulaGUI() {
         initComponents();
+        conAula=new AulaDao();
+        this.setLocation(500, 300);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }
 
     /**
@@ -56,6 +62,9 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
         getContentPane().add(edtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 76, 84, 21));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGravarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblGravarMouseEntered(evt);
             }
@@ -63,7 +72,7 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
                 lblGravarMouseExited(evt);
             }
         });
-        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(247, 49, 60, 20));
+        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(241, 46, 73, 25));
 
         edtFechar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -92,8 +101,22 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblGravarMouseEntered
 
     private void lblGravarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseExited
-        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblGravar);
     }//GEN-LAST:event_lblGravarMouseExited
+
+    private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
+        if (!edtNome.getText().isEmpty() || !edtValor.getText().isEmpty()) {
+
+            try {
+        conAula.insertAula(edtNome.getText(),Double.parseDouble(edtValor.getText().replace(",", ".")));
+    } catch (SQLException ex) {
+        Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Estes campos são obrigatorios!");
+
+        }
+    }//GEN-LAST:event_lblGravarMouseClicked
 
     /**
      * @param args the command line arguments

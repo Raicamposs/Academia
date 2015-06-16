@@ -8,8 +8,8 @@ package gerenciador.telas;
 import gerenciador.funcionario.AlteraFuncionarioGUI;
 import gerenciador.funcionario.CadastroFuncionarioGUI;
 import gerenciador.alunos.CadastroAlunoGUI;
-import gerenciador.alunos.AlteraAlunoGUI;
 import com.sun.glass.events.KeyEvent;
+import gerenciador.alunos.PesquisaAlunoGUI;
 import gerenciador.aula.CadastroAulaGUI;
 import java.awt.Cursor;
 import java.util.Date;
@@ -529,7 +529,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
         });
         pnlPrincipal.add(lblSelecFrequencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 540, 190, 50));
 
-        lblBoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Botoes/boMenu.png"))); // NOI18N
+        lblBoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/botões selecionados/boMenu.png"))); // NOI18N
         lblBoMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblBoMenuMouseClicked(evt);
@@ -728,7 +728,7 @@ public class PrincipalGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastroMouseExited
 
     private void lblConsultaAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultaAlunoMouseClicked
-        new AlteraAlunoGUI().setVisible(true);
+        new PesquisaAlunoGUI().setVisible(true);
         fechaMenu();
     }//GEN-LAST:event_lblConsultaAlunoMouseClicked
 

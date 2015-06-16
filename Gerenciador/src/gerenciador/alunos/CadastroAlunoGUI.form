@@ -33,6 +33,9 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblCadastra">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCadastraMouseClicked"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="470" y="660" width="120" height="42"/>
@@ -91,136 +94,6 @@
             <Property name="useNullLayout" type="boolean" value="false"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="pnlEndereco">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="460" y="140" width="230" height="270"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblCep" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cmbBairro" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="cmbCidade" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblBairro" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
-                                          <Component id="lblEstado" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblCidade" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmbEstado" alignment="0" min="-2" pref="101" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="edtCep" alignment="0" min="-2" pref="146" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                          <Component id="cmbEstado" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblCidade" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cmbCidade" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblBairro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cmbBairro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblCep" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="edtCep" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="72" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JFormattedTextField" name="edtCep">
-                  <Properties>
-                    <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="0" green="99" red="0" type="rgb"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lblCep">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="CEP"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lblBairro">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Bairro"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="cmbBairro">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lblEstado">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Estado"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="cmbEstado">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbEstadoActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="cmbCidade">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="lblCidade">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Cidade"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
             <Container class="javax.swing.JPanel" name="pnlInformacoes">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -361,6 +234,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoFone);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try&#xa;{&#xa;     formatoFone = new MaskFormatter(&quot;(0xx##)####-####&quot;);    &#xa;}&#xa;catch(Exception erro)&#xa;{&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro);&#xa;}"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtNome">
                   <Properties>
@@ -392,6 +269,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoRg);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoRg = new MaskFormatter(&quot;#####.###-#&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para RG, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblNome">
                   <Properties>
@@ -414,6 +295,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCpf);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try&#xa;{&#xa;     formatoCpf = new MaskFormatter(&quot;###.###.###-##&quot;);    &#xa;}&#xa;catch(Exception erro)&#xa;{&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro);&#xa;}"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtCel">
                   <Properties>
@@ -421,6 +306,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCel);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoCel = new MaskFormatter&#xd;&#xa;(&quot;(0xx##)#####-####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTelCelular">
                   <Properties>
@@ -450,6 +339,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoData = new MaskFormatter(&quot;##/##/####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblEstadoCivil">
                   <Properties>
@@ -567,6 +460,183 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Container class="javax.swing.JPanel" name="pnlEndereco">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+                  <AbsoluteConstraints x="460" y="140" width="-1" height="-1"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="cmbEstado" alignment="0" pref="144" max="32767" attributes="0"/>
+                                              <Component id="cmbCidade" alignment="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnNovaCidade" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="lblCep" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="edtCep" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cmbBairro" alignment="0" pref="146" max="32767" attributes="0"/>
+                                      <Component id="lblBairro" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblCidade" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="btnNovaBairro" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          <Component id="cmbEstado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblCidade" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cmbCidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNovaCidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblBairro" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cmbBairro" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNovaBairro" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblCep" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="edtCep" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="26" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JFormattedTextField" name="edtCep">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtCepActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCep);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoCep = new MaskFormatter(&quot;#####-###&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro); }"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblCep">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="CEP"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblBairro">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Bairro"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="cmbBairro">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Selecione..."/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbBairroFocusGained"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbBairroActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel5">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Estado"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="cmbEstado">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Selecione..."/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbEstadoFocusGained"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="cmbCidade">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Selecione..."/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cmbCidadeFocusGained"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbCidadeActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblCidade">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Cidade"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnNovaCidade">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Novo"/>
+                    <Property name="actionCommand" type="java.lang.String" value=""/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNovaCidadeMouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnNovaBairro">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Novo"/>
+                    <Property name="actionCommand" type="java.lang.String" value=""/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNovaBairroMouseClicked"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="pnlInfAdicionais">
@@ -623,8 +693,8 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="laDebito1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txDebito1" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
+                                              <Component id="lblDiaVencimaento" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="edtDiaVencimaento" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="laSituacao2" min="-2" pref="141" max="-2" attributes="0"/>
@@ -649,13 +719,13 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="lblExame" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="laAvaliacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="laDebito1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblDiaVencimaento" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="txCalExame" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txCalAvaliacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txDebito1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="edtDiaVencimaento" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -693,6 +763,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoData = new MaskFormatter(&quot;##/##/####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txCalAvaliacao">
                   <Properties>
@@ -700,6 +774,10 @@
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoData = new MaskFormatter(&quot;##/##/####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="laAvaliacao">
                   <Properties>
@@ -746,17 +824,21 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="laDebito1">
+                <Component class="javax.swing.JLabel" name="lblDiaVencimaento">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Data Vencimento:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txDebito1">
+                <Component class="javax.swing.JTextField" name="edtDiaVencimaento">
                   <Properties>
                     <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="99" red="0" type="rgb"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoDataVencimento);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {     formatoDataVencimento = new MaskFormatter(&quot;##&quot;);    &#xd;&#xa;} catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="chbMenorIdade">
                   <Properties>
@@ -817,7 +899,7 @@
                                           <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                                           <Component id="btnCadastrar" linkSize="1" min="-2" pref="99" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="edResponsavel" min="-2" pref="250" max="-2" attributes="0"/>
+                                      <Component id="edtResponsavel" min="-2" pref="250" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
                               </Group>
@@ -830,7 +912,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="lblResponsavel" min="-2" pref="14" max="-2" attributes="0"/>
                           <EmptySpace pref="16" max="32767" attributes="0"/>
-                          <Component id="edResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="edtResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -847,7 +929,7 @@
                     <Property name="text" type="java.lang.String" value="Nome Responsavel:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="edResponsavel">
+                <Component class="javax.swing.JTextField" name="edtResponsavel">
                   <Properties>
                     <Property name="selectionColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="99" red="0" type="rgb"/>
@@ -911,11 +993,11 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblNomeResponsavel" min="-2" pref="49" max="-2" attributes="0"/>
                                       <Component id="lblSetNomeResponsavel" min="-2" pref="270" max="-2" attributes="0"/>
-                                      <Component id="lblCefResponsavel" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
-                                      <Component id="lblSetCefResponsavel" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
+                                      <Component id="lblCpfResponsavel" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
+                                      <Component id="lblSetCpfResponsavel" alignment="0" min="-2" pref="249" max="-2" attributes="0"/>
                                       <Component id="lblTelefoneResponsavel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblMatriculadoResponsavel" alignment="0" min="-2" pref="68" max="-2" attributes="0"/>
-                                      <Component id="lblSetMatriculadoResponsavel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblRG" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblSetRG" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
                               </Group>
@@ -932,9 +1014,13 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblSetNomeResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblCefResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCpfResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSetCefResponsavel" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSetCpfResponsavel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblRG" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblSetRG" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="lblTelefoneResponsavel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -942,11 +1028,7 @@
                               <Component id="lblSetTelResponsavel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblSetTelResponsavel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblMatriculadoResponsavel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblSetMatriculadoResponsavel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="27" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -954,6 +1036,9 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblNomeResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Nome:"/>
                   </Properties>
                 </Component>
@@ -962,18 +1047,24 @@
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblCefResponsavel">
+                <Component class="javax.swing.JLabel" name="lblCpfResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="CPF"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSetCefResponsavel">
+                <Component class="javax.swing.JLabel" name="lblSetCpfResponsavel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTelefoneResponsavel">
                   <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Telefone"/>
                   </Properties>
                 </Component>
@@ -987,12 +1078,15 @@
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblMatriculadoResponsavel">
+                <Component class="javax.swing.JLabel" name="lblRG">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Matriculado"/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="RG"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblSetMatriculadoResponsavel">
+                <Component class="javax.swing.JLabel" name="lblSetRG">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="..."/>
                   </Properties>
