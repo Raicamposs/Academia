@@ -13,7 +13,7 @@ import gerenciador.pessoa.Pessoa;
  */
 public class Aluno extends Pessoa {
 
-    public Aluno( int estadoCivil, String cpf, String rg, String nome,
+    public Aluno(int id, int estadoCivil, String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
 
         super( estadoCivil, cpf, rg, nome, dataNascimento, email, sexo);

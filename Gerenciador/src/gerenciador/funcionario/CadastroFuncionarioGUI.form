@@ -186,6 +186,10 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtCepActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCep);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoCep = new MaskFormatter(&quot;#####-###&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCep">
                   <Properties>
@@ -405,6 +409,10 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtTelResActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoFone);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try&#xa;{&#xa;     formatoFone = new MaskFormatter(&quot;(0xx##)####-####&quot;);    &#xa;}&#xa;catch(Exception erro)&#xa;{&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro);&#xa;}"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="tedtNome">
                   <Events>
@@ -424,6 +432,10 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txIdentidade">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoRg);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoRg = new MaskFormatter(&quot;#####.###-#&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para RG, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
@@ -441,8 +453,16 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtCpf">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCpf);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try&#xa;{&#xa;     formatoCpf = new MaskFormatter(&quot;###.###.###-##&quot;);    &#xa;}&#xa;catch(Exception erro)&#xa;{&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro);&#xa;}"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtFoneCel">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoCel);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try&#xa;{&#xa;     formatoCel = new MaskFormatter(&quot;(0xx##)#####-####&quot;);    &#xa;}&#xa;catch(Exception erro)&#xa;{&#xa;    JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para cpf, &quot;+erro);&#xa;}"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtEmail">
                 </Component>
@@ -460,6 +480,10 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="edtDataNascimentoActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoData = new MaskFormatter(&quot;##/##/####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblEstadoCivil">
                   <Properties>
@@ -546,6 +570,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_mascMouseClicked"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sexo_mascActionPerformed"/>
                   </Events>
                 </Component>
@@ -565,6 +590,8 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_femMouseClicked"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sexo_femMouseEntered"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sexo_femActionPerformed"/>
                   </Events>
                 </Component>
@@ -721,6 +748,10 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="edtDataEntrada">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JFormattedTextField(formatoData);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try {      formatoData = new MaskFormatter(&quot;##/##/####&quot;);     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,&quot;N&#xe3;o foi possivel setar a mascara para data, &quot;+erro); }"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="llblAvaliacao">
                   <Properties>
@@ -959,6 +990,16 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="lblCadastra">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCadastraMouseClicked"/>
+      </Events>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="472" y="655" width="120" height="50"/>
+        </Constraint>
+      </Constraints>
+    </Component>
     <Component class="javax.swing.JLabel" name="lblFundo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

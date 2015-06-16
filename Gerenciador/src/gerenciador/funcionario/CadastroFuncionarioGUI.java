@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -22,10 +25,15 @@ import java.util.logging.Logger;
  */
 public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
+    Turno turno;
+    Funcao funcao;
+    private char sexo;
     EnderecoDao conEndereco;
     FuncionarioDao conFuncionario;
+    Funcionario funcionario;
     Cidade cidade = new Cidade("");
     Iterator iteratorEstado = null;
+    MaskFormatter formatoCpf, formatoRg, formatoCep, formatoFone, formatoCel, formatoData;
 
     public CadastroFuncionarioGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -73,30 +81,34 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         }
     }
 
-    private void setCbmCidade() {
+    private void setCbmCidade() throws SQLException {
         cmbCidade.removeAllItems();
         try {
-            iteratorEstado = conEndereco.getCidades((String) cmbEstado.getSelectedItem()).iterator();
+            iteratorEstado = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         while (iteratorEstado.hasNext()) {
             cmbCidade.addItem(String.valueOf(iteratorEstado.next()));
         }
-
+        if (conEndereco.getArrayBairro((String) cmbEstado.getSelectedItem()).contains("Guarapari")) {
+            cmbCidade.setSelectedItem("Guarapari");
+        }
     }
 
-    private void setCbmEstado() {
+    private void setCbmEstado() throws SQLException {
         cmbEstado.removeAllItems();
         try {
-            iteratorEstado = conEndereco.getEstados().iterator();
+            iteratorEstado = conEndereco.getArrayEstados().iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         while (iteratorEstado.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
-        cmbEstado.setSelectedIndex(6);
+        if (conEndereco.getArrayEstados().contains("Espírito Santo")) {
+            cmbCidade.setSelectedItem("Espírito Santo");
+        }
     }
 
     /**
@@ -113,7 +125,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         pnlPrincipal = new javax.swing.JTabbedPane();
         pnlDados = new javax.swing.JPanel();
         pnlEndereco = new javax.swing.JPanel();
-        edtCep = new javax.swing.JFormattedTextField();
+        try {      formatoCep = new MaskFormatter("#####-###");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro); }
+        edtCep = new JFormattedTextField(formatoCep);
         lblCep = new javax.swing.JLabel();
         lblBairro = new javax.swing.JLabel();
         cmbBairro = new javax.swing.JComboBox();
@@ -124,21 +137,47 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         btnNovaCidade = new javax.swing.JButton();
         btnNovaBairro = new javax.swing.JButton();
         pnlInformacoes = new javax.swing.JPanel();
-        edtTelRes = new javax.swing.JTextField();
+        try
+        {
+            formatoFone = new MaskFormatter("(0xx##)####-####");
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
+        }
+        edtTelRes = new JFormattedTextField(formatoFone);
         tedtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txEndereco = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        txIdentidade = new javax.swing.JTextField();
+        try {      formatoRg = new MaskFormatter("#####.###-#");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para RG, "+erro); }
+        txIdentidade = new JFormattedTextField(formatoRg);
         jLabel1 = new javax.swing.JLabel();
         lblFoneRes = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
-        edtCpf = new javax.swing.JTextField();
-        edtFoneCel = new javax.swing.JTextField();
+        try
+        {
+            formatoCpf = new MaskFormatter("###.###.###-##");
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
+        }
+        edtCpf = new JFormattedTextField(formatoCpf);
+        try
+        {
+            formatoCel = new MaskFormatter("(0xx##)#####-####");
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
+        }
+        edtFoneCel = new JFormattedTextField(formatoCel);
         edtEmail = new javax.swing.JTextField();
         lblEmail = new javax.swing.JLabel();
         lblDataNasc = new javax.swing.JLabel();
-        edtDataNascimento = new javax.swing.JFormattedTextField();
+        try {      formatoData = new MaskFormatter("##/##/####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDataNascimento = new JFormattedTextField(formatoData);
         lblEstadoCivil = new javax.swing.JLabel();
         cmbEstadoCivil = new javax.swing.JComboBox();
         lblFoneCel = new javax.swing.JLabel();
@@ -149,7 +188,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         paInfAdicionais = new javax.swing.JPanel();
         pnlDadosCadastrais = new javax.swing.JPanel();
         lblFuncao = new javax.swing.JLabel();
-        edtDataEntrada = new javax.swing.JTextField();
+        try {      formatoData = new MaskFormatter("##/##/####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDataEntrada = new JFormattedTextField(formatoData);
         llblAvaliacao = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         edtObservacoes = new javax.swing.JTextArea();
@@ -175,6 +215,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         rdbAdministrador = new javax.swing.JRadioButton();
         rdbUsuario = new javax.swing.JRadioButton();
         chbCadastrarUsuario = new javax.swing.JCheckBox();
+        lblCadastra = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -439,6 +480,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         sexo_masc.setText("Masculino");
         sexo_masc.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         sexo_masc.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        sexo_masc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sexo_mascMouseClicked(evt);
+            }
+        });
         sexo_masc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sexo_mascActionPerformed(evt);
@@ -449,6 +495,14 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         sexo_fem.setText("Feminino");
         sexo_fem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         sexo_fem.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        sexo_fem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sexo_femMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                sexo_femMouseEntered(evt);
+            }
+        });
         sexo_fem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sexo_femActionPerformed(evt);
@@ -735,6 +789,13 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         getContentPane().add(pnlPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, 830, 600));
 
+        lblCadastra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCadastraMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblCadastra, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 655, 120, 50));
+
         lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudCadastroFuncionario.jpg"))); // NOI18N
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 790));
 
@@ -795,17 +856,40 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_chbCadastrarUsuarioActionPerformed
 
     private void chbCadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbCadastrarUsuarioMouseClicked
-     if (chbCadastrarUsuario.isSelected()==true){
-         pnlCadastrar.setVisible(true);
-     }else{
-            pnlCadastrar.setVisible(false);     
-                 }
-     
+        if (chbCadastrarUsuario.isSelected() == true) {
+            pnlCadastrar.setVisible(true);
+        } else {
+            pnlCadastrar.setVisible(false);
+        }
+
     }//GEN-LAST:event_chbCadastrarUsuarioMouseClicked
 
     private void edtTelResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtTelResActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edtTelResActionPerformed
+
+    private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
+        funcionario = new Funcionario(1, cmbEstadoCivil.getSelectedIndex(), edtCpf.getText(), txIdentidade.getText(),
+                tedtNome.getText(), edtDataNascimento.getText(), edtEmail.getText(), sexo, turno, edtCnt.getText(),
+                funcao, Float.parseFloat(edtSalario.getText()));
+
+        funcionario.setFoneCelular(edtFoneCel.getText());
+        funcionario.setFoneResidencial(edtTelRes.getText());
+    }//GEN-LAST:event_lblCadastraMouseClicked
+
+    private void sexo_mascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_mascMouseClicked
+        sexo = ('M');
+
+    }//GEN-LAST:event_sexo_mascMouseClicked
+
+    private void sexo_femMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_femMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sexo_femMouseEntered
+
+    private void sexo_femMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_femMouseClicked
+        sexo = ('F');
+
+    }//GEN-LAST:event_sexo_femMouseClicked
 
     /**
      * @param args the command line arguments
@@ -878,6 +962,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblBairro;
+    private javax.swing.JLabel lblCadastra;
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCnt;
