@@ -5,6 +5,7 @@
  */
 package gerenciador.funcionario;
 
+import gerenciador.alunos.CadastroAlunoGUI;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
@@ -72,11 +73,26 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+private void setCbmBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        Iterator iteratorBairro ;
 
+        try {
+            iteratorBairro = conEndereco.getArrayBairro((String) cmbCidade.getSelectedItem()).iterator();
+            if (iteratorBairro.hasNext()) {
+                while (iteratorBairro.hasNext()) {
+                    cmbBairro.addItem(String.valueOf(iteratorBairro.next()));
+                }
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
     private void setCbmCidade() {
         cmbCidade.removeAllItems();
         try {
-            iteratorEstado = conEndereco.getCidades((String) cmbEstado.getSelectedItem()).iterator();
+            iteratorEstado = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,7 +105,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private void setCbmEstado() {
         cmbEstado.removeAllItems();
         try {
-            iteratorEstado = conEndereco.getEstados().iterator();
+            iteratorEstado = conEndereco.getArrayEstados().iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -210,6 +226,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         lblBairro.setText("Bairro");
 
         cmbBairro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBairro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmbBairroFocusGained(evt);
+            }
+        });
 
         jLabel5.setText("Estado");
 
@@ -217,6 +238,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         cmbEstado.setSelectedIndex(6);
 
         cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmbCidadeFocusGained(evt);
+            }
+        });
 
         lblCidade.setText("Cidade");
 
@@ -807,6 +833,20 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edtTelResActionPerformed
 
+    private void cmbCidadeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbCidadeFocusGained
+        cmbBairro.removeAllItems();
+        cmbBairro.addItem("Selecione ...");
+        setCbmCidade();
+    }//GEN-LAST:event_cmbCidadeFocusGained
+
+    private void cmbBairroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbBairroFocusGained
+        try {
+            setCbmBairro();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbBairroFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -839,6 +879,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new CadastroFuncionarioGUI().setVisible(true);
             }
