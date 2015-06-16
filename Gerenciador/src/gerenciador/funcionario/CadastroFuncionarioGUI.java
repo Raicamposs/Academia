@@ -76,7 +76,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private void setCbmCidade() {
         cmbCidade.removeAllItems();
         try {
-            iteratorEstado = conEndereco.getCidades((String) cmbEstado.getSelectedItem()).iterator();
+            iteratorEstado = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -86,13 +86,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     }
 
-    private void setCbmEstado() {
+    private void setCbmEstado() throws SQLException {
         cmbEstado.removeAllItems();
-        try {
-            iteratorEstado = conEndereco.getEstados().iterator();
-        } catch (SQLException ex) {
-            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        iteratorEstado = conEndereco.getArrayEstados().iterator();
         while (iteratorEstado.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
