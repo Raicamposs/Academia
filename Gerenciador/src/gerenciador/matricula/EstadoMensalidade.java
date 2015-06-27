@@ -4,11 +4,11 @@ public class EstadoMensalidade {
 
     /**
      * Método construtor. Você deve utiliza-lo para criar o registro de um novo
-     * author .
+     * EstadoMensalidade do aluno.
      *
      * @param estadoMensalidadeId id da EstadoMensalidade
      * @param estadoMensalidadeNome nome da EstadoMensalidade
-     * @author
+     * @author G4Developers
      */
     private int estadoMensalidadeId;
     private String estadoMensalidadeNome;
@@ -28,17 +28,17 @@ public class EstadoMensalidade {
         this.estadoMensalidadeNome = estadoMensalidadeNome;
     }
 
-    //Declaração do método estadoMensalidadeId
+    //Seta o Id do EstadoMensalidade
+    //@param um int contendo o a id do EstadoMensalidade
     public void setEstadoMensalidadeId(int estadoMensalidadeId) {
         this.estadoMensalidadeId = estadoMensalidadeId;
-        // Altera a variavel estadoMensalidadeId da classe EstadoMensalidade
-        //para o parametro passado
+
     }
 
-    //Declaração do método setEstadoMensalidadeNome
+    //Seta o nome do EstadoMensalidade
+    //@param um string contendo o a nome do EstadoMensalidade
     public void setEstadoMensalidadeNome(String estadoMensalidadeNome) {
         this.estadoMensalidadeNome = estadoMensalidadeNome;
-        // Altera a variavel estadoMensalidadeNome da classe EstadoMensalidade para o parametro passado
     }
 
     //Declaração do método getEstadoMensalidadeId 
@@ -50,7 +50,8 @@ public class EstadoMensalidade {
     //Declaração do método getEstadoMensalidadeNome
     public String getEstadoMensalidadeNome() {
         return estadoMensalidadeNome;
-        //retorna o Valor da Variavel  estadoMensalidadeNome
+        //retorna o nome do  estadoMensalidadeNome
+        //@return uma String contendo o nome EstadoMensalidade
     }
 
 }
