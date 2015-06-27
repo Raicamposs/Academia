@@ -19,7 +19,7 @@ public class CadastroAulaGUI extends javax.swing.JFrame {
 AulaDao conAula;
     public CadastroAulaGUI() {
         initComponents();
-        conAula=new AulaDao();
+        conAula = new AulaDao();
         this.setLocation(500, 300);
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }

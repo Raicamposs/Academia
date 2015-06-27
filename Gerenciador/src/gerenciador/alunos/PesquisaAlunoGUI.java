@@ -7,7 +7,10 @@ package gerenciador.alunos;
 
 import gerenciador.conexaoBD.AlunoDao;
 import gerenciador.conexaoBD.RelatorioDao;
+import gerenciador.telas.ultilidades.Data;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,9 +22,15 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
 
     AlunoDao con;
     RelatorioDao conRelatorio;
+    String formatohora = "HH:mm:ss";
+    SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
+    Data data = new Data();
 
     public PesquisaAlunoGUI() {
         initComponents();
+        tmrHora3.setDelay(1000);
+        tmrHora3.start();
+        lblData.setText(Data.mostraData());
         con = new AlunoDao();
         conRelatorio = new RelatorioDao();
     }
@@ -43,18 +52,25 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tmrHora3 = new org.netbeans.examples.lib.timerbean.Timer();
         frmPesquisa = new javax.swing.JInternalFrame();
         edtMatricula = new javax.swing.JTextField();
         edtNome = new javax.swing.JTextField();
         lblPesquisar = new javax.swing.JLabel();
         lblFundoPesquisa = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
-        lblImprimi = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
+        lblImprimi = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAluno = new javax.swing.JTable();
         lblFundo = new javax.swing.JLabel();
+
+        tmrHora3.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
+            public void onTime(java.awt.event.ActionEvent evt) {
+                tmrHora3OnTime(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -104,7 +120,17 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblInicioMouseExited(evt);
             }
         });
-        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 655, 120, 47));
+        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1077, 472, 120, 47));
+
+        lblHora.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
+        lblHora.setForeground(new java.awt.Color(255, 255, 255));
+        lblHora.setText("...");
+        getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 736, 140, 20));
+
+        lblData.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
+        lblData.setForeground(new java.awt.Color(255, 255, 255));
+        lblData.setText("...");
+        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 736, 320, 20));
 
         lblImprimi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -117,15 +143,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblImprimiMouseExited(evt);
             }
         });
-        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(656, 656, 120, 47));
-
-        lblHora.setForeground(new java.awt.Color(255, 255, 255));
-        lblHora.setText("...");
-        getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 730, 180, 30));
-
-        lblData.setForeground(new java.awt.Color(255, 255, 255));
-        lblData.setText("...");
-        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 730, 160, 30));
+        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1208, 470, 120, 47));
 
         tblAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -191,6 +209,11 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         conRelatorio.relAluno();
     }//GEN-LAST:event_lblImprimiMouseClicked
 
+    private void tmrHora3OnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmrHora3OnTime
+        Date le_hora = new Date();
+        lblHora.setText(horaformatada.format(le_hora));
+    }//GEN-LAST:event_tmrHora3OnTime
+
     /**
      * @param args the command line arguments
      */
@@ -242,5 +265,8 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblInicio;
     private javax.swing.JLabel lblPesquisar;
     private javax.swing.JTable tblAluno;
+    private org.netbeans.examples.lib.timerbean.Timer tmrHora;
+    private org.netbeans.examples.lib.timerbean.Timer tmrHora1;
+    private org.netbeans.examples.lib.timerbean.Timer tmrHora3;
     // End of variables declaration//GEN-END:variables
 }

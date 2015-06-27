@@ -6,7 +6,6 @@
 package gerenciador.conexaoBD;
 
 import gerenciador.endereco.Endereco;
-import gerenciador.endereco.Bairro;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ public class EnderecoDao {
     private PreparedStatement stmt;
     private ResultSet rs;
     private Endereco endereco;
-    ArrayList cidades, estados, bairro;
+    ArrayList cidades, estados, bairro, rua;
 
     public EnderecoDao() {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
@@ -114,6 +113,33 @@ public class EnderecoDao {
     public ArrayList getArrayBairro(String cidade) throws SQLException {
         getBairro(cidade);
         return bairro;
+    }
+
+    public void getRua(String bairro) throws SQLException {
+        String sql = ("call academia.getRua(?)");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            // seta os valores
+            novoStmt.setString(1, bairro + "%");
+            // executa
+
+            rs = novoStmt.executeQuery();
+
+            if (rs.first()) {
+                rua = new ArrayList<>();
+                while (rs.next()) {
+                    rua.add(rs.getString("rua_nome"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ArrayList getArrayRua(String bairro) throws SQLException {
+        getBairro(bairro);
+        return rua;
     }
 
     public void insertBairro(String nome, String cidade) throws SQLException {

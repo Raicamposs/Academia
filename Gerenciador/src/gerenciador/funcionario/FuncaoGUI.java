@@ -20,7 +20,8 @@ public class FuncaoGUI extends javax.swing.JFrame {
      */
     public FuncaoGUI() {
         initComponents();
-gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
+        gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
+        this.setLocation(500, 300);
     }
 
     /**
@@ -32,99 +33,66 @@ gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        boGravar = new javax.swing.JButton();
-        laFunNome = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
+        lblGravar = new javax.swing.JLabel();
+        edtFuncao = new javax.swing.JTextField();
+        lblMinimiza = new javax.swing.JLabel();
+        lblFechar = new javax.swing.JLabel();
+        lblFundo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro Função");
+        setUndecorated(true);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(374, 149));
-
-        boGravar.setText("Gravar");
-        boGravar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boGravarActionPerformed(evt);
+        lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblGravarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblGravarMouseExited(evt);
             }
         });
+        getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 70, 25));
 
-        laFunNome.setText("Função");
+        edtFuncao.setBorder(null);
+        getContentPane().add(edtFuncao, new org.netbeans.lib.awtextra.AbsoluteConstraints(96, 45, 130, 20));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        lblMinimiza.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblMinimizaMouseClicked(evt);
             }
         });
+        getContentPane().add(lblMinimiza, new org.netbeans.lib.awtextra.AbsoluteConstraints(305, 0, 15, 15));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(151, 151, 151)
-                        .addComponent(boGravar))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(laFunNome, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(70, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(laFunNome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(boGravar)
-                .addGap(28, 28, 28))
-        );
+        lblFechar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFecharMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblFechar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 10, 15));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 0));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Pequenas/tela funcao.png"))); // NOI18N
+        getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 150));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boGravarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boGravarActionPerformed
+    private void lblFecharMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFecharMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_lblFecharMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void lblMinimizaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimizaMouseClicked
+        this.setExtendedState(ICONIFIED);
+    }//GEN-LAST:event_lblMinimizaMouseClicked
+
+    private void lblGravarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseEntered
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblGravar);
+    }//GEN-LAST:event_lblGravarMouseEntered
+
+    private void lblGravarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseExited
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblGravar);
+    }//GEN-LAST:event_lblGravarMouseExited
 
     /**
      * @param args the command line arguments
@@ -162,10 +130,10 @@ gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boGravar;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel laFunNome;
+    private javax.swing.JTextField edtFuncao;
+    private javax.swing.JLabel lblFechar;
+    private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblGravar;
+    private javax.swing.JLabel lblMinimiza;
     // End of variables declaration//GEN-END:variables
 }

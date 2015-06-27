@@ -5,23 +5,32 @@
  */
 package gerenciador.funcionario;
 
+import gerenciador.telas.ultilidades.Data;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Raiane
  */
 public class AlteraFuncionarioGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AlteraFuncionario
-     */
+    String formatohora = "HH:mm:ss";
+    SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
+    Data data = new Data();
+
     public AlteraFuncionarioGUI() {
         initComponents();
+        tmrHora.setDelay(1000);
+        tmrHora.start();
+        lblData.setText(Data.mostraData());
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tmrHora = new org.netbeans.examples.lib.timerbean.Timer();
         lblAnterior = new javax.swing.JLabel();
         lblEdita = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
@@ -92,6 +101,12 @@ public class AlteraFuncionarioGUI extends javax.swing.JFrame {
         sexo_fem = new javax.swing.JRadioButton();
         lblPesquisa = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
+
+        tmrHora.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
+            public void onTime(java.awt.event.ActionEvent evt) {
+                tmrHoraOnTime(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -726,6 +741,11 @@ public class AlteraFuncionarioGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void tmrHoraOnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmrHoraOnTime
+        Date le_hora = new Date();
+        lblHora.setText(horaformatada.format(le_hora));
+    }//GEN-LAST:event_tmrHoraOnTime
+
     /**
      * @param args the command line arguments
      */
@@ -819,6 +839,7 @@ public class AlteraFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JPanel paInfAdicionais;
     private javax.swing.JRadioButton sexo_fem;
     private javax.swing.JRadioButton sexo_masc;
+    private org.netbeans.examples.lib.timerbean.Timer tmrHora;
     private javax.swing.JTextField txCPF;
     private javax.swing.JTextField txCalAvaliacao;
     private javax.swing.JTextField txCalExame;

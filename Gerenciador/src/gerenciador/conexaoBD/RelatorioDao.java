@@ -5,15 +5,20 @@
  */
 package gerenciador.conexaoBD;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import static org.codehaus.groovy.runtime.DefaultGroovyStaticMethods.start;
 
 /**
  *
@@ -38,11 +43,14 @@ public class RelatorioDao {
             rs = novoStmt.executeQuery();
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
             JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    "\\Relatorio\\RelatorioAluno.jasper\"", new HashMap(), jrRS);
+                    "/Relatorio/RelatorioAluno.jasper", new HashMap(), jrRS);
             JasperViewer.viewReport(jasperPrint);
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, "deu erro =" + erro);
+            JOptionPane.showMessageDialog(null, "deu erro = " + erro);
         }
     }
+
+
+
 
 }

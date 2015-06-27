@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -79,7 +80,36 @@ public class AlunoDao {
         return estadoCivil;
     }
 
- 
+    public void insertAuluno(Aluno aluno) throws SQLException {
+        String sql = ("call academia.insertAluno(?,?,?,?,?,?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, aluno.getEmail());
+            novoStmt.setString(2, aluno.getRG());
+            novoStmt.setString(3, aluno.getDataNascimento());
+            novoStmt.setString(4, aluno.getDataNascimento());
+            novoStmt.setString(5, aluno.getEmail());
+            novoStmt.setString(6, "" + aluno.getSexo());
+// novoStmt.setInt(7, aluno.get);
+// novoStmt.setString(1, id int,
+// novoStmt.setString(1, pes_id int,
+//// novoStmt.setString(1,em_id int, in data_matricula date,
+// novoStmt.setString(1, dia_venc_mensal int,
+// novoStmt.setString(1, observacoes varchar(200),
+// novoStmt.setString(1, validade_exame date,
+// novoStmt.setString(1,validade_avaliacao date,
+// novoStmt.setString(1, rua_cep int,
+// novoStmt.setString(1,complemento varchar(100),
+// novoStmt.setString(1, num  varchar(8))
+
+            novoStmt.execute();
+            JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public void getAlunos(JTable tblAluno, String nome, String matricula) throws SQLException {
         String sql = ("call academia.getPessoaNomeORCpf(?,?);");
         try ( // prepared statement para inserção
@@ -123,5 +153,3 @@ public class AlunoDao {
 
     }
 }
-
-

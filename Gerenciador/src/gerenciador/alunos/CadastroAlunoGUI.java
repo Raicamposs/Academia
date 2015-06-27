@@ -12,7 +12,10 @@ import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.responsavel.CadastroResponsavelGUI;
 import gerenciador.responsavel.Responsavel;
+import gerenciador.telas.ultilidades.Data;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +33,9 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private AlunoDao conAluno;
     private ResponsavelDao conResponsavel;
     Aluno aluno;
+    String formatohora = "HH:mm:ss";
+    SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
+    Data data = new Data();
     Responsavel responsavel;
     Iterator iteratorEstado;
     private char sexo;
@@ -39,6 +45,9 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setUndecorated(true);
         initComponents();
+        tmrHora.setDelay(1000);
+        tmrHora.start();
+        lblData.setText(Data.mostraData());
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         edtNome.grabFocus();
         conAluno = new AlunoDao();
@@ -74,6 +83,20 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void setCbmEndereco() throws SQLException {
+        cmbEndereco.removeAllItems();
+        try {
+            Iterator iteratorEndereco = conEndereco.getArrayRua((String) cmbBairro.getSelectedItem()).iterator();
+            while (iteratorEndereco.hasNext()) {
+                cmbEndereco.addItem(String.valueOf(iteratorEndereco.next()));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     private void setCbmCidade() throws SQLException {
@@ -143,8 +166,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         rbdGrupoSexo = new javax.swing.ButtonGroup();
+        tmrHora = new org.netbeans.examples.lib.timerbean.Timer();
         lblCadastra = new javax.swing.JLabel();
         lblVoltar = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        lblHora = new javax.swing.JLabel();
         lblNovo = new javax.swing.JLabel();
         pnlPrincipal = new javax.swing.JTabbedPane();
         pnlDados = new javax.swing.JPanel();
@@ -160,7 +186,6 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         edtTelRes = new JFormattedTextField(formatoFone);
         edtNome = new javax.swing.JTextField();
         lblEndereco = new javax.swing.JLabel();
-        edtEndereco = new javax.swing.JTextField();
         lblIdentidade = new javax.swing.JLabel();
         try {      formatoRg = new MaskFormatter("#####.###-#");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para RG, "+erro); }
         edtIdentidade = new JFormattedTextField(formatoRg);
@@ -187,6 +212,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         edtDataNascimento = new JFormattedTextField(formatoData);
         lblEstadoCivil = new javax.swing.JLabel();
         cmbEstadoCivil = new javax.swing.JComboBox();
+        cmbEndereco = new javax.swing.JComboBox();
         pnlSexo = new javax.swing.JPanel();
         lblSexo = new javax.swing.JLabel();
         rdbSexoMasc = new javax.swing.JRadioButton();
@@ -240,6 +266,12 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         lblSetRG = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
+        tmrHora.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
+            public void onTime(java.awt.event.ActionEvent evt) {
+                tmrHoraOnTime(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -255,6 +287,16 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lblVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 658, 120, 42));
+
+        lblData.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
+        lblData.setForeground(new java.awt.Color(255, 255, 255));
+        lblData.setText("...");
+        getContentPane().add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 736, 320, 20));
+
+        lblHora.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
+        lblHora.setForeground(new java.awt.Color(255, 255, 255));
+        lblHora.setText("...");
+        getContentPane().add(lblHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 736, 140, 20));
         getContentPane().add(lblNovo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 652, 120, 50));
 
         pnlPrincipal.setBackground(new java.awt.Color(153, 255, 153));
@@ -270,8 +312,6 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         edtNome.setSelectionColor(new java.awt.Color(0, 153, 0));
 
         lblEndereco.setText("Endereço");
-
-        edtEndereco.setSelectionColor(new java.awt.Color(0, 153, 0));
 
         lblIdentidade.setText("Identidade");
 
@@ -301,14 +341,21 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
 
         cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        cmbEndereco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmbEnderecoFocusGained(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlInformacoesLayout = new javax.swing.GroupLayout(pnlInformacoes);
         pnlInformacoes.setLayout(pnlInformacoesLayout);
         pnlInformacoesLayout.setHorizontalGroup(
             pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(edtEndereco)
+                    .addComponent(cmbEndereco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlInformacoesLayout.createSequentialGroup()
                         .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblIdentidade)
@@ -380,16 +427,16 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(lblEndereco)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
-                        .addComponent(lblEndereco)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTelResidencial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
                         .addComponent(lblTelCelular)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -917,6 +964,19 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbBairroFocusGained
 
+    private void cmbEnderecoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbEnderecoFocusGained
+        try {
+            setCbmEndereco();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbEnderecoFocusGained
+
+    private void tmrHoraOnTime(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tmrHoraOnTime
+        Date le_hora = new Date();
+        lblHora.setText(horaformatada.format(le_hora));
+    }//GEN-LAST:event_tmrHoraOnTime
+
     /**
      * @param args the command line arguments
      */
@@ -961,6 +1021,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox chbMenorIdade;
     private javax.swing.JComboBox cmbBairro;
     private javax.swing.JComboBox cmbCidade;
+    private javax.swing.JComboBox cmbEndereco;
     private javax.swing.JComboBox cmbEstado;
     private javax.swing.JComboBox cmbEstadoCivil;
     private javax.swing.JComboBox cmbPacote1;
@@ -971,7 +1032,6 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField edtDataNascimento;
     private javax.swing.JTextField edtDiaVencimaento;
     private javax.swing.JTextField edtEmail;
-    private javax.swing.JTextField edtEndereco;
     private javax.swing.JTextField edtIdentidade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextArea edtObs;
@@ -989,6 +1049,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblCpfResponsavel;
+    private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDataNascimento;
     private javax.swing.JLabel lblDiaVencimaento;
     private javax.swing.JLabel lblEmail;
@@ -996,6 +1057,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblEstadoCivil;
     private javax.swing.JLabel lblExame;
     private javax.swing.JLabel lblFundo;
+    private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblIdentidade;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNomeResponsavel;
@@ -1024,6 +1086,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup rbdGrupoSexo;
     private javax.swing.JRadioButton rdbSexoFem;
     private javax.swing.JRadioButton rdbSexoMasc;
+    private org.netbeans.examples.lib.timerbean.Timer tmrHora;
     private javax.swing.JTextField txCalAvaliacao;
     private javax.swing.JTextField txCalExame;
     // End of variables declaration//GEN-END:variables
