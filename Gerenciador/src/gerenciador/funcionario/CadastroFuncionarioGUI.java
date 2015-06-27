@@ -98,11 +98,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     private void setCbmEstado() throws SQLException {
         cmbEstado.removeAllItems();
+
         try {
             iteratorEstado = conEndereco.getArrayEstados().iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        iteratorEstado = conEndereco.getArrayEstados().iterator();
+
         while (iteratorEstado.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
