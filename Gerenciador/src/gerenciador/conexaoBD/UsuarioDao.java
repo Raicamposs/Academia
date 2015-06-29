@@ -52,11 +52,14 @@ public class UsuarioDao {
 
                 rs = novoStmt.executeQuery();
                 if (rs.first()) {
+                    if(rs.getString("login").equalsIgnoreCase(usuario)&& rs.getString("senha").equalsIgnoreCase(senha)){
                     setUsuarioLogado(
                             rs.getString("nome"),
                             rs.getInt("nivel_acesso"));
-                    novoStmt.close();
-                    return true;
+                    novoStmt.close();return true;
+                    } else {
+                        return false;
+                    }
                 }
 
             }

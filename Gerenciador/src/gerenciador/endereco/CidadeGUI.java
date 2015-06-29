@@ -19,7 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class CidadeGUI extends javax.swing.JFrame {
 
-    EnderecoDao con;
+    private EnderecoDao con;
+    private String estado;
 
     public CidadeGUI() {
         initComponents();
@@ -27,6 +28,11 @@ public class CidadeGUI extends javax.swing.JFrame {
         this.setLocation(500, 300);
         con = new EnderecoDao();
     }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +61,7 @@ public class CidadeGUI extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 100, -1));
+        getContentPane().add(cmbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 130, -1));
 
         lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -117,13 +123,16 @@ public class CidadeGUI extends javax.swing.JFrame {
         Iterator iteratorCidade = null;
         try {
             iteratorCidade = con.getArrayEstados().iterator();
+
+            while (iteratorCidade.hasNext()) {
+                cmbEstado.addItem(String.valueOf(iteratorCidade.next()));
+            }
+            if (con.getArrayEstados().contains(estado)) {
+                cmbEstado.setSelectedItem(estado);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        while (iteratorCidade.hasNext()) {
-            cmbEstado.addItem(String.valueOf(iteratorCidade.next()));
-        }
-         cmbEstado.setSelectedItem("ES");
     }//GEN-LAST:event_formComponentShown
 
     private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked

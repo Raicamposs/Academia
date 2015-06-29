@@ -5,7 +5,7 @@
  */
 package gerenciador.conexaoBD;
 
-import gerenciador.alunos.Aluno;
+
 import gerenciador.aula.Aula;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

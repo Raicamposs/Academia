@@ -7,6 +7,7 @@ package gerenciador.endereco;
 
 import gerenciador.aula.CadastroAulaGUI;
 import gerenciador.conexaoBD.EnderecoDao;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -19,13 +20,18 @@ import javax.swing.JOptionPane;
  */
 public class BairroGUI extends javax.swing.JFrame {
 
-    EnderecoDao con;
+    private EnderecoDao con;
+    private String estado;
 
     public BairroGUI() {
         initComponents();
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         this.setLocation(500, 300);
         con = new EnderecoDao();
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     /**
@@ -133,10 +139,9 @@ public class BairroGUI extends javax.swing.JFrame {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         cmbCidade.removeAllItems();
-
         Iterator iteratorCidade = null;
         try {
-            iteratorCidade = con.getArrayCidade("es").iterator();
+            iteratorCidade = con.getArrayCidade(estado).iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -144,7 +149,7 @@ public class BairroGUI extends javax.swing.JFrame {
             cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
         }
         try {
-            if (con.getArrayCidade("mg").contains("Guarapari")) {
+            if (con.getArrayCidade(estado).contains("Guarapari")) {
                 cmbCidade.setSelectedItem("Guarapari");
             }
         } catch (SQLException ex) {
@@ -158,6 +163,8 @@ public class BairroGUI extends javax.swing.JFrame {
 
             try {
                 con.insertBairro(edtNome.getText(), (String) cmbCidade.getSelectedItem());
+                cmbCidade.removeAllItems();
+                this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroAulaGUI.class.getName()).log(Level.SEVERE, null, ex);
             }

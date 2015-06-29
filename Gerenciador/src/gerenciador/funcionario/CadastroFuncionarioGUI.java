@@ -5,12 +5,14 @@
  */
 package gerenciador.funcionario;
 
+import gerenciador.alunos.CadastroAlunoGUI;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
 
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.FuncionarioDao;
+import gerenciador.pessoa.EstadoCivil;
 import gerenciador.telas.ultilidades.Data;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -90,27 +92,12 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         }
     }
 
-    private void setCbmCidade() throws SQLException {
-        cmbCidade.removeAllItems();
-        try {
-            iteratorEstado = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
-        } catch (SQLException ex) {
-            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        while (iteratorEstado.hasNext()) {
-            cmbCidade.addItem(String.valueOf(iteratorEstado.next()));
-        }
-        if (conEndereco.getArrayBairro((String) cmbEstado.getSelectedItem()).contains("Guarapari")) {
-            cmbCidade.setSelectedItem("Guarapari");
-        }
-    }
-
     private void setCbmEndereco() throws SQLException {
         cmbEndereco.removeAllItems();
         try {
-            Iterator iteratorEndereco = conEndereco.getArrayRua((String) cmbEstado.getSelectedItem()).iterator();
+            Iterator iteratorEndereco = conEndereco.getArrayRua((String) cmbBairro.getSelectedItem()).iterator();
             while (iteratorEndereco.hasNext()) {
-                cmbEndereco.addItem(String.valueOf(iteratorEstado.next()));
+                cmbEndereco.addItem(String.valueOf(iteratorEndereco.next()));
             }
 
         } catch (SQLException ex) {
@@ -119,23 +106,69 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     }
 
-    private void setCbmEstado() throws SQLException {
-        cmbEstado.removeAllItems();
+    private void setCbmCidade() throws SQLException {
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        Iterator iteratorCidade = null;
+        try {
+            iteratorCidade = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (iteratorCidade.hasNext()) {
+            cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
+        }
+        if (conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).contains("Guarapari")) {
+            cmbCidade.setSelectedItem("Guarapari");
+        }
+        setCbmBairro();
+    }
 
+    private void setCbmBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        Iterator iteratorBairro;
+
+        try {
+            iteratorBairro = conEndereco.getArrayBairro((String) cmbCidade.getSelectedItem()).iterator();
+            if (iteratorBairro.hasNext()) {
+                while (iteratorBairro.hasNext()) {
+                    cmbBairro.addItem(String.valueOf(iteratorBairro.next()));
+                }
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, e);
+        }
+        setCbmEndereco();
+    }
+
+    private void setCbmEstado() throws SQLException {
+
+        cmbEstado.removeAllItems();
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
         try {
             iteratorEstado = conEndereco.getArrayEstados().iterator();
         } catch (SQLException ex) {
             Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        iteratorEstado = conEndereco.getArrayEstados().iterator();
-
         while (iteratorEstado.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
         if (conEndereco.getArrayEstados().contains("Espírito Santo")) {
-            cmbCidade.setSelectedItem("Espírito Santo");
+            cmbEstado.setSelectedItem("Espírito Santo");
         }
+        setCbmCidade();
+    }
+
+    private void atualizaCbmEstado() throws SQLException {
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        setCbmCidade();
     }
 
     /**
@@ -297,14 +330,29 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         lblBairro.setText("Bairro");
 
-        cmbBairro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBairro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione ...", "Item 2", "Item 3", "Item 4" }));
+        cmbBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBairroActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Estado");
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 1", "Item 2", "Selecione...", "Item 4" }));
         cmbEstado.setSelectedIndex(6);
+        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoActionPerformed(evt);
+            }
+        });
 
-        cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione ...", "Item 2", "Item 3", "Item 4" }));
+        cmbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCidadeActionPerformed(evt);
+            }
+        });
 
         lblCidade.setText("Cidade");
 
@@ -429,7 +477,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         lblFoneCel.setText("Fone Cel.:");
 
-        cmbEndereco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEndereco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione ...", "Item 2", "Item 3", "Item 4" }));
         cmbEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmbEnderecoFocusGained(evt);
@@ -896,11 +944,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblVoltarMouseClicked
 
     private void btnNovaCidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaCidadeMouseClicked
-        new CidadeGUI().setVisible(true);
+        CidadeGUI cidade = new CidadeGUI();
+        cidade.setEstado((String) cmbEstado.getSelectedItem());
+        cidade.setVisible(true);
     }//GEN-LAST:event_btnNovaCidadeMouseClicked
 
     private void btnNovaBairroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaBairroMouseClicked
-        new BairroGUI().setVisible(true);
+        BairroGUI bairro = new BairroGUI();
+        bairro.setEstado((String) cmbEstado.getSelectedItem());
+        bairro.setVisible(true);
     }//GEN-LAST:event_btnNovaBairroMouseClicked
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -938,7 +990,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_edtTelResActionPerformed
 
     private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
-        funcionario = new Funcionario(1, cmbEstadoCivil.getSelectedIndex(), edtCpf.getText(), txIdentidade.getText(),
+        EstadoCivil estadoCivil = new EstadoCivil(((String) cmbEstadoCivil.getSelectedItem()), (cmbEstadoCivil.getSelectedIndex() + 1));
+        funcionario = new Funcionario(estadoCivil, edtCpf.getText(), txIdentidade.getText(),
                 tedtNome.getText(), edtDataNascimento.getText(), edtEmail.getText(), sexo, turno, edtCnt.getText(),
                 funcao, Float.parseFloat(edtSalario.getText()));
 
@@ -966,7 +1019,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     private void cmbEnderecoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbEnderecoFocusGained
         try {
-            setCbmEndereco() ;
+            setCbmEndereco();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -976,6 +1029,30 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         Date le_hora = new Date();
         lblHora.setText(horaformatada.format(le_hora));
     }//GEN-LAST:event_tmrHoraOnTime
+
+    private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
+        try {
+            setCbmBairro();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbCidadeActionPerformed
+
+    private void cmbBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBairroActionPerformed
+        try {
+            setCbmEndereco();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbBairroActionPerformed
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        try {
+            setCbmCidade();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbEstadoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

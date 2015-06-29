@@ -24,14 +24,37 @@ public class EnderecoDao {
     private PreparedStatement stmt;
     private ResultSet rs;
     private Endereco endereco;
-    ArrayList cidades, estados, bairro, rua;
+    private ArrayList cidades, estados, bairro, rua;
+    private final String texto = "Sem Registros!";
 
     public EnderecoDao() {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
     }
 
+    public void selectEndereco(int cep) throws SQLException {
+        String sql = ("call getEnderecoCompleto(?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            // seta os valores
+            novoStmt.setInt(1, cep);
+            // executa
+
+            rs = novoStmt.executeQuery();
+
+            if (rs.first()) {
+                endereco = new Endereco(rs.getString("rua"), rs.getInt("CEP"),
+                        rs.getInt("rua"), rs.getInt("rua"), rs.getString("Estado"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public void selectEstado() throws SQLException {
         String sql = ("call academia.getEstado;");
+        estados = new ArrayList<>();
         try {
             // seta os valores
             try ( // prepared statement para inserção
@@ -39,7 +62,7 @@ public class EnderecoDao {
                 rs = novoStmt.executeQuery();
 
                 if (rs.first()) {
-                    estados = new ArrayList<>();
+
                     while (rs.next()) {
                         estados.add(rs.getString("est_nome"));
 
@@ -59,6 +82,7 @@ public class EnderecoDao {
 
     public void getCidades(String uf) throws SQLException {
         String sql = ("call academia.getCidade(?);");
+        cidades = new ArrayList<>();
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores
@@ -68,17 +92,19 @@ public class EnderecoDao {
             rs = novoStmt.executeQuery();
 
             if (rs.first()) {
-                cidades = new ArrayList<>();
+
                 while (rs.next()) {
                     cidades.add(rs.getString("cid_nome"));
                 }
             } else {
 
-                cidades.add("Sem Registros");
+                cidades.add(texto);
 
             }
         } catch (SQLException e) {
+            cidades.add(texto);
             throw new RuntimeException(e);
+
         }
 
     }
@@ -89,6 +115,7 @@ public class EnderecoDao {
     }
 
     public void getBairro(String cidade) throws SQLException {
+        bairro = new ArrayList<>();
         String sql = ("call academia.getBairro(?)");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
@@ -99,12 +126,16 @@ public class EnderecoDao {
             rs = novoStmt.executeQuery();
 
             if (rs.first()) {
-                bairro = new ArrayList<>();
                 while (rs.next()) {
                     bairro.add(rs.getString("bai_nome"));
                 }
+            } else {
+
+                bairro.add(texto);
+
             }
         } catch (SQLException e) {
+            bairro.add(texto);
             throw new RuntimeException(e);
         }
 
@@ -124,21 +155,27 @@ public class EnderecoDao {
             // executa
 
             rs = novoStmt.executeQuery();
-
+            rua = new ArrayList<>();
             if (rs.first()) {
-                rua = new ArrayList<>();
+
                 while (rs.next()) {
+
                     rua.add(rs.getString("rua_nome"));
                 }
+            } else {
+
+                rua.add(texto);
+
             }
         } catch (SQLException e) {
+            rua.add(texto);
             throw new RuntimeException(e);
         }
 
     }
 
     public ArrayList getArrayRua(String bairro) throws SQLException {
-        getBairro(bairro);
+        getRua(bairro);
         return rua;
     }
 

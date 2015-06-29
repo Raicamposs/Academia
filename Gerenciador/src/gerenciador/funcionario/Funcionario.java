@@ -1,5 +1,6 @@
 package gerenciador.funcionario;
 
+import gerenciador.pessoa.EstadoCivil;
 import gerenciador.pessoa.Pessoa;
 
 
@@ -18,7 +19,6 @@ public class Funcionario extends Pessoa {
 
     /**
      *
-     * @param id
      * @param estadoCivil
      * @param cpf
      * @param rg
@@ -31,11 +31,11 @@ public class Funcionario extends Pessoa {
      * @param funcao
      * @param salario
      */
-    public Funcionario(int id, int estadoCivil, String cpf, String rg, String nome,
+    public Funcionario(EstadoCivil estadoCivil, String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo, Turno turno, String cnt, Funcao funcao, float salario) {
         super( estadoCivil, cpf, rg, nome, dataNascimento, email, sexo);
 
-        this.id = id;
+      
         this.funcao = funcao.getId();
         this.turno = turno.getId();
         this.cnt = cnt;

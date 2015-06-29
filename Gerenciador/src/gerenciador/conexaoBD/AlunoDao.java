@@ -81,27 +81,26 @@ public class AlunoDao {
     }
 
     public void insertAuluno(Aluno aluno) throws SQLException {
-        String sql = ("call academia.insertAluno(?,?,?,?,?,?);");
+        String sql = ("call academia.insertAluno("
+                + "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
-            novoStmt.setString(1, aluno.getEmail());
+            novoStmt.setString(1, aluno.getNome());
             novoStmt.setString(2, aluno.getRG());
-            novoStmt.setString(3, aluno.getDataNascimento());
+            novoStmt.setString(3, aluno.getCpf());
             novoStmt.setString(4, aluno.getDataNascimento());
             novoStmt.setString(5, aluno.getEmail());
             novoStmt.setString(6, "" + aluno.getSexo());
-// novoStmt.setInt(7, aluno.get);
-// novoStmt.setString(1, id int,
-// novoStmt.setString(1, pes_id int,
-//// novoStmt.setString(1,em_id int, in data_matricula date,
-// novoStmt.setString(1, dia_venc_mensal int,
-// novoStmt.setString(1, observacoes varchar(200),
-// novoStmt.setString(1, validade_exame date,
-// novoStmt.setString(1,validade_avaliacao date,
-// novoStmt.setString(1, rua_cep int,
-// novoStmt.setString(1,complemento varchar(100),
-// novoStmt.setString(1, num  varchar(8))
-
+            novoStmt.setInt(7, aluno.getEstadoCivil().getId());
+            novoStmt.setInt(8, aluno.getEstadoMatricula());
+            novoStmt.setString(9, aluno.getDataMatricula());
+            novoStmt.setInt(10, Integer.parseUnsignedInt(aluno.getVencimento()));
+            novoStmt.setString(11, aluno.getObservacao());
+            novoStmt.setString(12, aluno.getDataExame());
+            novoStmt.setString(13, aluno.getDataAvaliacao());
+            novoStmt.setInt(14, aluno.getEndereco().getCEP());
+            novoStmt.setString(15, aluno.getEndereco().getComplemento());
+            novoStmt.setInt(16, aluno.getEndereco().getNumero());
             novoStmt.execute();
             JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
         } catch (SQLException e) {

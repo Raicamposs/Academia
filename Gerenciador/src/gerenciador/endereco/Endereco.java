@@ -11,38 +11,52 @@ package gerenciador.endereco;
  */
 public class Endereco extends Bairro {
 
-    private String endereco, cep;
-    private int id;
+    private String rua, complemento;
+    private int numero, cep;
 
-    public Endereco(String endereco, String cep, int id, int bairroId, int cidadeId, String estadoUf) {
+    public Endereco(String endereco, int cep, int bairroId, int cidadeId, String estadoUf) {
         super(bairroId, cidadeId, estadoUf);
-        this.endereco = endereco;
+        this.rua = endereco;
         this.cep = cep;
-        this.id = id;
     }
 
-    public Endereco(int id, String endereco, String cep, int bairroId, int cidadeId, String estadoUf) {
+    public Endereco(int id, String endereco, int cep, int bairroId, int cidadeId, String estadoUf) {
         super(bairroId, cidadeId, estadoUf);
-        this.endereco = endereco;
+        this.rua = endereco;
         this.cep = cep;
-        this.id = id;
 
     }
 
-    public String getEndereco() {
-        return this.endereco;
+    public String getRua() {
+        return this.rua;
     }
 
-    public String getCEP() {
+    public int getCEP() {
         return this.cep;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setRua(String endereco) {
+        this.rua = endereco;
     }
 
-    public void setCEP(String cep) {
+    public void setCEP(int cep) {
         this.cep = cep;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public int getNumero() {
+        return numero;
     }
 
 }
