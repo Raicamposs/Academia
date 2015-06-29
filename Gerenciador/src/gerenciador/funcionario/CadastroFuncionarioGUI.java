@@ -9,7 +9,6 @@ import gerenciador.alunos.CadastroAlunoGUI;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
-
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.FuncionarioDao;
 import gerenciador.pessoa.EstadoCivil;
@@ -54,6 +53,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         pnlCadastrar.setVisible(false);
         conEndereco = new EnderecoDao();
         conFuncionario = new FuncionarioDao();
+        edtCep.setEditable(false);
     }
 
     private void setCbmFuncao() throws SQLException {
@@ -481,6 +481,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         cmbEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmbEnderecoFocusGained(evt);
+            }
+        });
+        cmbEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEnderecoActionPerformed(evt);
             }
         });
 
@@ -1053,6 +1058,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cmbEstadoActionPerformed
+
+    private void cmbEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEnderecoActionPerformed
+        try {
+            if (cmbEndereco.getSelectedIndex() >= 0) {
+                edtCep.setText((String) conEndereco.getCep().get(cmbEndereco.getSelectedIndex()));
+            }
+        } catch (NullPointerException e) {
+        }
+    }//GEN-LAST:event_cmbEnderecoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

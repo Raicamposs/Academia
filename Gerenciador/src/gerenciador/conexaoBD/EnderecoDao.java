@@ -24,7 +24,7 @@ public class EnderecoDao {
     private PreparedStatement stmt;
     private ResultSet rs;
     private Endereco endereco;
-    private ArrayList cidades, estados, bairro, rua;
+    private ArrayList cidades, estados, bairro, rua, cep;
     private final String texto = "Sem Registros!";
 
     public EnderecoDao() {
@@ -148,6 +148,8 @@ public class EnderecoDao {
 
     public void getRua(String bairro) throws SQLException {
         String sql = ("call academia.getRua(?)");
+        rua = new ArrayList<>();
+        cep = new ArrayList<>();
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores
@@ -155,23 +157,28 @@ public class EnderecoDao {
             // executa
 
             rs = novoStmt.executeQuery();
-            rua = new ArrayList<>();
+
             if (rs.first()) {
 
                 while (rs.next()) {
-
+                    cep.add(rs.getString("rua_cep"));
                     rua.add(rs.getString("rua_nome"));
                 }
             } else {
-
+                cep.add("0000000");
                 rua.add(texto);
 
             }
         } catch (SQLException e) {
             rua.add(texto);
+            cep.add("0000000");
             throw new RuntimeException(e);
         }
 
+    }
+
+    public ArrayList getCep() {
+        return cep;
     }
 
     public ArrayList getArrayRua(String bairro) throws SQLException {

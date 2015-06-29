@@ -57,6 +57,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         conResponsavel = new ResponsavelDao();
         pnlResponsavel.setVisible(false);
         pnlDadosResponsavel.setVisible(false);
+        edtCep.setEditable(false);
 
     }
 
@@ -391,6 +392,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         cmbEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 cmbEnderecoFocusGained(evt);
+            }
+        });
+        cmbEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEnderecoActionPerformed(evt);
             }
         });
 
@@ -1052,6 +1058,15 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cmbEstadoActionPerformed
+
+    private void cmbEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEnderecoActionPerformed
+        try {
+            if (cmbEndereco.getSelectedIndex() >= 0) {
+                edtCep.setText((String) conEndereco.getCep().get(cmbEndereco.getSelectedIndex()));
+            }
+        } catch (NullPointerException e) {
+        }
+    }//GEN-LAST:event_cmbEnderecoActionPerformed
 
     /**
      * @param args the command line arguments
