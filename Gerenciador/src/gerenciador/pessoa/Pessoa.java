@@ -26,13 +26,14 @@ public abstract class Pessoa extends Telefones {
         this.rg = rg;
         this.nome = nome;
         this.email = email;
+        estadoCivil = new EstadoCivil();
     }
 
     // Declaração do construtor da classe Pessoa
-    public Pessoa(EstadoCivil estadoCivil, String cpf, String rg, String nome,
+    public Pessoa(String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
 
-        this.estadoCivil = estadoCivil;
+        estadoCivil = new EstadoCivil();
         this.cpf = cpf;
         this.rg = rg;
         this.nome = nome;

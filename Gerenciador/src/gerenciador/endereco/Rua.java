@@ -13,7 +13,10 @@ public class Rua {
      
     private int ruaCep;
     private String ruaNome;
- 
+
+    public Rua() {
+    }
+
 
     // Declaração do construtor da classe rua//
     public Rua(int ruaCep, String ruaNome) {

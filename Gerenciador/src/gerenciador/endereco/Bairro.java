@@ -16,6 +16,9 @@ public class Bairro extends Cidade {
     private int id;
     private String nome;
 
+    public Bairro() {
+
+    }
 
     public Bairro(int bairroId, int cidadeId, String estadoUf) {
         super(cidadeId, estadoUf);

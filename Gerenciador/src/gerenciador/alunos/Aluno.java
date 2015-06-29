@@ -6,7 +6,6 @@
 package gerenciador.alunos;
 
 import gerenciador.endereco.Endereco;
-import gerenciador.pessoa.EstadoCivil;
 import gerenciador.pessoa.Pessoa;
 
 /**
@@ -20,9 +19,10 @@ public class Aluno extends Pessoa {
     private Endereco endereco;
     private int  estadoMatricula = 1;
 
-    public Aluno(EstadoCivil estadoCivil, String cpf, String rg, String nome,
+    public Aluno(String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
-        super(estadoCivil, cpf, rg, nome, dataNascimento, email, sexo);
+        super(cpf, rg, nome, dataNascimento, email, sexo);
+        endereco = new Endereco();
     }
 
     public void setDataAvaliacao(String dataAvaliacao) {

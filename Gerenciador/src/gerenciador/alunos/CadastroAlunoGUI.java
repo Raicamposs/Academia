@@ -5,7 +5,7 @@
  */
 package gerenciador.alunos;
 
-import gerenciador.pessoa.EstadoCivil;
+
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.AlunoDao;
 import gerenciador.conexaoBD.ResponsavelDao;
@@ -40,7 +40,6 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private Responsavel responsavel;
     private Iterator iteratorEstado;
     private char sexo;
-    private EstadoCivil estadoCivil;
     private MaskFormatter formatoCpf, formatoRg, formatoDataVencimento, formatoCep, formatoCel, formatoFone, formatoData;
 
     public CadastroAlunoGUI() {
@@ -62,20 +61,25 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     }
 
     private void cadastra() {
-        estadoCivil = new EstadoCivil(((String) cmbEstadoCivil.getSelectedItem()), (cmbEstadoCivil.getSelectedIndex() + 1));
-        aluno = new Aluno(estadoCivil, edtCPF.getText(),
-                edtIdentidade.getText(), edtNome.getText(), edtDataNascimento.getText(),
-                edtEmail.getText(), sexo);
-        aluno.setFoneCelular(edtCel.getText());
-        aluno.setFoneResidencial(edtTelRes.getText());
-        aluno.setVencimento(edtDiaVencimaento.getText());
-        aluno.setDataNascimento(edtDataNascimento.getText());
-        aluno.setObservacao(edtObs.getText());
-        aluno.setDataAvaliacao(edtDataAvaliacao.getText());
-        aluno.setDataExame(edtDataExame.getText());
-        aluno.getEndereco().setRua((String) cmbEndereco.getSelectedItem());
-        aluno.getEndereco().setComplemento(edtComplemento.getText());
-        aluno.getEndereco().setNumero(Integer.parseUnsignedInt(edtNumero.getText()));
+        if (gerenciador.pessoa.ValidaCpf.validador(edtCPF.getText())) {
+
+            aluno = new Aluno(gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtCPF.getText()),
+                    gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtIdentidade.getText()), edtNome.getText(),
+                    gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataNascimento.getText()), edtEmail.getText(), sexo);
+            aluno.setFoneCelular(edtCel.getText());
+            aluno.setFoneResidencial(edtTelRes.getText());
+            aluno.setVencimento(edtDiaVencimaento.getText());
+            aluno.setObservacao(edtObs.getText());
+            aluno.setDataAvaliacao(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataAvaliacao.getText()));
+            aluno.setDataExame(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataExame.getText()));
+            aluno.getEndereco().setCEP(Integer.parseInt(edtCep.getText().replace("-", "")));
+            aluno.getEndereco().setRua((String) cmbEndereco.getSelectedItem());
+            aluno.getEndereco().setComplemento(edtComplemento.getText());
+            aluno.getEndereco().setNumero(edtNumero.getText());
+            aluno.getEstadoCivil().setDescricao((String) cmbEstadoCivil.getSelectedItem());
+            aluno.getEstadoCivil().setId((cmbEstadoCivil.getSelectedIndex() + 1));
+            aluno.setDataMatricula(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(lblData.getText()));
+        }
 
     }
 
@@ -1041,12 +1045,13 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_edtNumeroActionPerformed
 
     private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
-//        try {
-        cadastra();
-//            conAluno.insertAuluno(aluno);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            cadastra();
+
+            conAluno.insertAuluno(aluno);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         System.out.println(aluno.toString());
     }//GEN-LAST:event_lblCadastraMouseClicked

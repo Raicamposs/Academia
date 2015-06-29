@@ -20,6 +20,9 @@ public class EstadoCivil {
     private int id;
     private String descricao;
 
+    public EstadoCivil() {
+    }
+
     // Declaração do construtor da classe Estado Civil
     public EstadoCivil(String descricao, int id) {
 

@@ -12,21 +12,26 @@ import jdk.nashorn.internal.runtime.JSType;
  *
  * @author Raiane Campos
  */
-public class ValidaCpf {
+public abstract class ValidaCpf {
 
-    public void ExercicioNumero6(String cpf) {
+    public static boolean validador(String cpf) {
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
         if (cpfParseString(cpf)) {
             String digitosFinais = "" + calculoDigito(dvCpf(10, cpf)) + calculoDigito(dvCpf(11, cpf));
             if (cpf.endsWith(digitosFinais)) {
-                JOptionPane.showMessageDialog(null, "Cpf Valido!");
+                return true;
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Cpf Invalido!");
+                return false;
             }
 
         }
+        return false;
     }
 
-    private boolean cpfParseString(String numCpf) {
+    private static boolean cpfParseString(String numCpf) {
         Boolean confere = false;
         while (!confere == true) {
 
@@ -47,7 +52,7 @@ public class ValidaCpf {
         return true;
     }
 
-    private int dvCpf(int num, String numCpf) {
+    private static int dvCpf(int num, String numCpf) {
 
         int j = num;
         int soma = 0;
@@ -63,7 +68,7 @@ public class ValidaCpf {
 
     }
 
-    private int calculoDigito(int sm) {
+    private static int calculoDigito(int sm) {
         return 11 - (sm % 11);
     }
 }

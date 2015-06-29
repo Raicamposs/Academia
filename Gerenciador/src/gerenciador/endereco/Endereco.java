@@ -11,8 +11,12 @@ package gerenciador.endereco;
  */
 public class Endereco extends Bairro {
 
-    private String rua, complemento;
-    private int numero, cep;
+    private String rua,numero, complemento;
+    private int  cep;
+
+    public Endereco() {
+    }
+
 
     public Endereco(String endereco, int cep, int bairroId, int cidadeId, String estadoUf) {
         super(bairroId, cidadeId, estadoUf);
@@ -43,7 +47,7 @@ public class Endereco extends Bairro {
         this.cep = cep;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -55,7 +59,7 @@ public class Endereco extends Bairro {
         return complemento;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 

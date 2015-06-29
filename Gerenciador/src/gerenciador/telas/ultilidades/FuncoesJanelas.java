@@ -21,7 +21,7 @@ import javax.swing.JFrame;
  *
  * @author Raiane
  */
-public class FuncoesJanelas {
+public abstract class FuncoesJanelas {
 
     public static void navegador(String url, JFrame frame) {
         try {
@@ -38,4 +38,5 @@ public class FuncoesJanelas {
         Image imagemTitulo = Toolkit.getDefaultToolkit().getImage(url);
         frame.setIconImage(imagemTitulo);
     }
+
 }

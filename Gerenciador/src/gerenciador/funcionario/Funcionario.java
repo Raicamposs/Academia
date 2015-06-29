@@ -33,7 +33,7 @@ public class Funcionario extends Pessoa {
      */
     public Funcionario(EstadoCivil estadoCivil, String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo, Turno turno, String cnt, Funcao funcao, float salario) {
-        super( estadoCivil, cpf, rg, nome, dataNascimento, email, sexo);
+        super(  cpf, rg, nome, dataNascimento, email, sexo);
 
       
         this.funcao = funcao.getId();

@@ -9,13 +9,22 @@ package gerenciador.telas.ultilidades;
  *
  * @author Raiane
  */
-public class FormataCampo {
-//
-//    MaskFormatter format = new MaskFormatter();
-//
-//    public String CPF(String cpf) {
-//        cpf = format.
-//        return cpf;
-//
-//    }
+public abstract class FormataCampo {
+
+    public static String formataDataBanco(String data) {
+        String[] vetData;
+        String[] vetNovaData = new String[3];
+        vetData = (data.split("/"));
+        for (int i = 2; i >= 0; i--) {
+            vetNovaData[i] = vetData[i];
+        }
+        return vetNovaData[2] + "-" + vetNovaData[1] + "-" + vetNovaData[0];
+    }
+
+    public static String formataDocumentosBanco(String doc) {
+        doc = doc.replace(".", "");
+        doc = doc.replace("-", "");
+        return doc;
+    }
+
 }

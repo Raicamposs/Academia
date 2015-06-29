@@ -13,6 +13,9 @@ public class Cidade extends Estado {
     private int id;
     private String nome;
 
+    public Cidade() {
+    }
+
     public Cidade(String estadoUf) {
         super(estadoUf);
     }

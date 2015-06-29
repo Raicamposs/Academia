@@ -14,6 +14,9 @@ public class Estado {
     private String estadoNome;
     private String estadoUf;
 
+    public Estado() {
+    }
+
     // Declaração do construtor da classe estado//
     public Estado(int estadoId, String estadoNome, String estadoUf) {
 

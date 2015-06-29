@@ -13,12 +13,14 @@ import javax.swing.JLabel;
  *
  * @author wagner
  */
-public class Style {
+public abstract class Style {
+
     public static void styleBorderEntered(JLabel label) {
-     label.setBorder(BorderFactory.createLineBorder(Color.ORANGE,3));  
+        label.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 3));
     }
-   public static void styleBorderExited(JLabel label) {
-     label.setBorder(null);  
-    } 
-    
+
+    public static void styleBorderExited(JLabel label) {
+        label.setBorder(null);
+    }
+
 }

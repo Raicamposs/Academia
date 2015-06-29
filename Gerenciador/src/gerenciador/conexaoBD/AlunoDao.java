@@ -94,13 +94,13 @@ public class AlunoDao {
             novoStmt.setInt(7, aluno.getEstadoCivil().getId());
             novoStmt.setInt(8, aluno.getEstadoMatricula());
             novoStmt.setString(9, aluno.getDataMatricula());
-            novoStmt.setInt(10, Integer.parseUnsignedInt(aluno.getVencimento()));
+            novoStmt.setInt(10, Integer.parseInt(aluno.getVencimento()));
             novoStmt.setString(11, aluno.getObservacao());
             novoStmt.setString(12, aluno.getDataExame());
             novoStmt.setString(13, aluno.getDataAvaliacao());
-            novoStmt.setInt(14, aluno.getEndereco().getCEP());
+            novoStmt.setInt(14,aluno.getEndereco().getCEP());
             novoStmt.setString(15, aluno.getEndereco().getComplemento());
-            novoStmt.setInt(16, aluno.getEndereco().getNumero());
+            novoStmt.setString(16, aluno.getEndereco().getNumero());
             novoStmt.execute();
             JOptionPane.showMessageDialog(null, "Cadastro Efetuado!");
         } catch (SQLException e) {
