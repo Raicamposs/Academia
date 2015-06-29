@@ -122,9 +122,9 @@ public class LoginGUI extends javax.swing.JFrame {
                 } else {
                     contTentativa++;
                     if (contTentativa == 1) {
-                        JOptionPane.showMessageDialog(null, "Senha Incorreta!\n Você só tem mais uma chance");
+                        JOptionPane.showMessageDialog(null, "Senha ou Usuário Inválido!\n Você só tem mais uma chance");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Senha Incorreta Novamente!\n Usuário Inabilitado para usar o Sistema");
+                        JOptionPane.showMessageDialog(null, "Senha ou Usuário Inválido Novamente!\n Usuário Inabilitado para usar o Sistema");
                         dispose();
                     }
                 }

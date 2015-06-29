@@ -9,7 +9,7 @@ package gerenciador.pessoa;
  *
  * @author wagner
  */
-class EstadoCivil {
+public class EstadoCivil {
 
     /**
      * Método construtor. Você deve utiliza-lo para criar um novo registro de
@@ -31,20 +31,6 @@ class EstadoCivil {
     public EstadoCivil(String descricao) {
 
         this.descricao = descricao;
-
-    }
-
-    public EstadoCivil(int id) {
-
-        this.id = id;
-
-        if (id == 1) {
-            this.descricao = "Solteiro(a)";
-        } else if (id == 2) {
-            this.descricao = "Casado(a)";
-        } else {
-            this.descricao = "Divórciado(a)";
-        }
 
     }
 
