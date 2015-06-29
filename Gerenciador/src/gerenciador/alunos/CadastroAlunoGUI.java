@@ -1047,13 +1047,11 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
         try {
             cadastra();
-
             conAluno.insertAuluno(aluno);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.println(aluno.toString());
     }//GEN-LAST:event_lblCadastraMouseClicked
 
     private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
