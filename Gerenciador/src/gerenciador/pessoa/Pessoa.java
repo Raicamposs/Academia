@@ -5,6 +5,8 @@
  */
 package gerenciador.pessoa;
 
+import gerenciador.endereco.Endereco;
+
 /**
  *
  * @author wagner
@@ -18,6 +20,7 @@ public abstract class Pessoa extends Telefones {
     private String dataNascimento;
     private String email;
     private char sexo;
+    private Endereco endereco;
 
     // Declaração do construtor da classe Pessoa
     public Pessoa(String cpf, String rg, String nome,
@@ -26,14 +29,16 @@ public abstract class Pessoa extends Telefones {
         this.rg = rg;
         this.nome = nome;
         this.email = email;
-        estadoCivil = new EstadoCivil();
+        this.estadoCivil = new EstadoCivil();
+        this.endereco = new Endereco();
     }
 
     // Declaração do construtor da classe Pessoa
     public Pessoa(String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
 
-        estadoCivil = new EstadoCivil();
+        this.estadoCivil = new EstadoCivil();
+        this.endereco = new Endereco();
         this.cpf = cpf;
         this.rg = rg;
         this.nome = nome;
@@ -100,5 +105,14 @@ public abstract class Pessoa extends Telefones {
     public void setSexo(char sexo) {
         this.sexo = sexo;
     }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
 
 }

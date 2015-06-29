@@ -27,6 +27,9 @@ public class Funcao {
         this.nome = nome;
     }
 
+    public Funcao() {
+    }
+
     //Declaração do método funcaoId
 
     public void setId(int id) {

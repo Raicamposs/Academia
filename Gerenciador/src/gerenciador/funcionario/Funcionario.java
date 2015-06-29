@@ -3,46 +3,48 @@ package gerenciador.funcionario;
 import gerenciador.pessoa.EstadoCivil;
 import gerenciador.pessoa.Pessoa;
 
-
-
 /*
  * @author Evolute Jackson
  */
-
 public class Funcionario extends Pessoa {
 
-    private int id;
-    private int funcao;
-    private int turno;
-    private String cnt;
+    private int id, situacao;
+    private Funcao funcao;
+    private Turno turno;
+    private String cnt, observacao, dataEntrada;
     private float salario;
 
     /**
      *
-     * @param estadoCivil
+     *
      * @param cpf
      * @param rg
      * @param nome
      * @param dataNascimento
      * @param email
      * @param sexo
-     * @param turno
      * @param cnt
-     * @param funcao
      * @param salario
      */
-    public Funcionario(EstadoCivil estadoCivil, String cpf, String rg, String nome,
-            String dataNascimento, String email, char sexo, Turno turno, String cnt, Funcao funcao, float salario) {
-        super(  cpf, rg, nome, dataNascimento, email, sexo);
+    public Funcionario(String cpf, String rg, String nome,
+            String dataNascimento, String email, char sexo,
+            String cnt,
+            float salario) {
+        super(cpf, rg, nome, dataNascimento, email, sexo);
 
-      
-        this.funcao = funcao.getId();
-        this.turno = turno.getId();
+        this.turno = new Turno();
+        this.funcao = new Funcao();
         this.cnt = cnt;
         this.salario = salario;
     }
 
-   
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 
     public void setId(int Id) {
         this.id = Id;
@@ -77,6 +79,38 @@ public class Funcionario extends Pessoa {
     public float getSalario() {
         return salario;
         //retorna o Valor da Variavel  salario
+    }
+
+    public Funcao getFuncao() {
+        return funcao;
+    }
+
+    public void setTurno(Turno turno) {
+        this.turno = turno;
+    }
+
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
+    }
+
+    public Turno getTurno() {
+        return turno;
+    }
+
+    public String getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(String dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public int getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(int situacao) {
+        this.situacao = situacao;
     }
 
 }

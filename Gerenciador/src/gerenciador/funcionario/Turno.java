@@ -26,6 +26,10 @@ public class Turno {
         this.nome = nome;
     }
 
+    public Turno() {
+    }
+
+
     //Declaração do método setTurnoId
 
     public void setId(int id) {

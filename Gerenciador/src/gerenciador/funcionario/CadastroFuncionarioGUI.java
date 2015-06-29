@@ -56,6 +56,32 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         edtCep.setEditable(false);
     }
 
+    private void cadastra() {
+        if (gerenciador.pessoa.ValidaCpf.validador(edtCpf.getText())) {
+
+            funcionario = new Funcionario(gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtCpf.getText()),
+                    gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtIdentidade.getText()), edtNome.getText(),
+                    gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataNascimento.getText()), edtEmail.getText(), sexo,
+                    edtCnt.getText(), (Float.parseFloat(edtSalario.getText())));
+            funcionario.setFoneCelular(edtFoneCel.getText());
+            funcionario.setFoneResidencial(edtTelRes.getText());
+            funcionario.setObservacao(edtObservacoes.getText());
+            funcionario.setDataEntrada(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataEntrada.getText()));
+            funcionario.setSituacao((cmbSituacaoFuncionario.getSelectedIndex() + 1));
+            funcionario.getEndereco().setCEP(Integer.parseInt(edtCep.getText().replace("-", "")));
+            funcionario.getEndereco().setRua((String) cmbEndereco.getSelectedItem());
+            funcionario.getEndereco().setComplemento(edtComplemento.getText());
+            funcionario.getEndereco().setNumero(edtNumero.getText());
+            funcionario.getEstadoCivil().setDescricao((String) cmbEstadoCivil.getSelectedItem());
+            funcionario.getEstadoCivil().setId((cmbEstadoCivil.getSelectedIndex() + 1));
+            funcionario.getTurno().setNome((String) cmbTurno.getSelectedItem());
+            funcionario.getTurno().setId((cmbTurno.getSelectedIndex() + 1));
+            funcionario.getFuncao().setNome((String) cmbFuncao.getSelectedItem());
+            funcionario.getFuncao().setId((cmbFuncao.getSelectedIndex() + 1));
+        }
+
+    }
+
     private void setCbmFuncao() throws SQLException {
         try {
             cmbFuncao.removeAllItems();
@@ -199,6 +225,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         lblCidade = new javax.swing.JLabel();
         btnNovaCidade = new javax.swing.JButton();
         btnNovaBairro = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        edtNumero = new javax.swing.JTextField();
         pnlInformacoes = new javax.swing.JPanel();
         try
         {
@@ -209,11 +237,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
         }
         edtTelRes = new JFormattedTextField(formatoFone);
-        tedtNome = new javax.swing.JTextField();
+        edtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         try {      formatoRg = new MaskFormatter("#####.###-#");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para RG, "+erro); }
-        txIdentidade = new JFormattedTextField(formatoRg);
+        edtIdentidade = new JFormattedTextField(formatoRg);
         jLabel1 = new javax.swing.JLabel();
         lblFoneRes = new javax.swing.JLabel();
         lblCpf = new javax.swing.JLabel();
@@ -244,6 +272,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         cmbEstadoCivil = new javax.swing.JComboBox();
         lblFoneCel = new javax.swing.JLabel();
         cmbEndereco = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        edtComplemento = new javax.swing.JTextField();
         pnlSexo = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         sexo_masc = new javax.swing.JRadioButton();
@@ -376,6 +406,14 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Numero");
+
+        edtNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtNumeroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlEnderecoLayout = new javax.swing.GroupLayout(pnlEndereco);
         pnlEndereco.setLayout(pnlEnderecoLayout);
         pnlEnderecoLayout.setHorizontalGroup(
@@ -384,26 +422,28 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlEnderecoLayout.createSequentialGroup()
-                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlEnderecoLayout.createSequentialGroup()
-                                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(cmbEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 144, Short.MAX_VALUE)
-                                    .addComponent(cmbCidade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNovaCidade))
-                            .addComponent(lblCep))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
                         .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(edtCep, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(cmbBairro, javax.swing.GroupLayout.Alignment.LEADING, 0, 146, Short.MAX_VALUE)
-                                .addComponent(lblBairro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblCidade, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNovaBairro)))
-                .addContainerGap())
+                            .addComponent(cmbEstado, javax.swing.GroupLayout.Alignment.LEADING, 0, 144, Short.MAX_VALUE)
+                            .addComponent(cmbCidade, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnNovaCidade)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(edtCep, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cmbBairro, javax.swing.GroupLayout.Alignment.LEADING, 0, 146, Short.MAX_VALUE)
+                                    .addComponent(lblBairro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCidade, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addComponent(lblCep))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnNovaBairro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4)
+                            .addComponent(edtNumero))
+                        .addContainerGap(16, Short.MAX_VALUE))))
         );
 
         pnlEnderecoLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnNovaBairro, btnNovaCidade});
@@ -423,15 +463,20 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                     .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovaCidade))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblBairro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovaBairro))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblCep)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                        .addComponent(lblBairro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNovaBairro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCep)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -445,9 +490,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             }
         });
 
-        tedtNome.addActionListener(new java.awt.event.ActionListener() {
+        edtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tedtNomeActionPerformed(evt);
+                edtNomeActionPerformed(evt);
             }
         });
 
@@ -489,6 +534,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Complemento");
+
         javax.swing.GroupLayout pnlInformacoesLayout = new javax.swing.GroupLayout(pnlInformacoes);
         pnlInformacoes.setLayout(pnlInformacoesLayout);
         pnlInformacoesLayout.setHorizontalGroup(
@@ -496,43 +543,50 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             .addGroup(pnlInformacoesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbEndereco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDataNasc)
-                            .addComponent(lblEmail)
-                            .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(tedtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1)
-                                .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                    .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel18)
-                                        .addComponent(txIdentidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                        .addComponent(edtDataNascimento))
-                                    .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                            .addGap(22, 22, 22)
-                                            .addComponent(lblCpf))
-                                        .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(edtCpf)
-                                                .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                                    .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(lblEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGap(0, 42, Short.MAX_VALUE))))))
-                                .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                    .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblFoneRes))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(edtFoneCel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblFoneCel)))
-                                .addComponent(edtEmail))))
-                    .addComponent(cmbEndereco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblDataNasc)
+                                .addComponent(lblEmail)
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel18)
+                                            .addComponent(edtIdentidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                            .addComponent(edtDataNascimento))
+                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addComponent(lblCpf))
+                                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(edtCpf)
+                                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(lblEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGap(0, 0, Short.MAX_VALUE))))))
+                                    .addComponent(edtEmail)
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblFoneRes))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(edtFoneCel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblFoneCel)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(308, 308, 308))))
+                            .addComponent(edtComplemento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         pnlInformacoesLayout.setVerticalGroup(
@@ -545,11 +599,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                     .addGroup(pnlInformacoesLayout.createSequentialGroup()
                         .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                .addComponent(tedtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txIdentidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(edtIdentidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlInformacoesLayout.createSequentialGroup()
                                 .addComponent(lblCpf)
@@ -566,10 +620,6 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                 .addComponent(lblEmail)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFoneRes)
@@ -578,7 +628,15 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtFoneCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(edtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pnlSexo.setBackground(new java.awt.Color(255, 255, 255));
@@ -928,9 +986,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edtCepActionPerformed
 
-    private void tedtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tedtNomeActionPerformed
+    private void edtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tedtNomeActionPerformed
+    }//GEN-LAST:event_edtNomeActionPerformed
 
     private void edtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtDataNascimentoActionPerformed
         // TODO add your handling code here:
@@ -995,13 +1053,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_edtTelResActionPerformed
 
     private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
-        EstadoCivil estadoCivil = new EstadoCivil(((String) cmbEstadoCivil.getSelectedItem()), (cmbEstadoCivil.getSelectedIndex() + 1));
-        funcionario = new Funcionario(estadoCivil, edtCpf.getText(), txIdentidade.getText(),
-                tedtNome.getText(), edtDataNascimento.getText(), edtEmail.getText(), sexo, turno, edtCnt.getText(),
-                funcao, Float.parseFloat(edtSalario.getText()));
+        cadastra();
 
-        funcionario.setFoneCelular(edtFoneCel.getText());
-        funcionario.setFoneResidencial(edtTelRes.getText());
     }//GEN-LAST:event_lblCadastraMouseClicked
 
     private void sexo_mascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_mascMouseClicked
@@ -1068,6 +1121,10 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbEnderecoActionPerformed
 
+    private void edtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtNumeroActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1118,12 +1175,16 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbTurno;
     private javax.swing.JFormattedTextField edtCep;
     private javax.swing.JTextField edtCnt;
+    private javax.swing.JTextField edtComplemento;
     private javax.swing.JTextField edtCpf;
     private javax.swing.JTextField edtDataEntrada;
     private javax.swing.JFormattedTextField edtDataNascimento;
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtFoneCel;
+    private javax.swing.JTextField edtIdentidade;
     private javax.swing.JTextField edtNivelAcesso;
+    private javax.swing.JTextField edtNome;
+    private javax.swing.JTextField edtNumero;
     private javax.swing.JTextArea edtObservacoes;
     private javax.swing.JTextField edtSalario;
     private javax.swing.JTextField edtTelRes;
@@ -1133,6 +1194,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
@@ -1174,8 +1237,6 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdbUsuario;
     private javax.swing.JRadioButton sexo_fem;
     private javax.swing.JRadioButton sexo_masc;
-    private javax.swing.JTextField tedtNome;
     private org.netbeans.examples.lib.timerbean.Timer tmrHora;
-    private javax.swing.JTextField txIdentidade;
     // End of variables declaration//GEN-END:variables
 }

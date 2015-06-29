@@ -16,13 +16,13 @@ public class Aluno extends Pessoa {
 
     private String observacao, dataMatricula;
     private String dataExame, dataAvaliacao, vencimento;
-    private Endereco endereco;
+   
     private int  estadoMatricula = 1;
 
     public Aluno(String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
         super(cpf, rg, nome, dataNascimento, email, sexo);
-        endereco = new Endereco();
+       
     }
 
     public void setDataAvaliacao(String dataAvaliacao) {
@@ -57,13 +57,7 @@ public class Aluno extends Pessoa {
         return vencimento;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
+   
 
     public void setDataMatricula(String dataMatricula) {
         this.dataMatricula = dataMatricula;
