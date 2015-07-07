@@ -5,15 +5,16 @@
  */
 package gerenciador.funcionario;
 
+
 import gerenciador.alunos.CadastroAlunoGUI;
 import gerenciador.endereco.CidadeGUI;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.Cidade;
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.FuncionarioDao;
-import gerenciador.pessoa.EstadoCivil;
 import gerenciador.telas.ultilidades.Data;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -29,18 +30,20 @@ import javax.swing.text.MaskFormatter;
  */
 public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
-    Turno turno;
-    Funcao funcao;
+    private Turno turno;
+    private Funcao funcao;
     private char sexo;
-    EnderecoDao conEndereco;
-    FuncionarioDao conFuncionario;
-    String formatohora = "HH:mm:ss";
-    SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
-    Data data = new Data();
-    Funcionario funcionario;
-    Cidade cidade = new Cidade("");
-    Iterator iteratorEstado = null;
-    MaskFormatter formatoCpf, formatoRg, formatoCep, formatoFone, formatoCel, formatoData;
+    private EnderecoDao conEndereco;
+    private FuncionarioDao conFuncionario;
+    private String formatohora = "HH:mm:ss";
+    private SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
+    private Data data = new Data();
+    private Funcionario funcionario;
+    private Cidade cidade = new Cidade("");
+    private Iterator iteratorEstado = null;
+    private MaskFormatter formatoCpf, formatoCtps, formatoRg, formatoCep, formatoFone, formatoCel, formatoData;
+    private int nivel;
+   
 
     public CadastroFuncionarioGUI() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -56,28 +59,49 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         edtCep.setEditable(false);
     }
 
-    private void cadastra() {
+    private void cadastra() throws SQLException {
         if (gerenciador.pessoa.ValidaCpf.validador(edtCpf.getText())) {
+            if ((new String(pwfSenha.getPassword())).equals(new String(pwfConfirmaSenha.getPassword()))) {
+                funcionario = new Funcionario(gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtCpf.getText()),
+                        gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtIdentidade.getText()), edtNome.getText(),
+                        gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataNascimento.getText()), edtEmail.getText(), sexo,
+                        edtCtps.getText(), (Float.parseFloat(edtSalario.getText().replace(",", "."))));
+                funcionario.setFoneCelular(edtFoneCel.getText());
+                funcionario.setFoneResidencial(edtTelRes.getText());
+                funcionario.setObservacao(edtObservacoes.getText());
+                funcionario.setDataEntrada(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataEntrada.getText()));
+                funcionario.setSituacao((cmbSituacaoFuncionario.getSelectedIndex() + 1));
+                funcionario.getEndereco().setCEP(Integer.parseInt(edtCep.getText().replace("-", "")));
+                funcionario.getEndereco().setRua((String) cmbEndereco.getSelectedItem());
+                funcionario.getEndereco().setComplemento(edtComplemento.getText());
+                funcionario.getEndereco().setNumero(edtNumero.getText());
+                funcionario.getEstadoCivil().setDescricao((String) cmbEstadoCivil.getSelectedItem());
+                funcionario.getEstadoCivil().setId((cmbEstadoCivil.getSelectedIndex() + 1));
+                funcionario.getTurno().setNome((String) cmbTurno.getSelectedItem());
+                funcionario.getTurno().setId((cmbTurno.getSelectedIndex() + 1));
+                funcionario.getFuncao().setNome((String) cmbFuncao.getSelectedItem());
+                funcionario.getFuncao().setId((cmbFuncao.getSelectedIndex() + 1));
+                funcionario.setSituacao((cmbSituacaoFuncionario.getSelectedIndex() + 1));
 
-            funcionario = new Funcionario(gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtCpf.getText()),
-                    gerenciador.telas.ultilidades.FormataCampo.formataDocumentosBanco(edtIdentidade.getText()), edtNome.getText(),
-                    gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataNascimento.getText()), edtEmail.getText(), sexo,
-                    edtCnt.getText(), (Float.parseFloat(edtSalario.getText())));
-            funcionario.setFoneCelular(edtFoneCel.getText());
-            funcionario.setFoneResidencial(edtTelRes.getText());
-            funcionario.setObservacao(edtObservacoes.getText());
-            funcionario.setDataEntrada(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataEntrada.getText()));
-            funcionario.setSituacao((cmbSituacaoFuncionario.getSelectedIndex() + 1));
-            funcionario.getEndereco().setCEP(Integer.parseInt(edtCep.getText().replace("-", "")));
-            funcionario.getEndereco().setRua((String) cmbEndereco.getSelectedItem());
-            funcionario.getEndereco().setComplemento(edtComplemento.getText());
-            funcionario.getEndereco().setNumero(edtNumero.getText());
-            funcionario.getEstadoCivil().setDescricao((String) cmbEstadoCivil.getSelectedItem());
-            funcionario.getEstadoCivil().setId((cmbEstadoCivil.getSelectedIndex() + 1));
-            funcionario.getTurno().setNome((String) cmbTurno.getSelectedItem());
-            funcionario.getTurno().setId((cmbTurno.getSelectedIndex() + 1));
-            funcionario.getFuncao().setNome((String) cmbFuncao.getSelectedItem());
-            funcionario.getFuncao().setId((cmbFuncao.getSelectedIndex() + 1));
+                if (chbCadastrarUsuario.isSelected() == true) {
+                    funcionario.setUsuarioAutorizado(true);
+                    funcionario.getUsario().setLogin(edtUsuLogin.getText());
+                    funcionario.getUsario().setSenha(new String(pwfSenha.getPassword()));
+                    funcionario.getUsario().setNivel(nivel);
+
+                } else {
+                    funcionario.setUsuarioAutorizado(false);
+                    funcionario.getUsario().setLogin("");
+                    funcionario.getUsario().setSenha("");
+                    funcionario.getUsario().setNivel(0);
+
+                }
+
+                conFuncionario.insertFuncionario(funcionario);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "As senhas não são iguais");
+            }
         }
 
     }
@@ -289,8 +313,10 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         lblObservacoes = new javax.swing.JLabel();
         lblTurno = new javax.swing.JLabel();
         cmbTurno = new javax.swing.JComboBox();
-        lblCnt = new javax.swing.JLabel();
-        edtCnt = new javax.swing.JTextField();
+        lblCtps = new javax.swing.JLabel();
+        try {      formatoCtps= new MaskFormatter
+            ("#######/#####-UU");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para ctps, "+erro); }
+        edtCtps = new JFormattedTextField(formatoCtps);
         cmbFuncao = new javax.swing.JComboBox();
         lblSalario = new javax.swing.JLabel();
         edtSalario = new javax.swing.JTextField();
@@ -299,11 +325,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         btnNovaFuncao = new javax.swing.JButton();
         pnlBorda = new javax.swing.JPanel();
         pnlCadastrar = new javax.swing.JPanel();
-        edtNivelAcesso = new javax.swing.JTextField();
+        edtUsuLogin = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         lblSenha = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        pwfSenha = new javax.swing.JPasswordField();
+        pwfConfirmaSenha = new javax.swing.JPasswordField();
         lblConfirmarSenha = new javax.swing.JLabel();
         lblNivelAcesso = new javax.swing.JLabel();
         rdbAdministrador = new javax.swing.JRadioButton();
@@ -750,15 +776,31 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         cmbTurno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblCnt.setText("CNT");
+        lblCtps.setText("CTPS");
 
         cmbFuncao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lblSalario.setText("Salário");
 
+        edtSalario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                edtSalarioMouseClicked(evt);
+            }
+        });
+        edtSalario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtSalarioActionPerformed(evt);
+            }
+        });
+
         lblSituacoaFuncionario.setText("Situação do funcionário");
 
         cmbSituacaoFuncionario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ativo", "Inativo" }));
+        cmbSituacaoFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSituacaoFuncionarioActionPerformed(evt);
+            }
+        });
 
         btnNovaFuncao.setBackground(new java.awt.Color(0, 153, 0));
         btnNovaFuncao.setForeground(new java.awt.Color(255, 255, 255));
@@ -783,9 +825,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                     .addGroup(pnlDadosCadastraisLayout.createSequentialGroup()
                         .addGroup(pnlDadosCadastraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(cmbFuncao, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(edtCnt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edtCtps, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbTurno, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblCnt, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCtps, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTurno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNovaFuncao)))
@@ -826,9 +868,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbTurno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblCnt)
+                        .addComponent(lblCtps)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(edtCnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(edtCtps, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblSalario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -851,9 +893,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
         pnlCadastrar.setBackground(new java.awt.Color(255, 255, 255));
 
-        edtNivelAcesso.addActionListener(new java.awt.event.ActionListener() {
+        edtUsuLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtNivelAcessoActionPerformed(evt);
+                edtUsuLoginActionPerformed(evt);
             }
         });
 
@@ -868,6 +910,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         rdbAdministrador.setBackground(new java.awt.Color(255, 255, 255));
         grupoNivelAcesso.add(rdbAdministrador);
         rdbAdministrador.setText("Administrador");
+        rdbAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbAdministradorActionPerformed(evt);
+            }
+        });
 
         rdbUsuario.setBackground(new java.awt.Color(255, 255, 255));
         grupoNivelAcesso.add(rdbUsuario);
@@ -880,7 +927,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
             .addGroup(pnlCadastrarLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(edtNivelAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtUsuLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblNivelAcesso)
                     .addComponent(rdbUsuario)
                     .addComponent(rdbAdministrador)
@@ -889,8 +936,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                 .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSenha)
                     .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(pwfConfirmaSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addComponent(pwfSenha, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblConfirmarSenha)))
                 .addGap(35, 35, 35))
         );
@@ -903,8 +950,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                     .addComponent(lblSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtNivelAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtUsuLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pwfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNivelAcesso)
@@ -912,7 +959,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(pnlCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rdbAdministrador)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pwfConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(rdbUsuario)
                 .addContainerGap())
@@ -1031,9 +1078,9 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formComponentShown
 
-    private void edtNivelAcessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNivelAcessoActionPerformed
+    private void edtUsuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUsuLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_edtNivelAcessoActionPerformed
+    }//GEN-LAST:event_edtUsuLoginActionPerformed
 
     private void chbCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbCadastrarUsuarioActionPerformed
         // TODO add your handling code here:
@@ -1042,6 +1089,7 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private void chbCadastrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbCadastrarUsuarioMouseClicked
         if (chbCadastrarUsuario.isSelected() == true) {
             pnlCadastrar.setVisible(true);
+
         } else {
             pnlCadastrar.setVisible(false);
         }
@@ -1053,8 +1101,11 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_edtTelResActionPerformed
 
     private void lblCadastraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCadastraMouseClicked
-        cadastra();
-
+        try {
+            cadastra();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroFuncionarioGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_lblCadastraMouseClicked
 
     private void sexo_mascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sexo_mascMouseClicked
@@ -1125,6 +1176,26 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_edtNumeroActionPerformed
 
+    private void rdbAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbAdministradorActionPerformed
+        if (rdbAdministrador.isSelected()) {
+            this.nivel = 1;
+        } else {
+            this.nivel = 2;
+        }
+    }//GEN-LAST:event_rdbAdministradorActionPerformed
+
+    private void cmbSituacaoFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSituacaoFuncionarioActionPerformed
+
+    }//GEN-LAST:event_cmbSituacaoFuncionarioActionPerformed
+
+    private void edtSalarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtSalarioActionPerformed
+              // TODO add your handling code here:
+    }//GEN-LAST:event_edtSalarioActionPerformed
+
+    private void edtSalarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edtSalarioMouseClicked
+     // TODO add your handling code here:
+    }//GEN-LAST:event_edtSalarioMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1174,20 +1245,20 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbSituacaoFuncionario;
     private javax.swing.JComboBox cmbTurno;
     private javax.swing.JFormattedTextField edtCep;
-    private javax.swing.JTextField edtCnt;
     private javax.swing.JTextField edtComplemento;
     private javax.swing.JTextField edtCpf;
+    private javax.swing.JTextField edtCtps;
     private javax.swing.JTextField edtDataEntrada;
     private javax.swing.JFormattedTextField edtDataNascimento;
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtFoneCel;
     private javax.swing.JTextField edtIdentidade;
-    private javax.swing.JTextField edtNivelAcesso;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField edtNumero;
     private javax.swing.JTextArea edtObservacoes;
     private javax.swing.JTextField edtSalario;
     private javax.swing.JTextField edtTelRes;
+    private javax.swing.JTextField edtUsuLogin;
     private javax.swing.ButtonGroup grupoNivelAcesso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -1197,16 +1268,14 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblCadastra;
     private javax.swing.JLabel lblCep;
     private javax.swing.JLabel lblCidade;
-    private javax.swing.JLabel lblCnt;
     private javax.swing.JLabel lblConfirmarSenha;
     private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblCtps;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDataNasc;
     private javax.swing.JLabel lblEmail;
@@ -1233,6 +1302,8 @@ public class CadastroFuncionarioGUI extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInformacoes;
     private javax.swing.JTabbedPane pnlPrincipal;
     private javax.swing.JPanel pnlSexo;
+    private javax.swing.JPasswordField pwfConfirmaSenha;
+    private javax.swing.JPasswordField pwfSenha;
     private javax.swing.JRadioButton rdbAdministrador;
     private javax.swing.JRadioButton rdbUsuario;
     private javax.swing.JRadioButton sexo_fem;

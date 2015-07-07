@@ -22,6 +22,11 @@ public abstract class Pessoa extends Telefones {
     private char sexo;
     private Endereco endereco;
 
+    public Pessoa() {
+        this.estadoCivil = new EstadoCivil();
+        this.endereco = new Endereco();
+    }
+
     // Declaração do construtor da classe Pessoa
     public Pessoa(String cpf, String rg, String nome,
             String email) {
@@ -113,6 +118,5 @@ public abstract class Pessoa extends Telefones {
     public Endereco getEndereco() {
         return endereco;
     }
-
 
 }

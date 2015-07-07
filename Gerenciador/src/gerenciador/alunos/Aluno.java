@@ -5,7 +5,7 @@
  */
 package gerenciador.alunos;
 
-import gerenciador.endereco.Endereco;
+
 import gerenciador.pessoa.Pessoa;
 
 /**
@@ -17,13 +17,19 @@ public class Aluno extends Pessoa {
     private String observacao, dataMatricula;
     private String dataExame, dataAvaliacao, vencimento;
    
-    private int  estadoMatricula = 1;
+    private int estadoMatricula = 1;
+
+    public Aluno() {
+ 
+    }
 
     public Aluno(String cpf, String rg, String nome,
             String dataNascimento, String email, char sexo) {
         super(cpf, rg, nome, dataNascimento, email, sexo);
        
     }
+
+   
 
     public void setDataAvaliacao(String dataAvaliacao) {
         this.dataAvaliacao = dataAvaliacao;

@@ -16,8 +16,8 @@ public class Cidade extends Estado {
     public Cidade() {
     }
 
-    public Cidade(String estadoUf) {
-        super(estadoUf);
+    public Cidade(String estadoNome) {
+        super(estadoNome);
     }
 
     public Cidade(int cidadeId, String estadoUf) {
@@ -26,10 +26,10 @@ public class Cidade extends Estado {
     }
 
     // Declaração do construtor da classe cidade//
-    public Cidade(int id, String cidadeNome, String estadoUf) {
-        super(estadoUf);
+    public Cidade(String cidadeNome, String estadoNome) {
+        super(estadoNome);
         this.nome = cidadeNome;
-        this.id = id;
+     
     }
 
     //Declaração do método cidadeId

@@ -16,7 +16,6 @@ public class Usuario {
     private String senha;
     private String login;
     private int nivel;
- 
 
     public Usuario() {
     }
@@ -29,13 +28,18 @@ public class Usuario {
         this.nivel = nivel;
     }
 
+    public Usuario(String login, String senha, int nivel) {
+
+        this.login = login;
+        this.senha = senha;
+        this.nivel = nivel;
+    }
+
     public Usuario(String name, int nivel) {
 
         this.name = name;
         this.nivel = nivel;
     }
-
- 
 
     public void setCod(int novo) {
         this.codigo = novo;

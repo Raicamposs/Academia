@@ -98,7 +98,7 @@ public class AlunoDao {
             novoStmt.setString(11, aluno.getObservacao());
             novoStmt.setString(12, aluno.getDataExame());
             novoStmt.setString(13, aluno.getDataAvaliacao());
-            novoStmt.setInt(14,aluno.getEndereco().getCEP());
+            novoStmt.setInt(14, aluno.getEndereco().getCEP());
             novoStmt.setString(15, aluno.getEndereco().getComplemento());
             novoStmt.setString(16, aluno.getEndereco().getNumero());
             novoStmt.execute();
@@ -109,7 +109,7 @@ public class AlunoDao {
 
     }
 
-    public void getAlunos(JTable tblAluno, String nome, String matricula) throws SQLException {
+    public void preencheTable(JTable tblAluno, String nome, String matricula) throws SQLException {
         String sql = ("call academia.getPessoaNomeORCpf(?,?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
@@ -151,4 +151,37 @@ public class AlunoDao {
         }
 
     }
+
+    public void selectAuluno(Aluno aluno, String cpf) throws SQLException {
+        String sql = ("call academia.getAluno(?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setString(1, cpf);
+            novoStmt.execute();
+            rs = novoStmt.executeQuery();
+            if (rs.first()) {
+                aluno.setNome(rs.getString("Nome"));
+                aluno.setRG(rs.getString("Rg"));
+                aluno.setCpf(rs.getString("cpf"));
+                aluno.setDataNascimento(rs.getString("Data_nascimento"));
+                aluno.setEmail(rs.getString("email"));
+                aluno.setSexo(rs.getString("Sexo").charAt(0));
+                aluno.getEstadoCivil().setDescricao(rs.getString("Estado_Civil"));
+                aluno.setEstadoMatricula(rs.getInt("Estado_Matricula"));
+                aluno.setDataMatricula(rs.getString("Data_Matricula"));
+                aluno.setVencimento(rs.getString("Vencimento_Matricula"));
+                aluno.setObservacao(rs.getString("Observacao"));
+                aluno.setDataExame(rs.getString("Validade_exame"));
+                aluno.setDataAvaliacao(rs.getString("Validade_avaliacao"));
+                aluno.getEndereco().setCEP(rs.getInt("CEP"));
+                aluno.getEndereco().setComplemento(rs.getString("Complemento"));
+                aluno.getEndereco().setNumero(rs.getString("Numero"));
+            
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 }

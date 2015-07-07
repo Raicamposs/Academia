@@ -6,13 +6,21 @@
 package gerenciador.alunos;
 
 import gerenciador.conexaoBD.AlunoDao;
+import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.RelatorioDao;
+import gerenciador.conexaoBD.ResponsavelDao;
+import gerenciador.endereco.BairroGUI;
+import gerenciador.endereco.CidadeGUI;
 import gerenciador.telas.ultilidades.Data;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -20,26 +28,207 @@ import java.util.logging.Logger;
  */
 public class PesquisaAlunoGUI extends javax.swing.JFrame {
 
-    AlunoDao con;
-    RelatorioDao conRelatorio;
-    String formatohora = "HH:mm:ss";
-    SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
-    Data data = new Data();
+    private AlunoDao conAluno;
+    private EnderecoDao conEndereco;
+    private RelatorioDao conRelatorio;
+    private ResponsavelDao conResponsavel;
+    private Iterator iteratorEstado;
+    private String formatohora = "HH:mm:ss";
+
+    private SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
+    private Data data = new Data();
+    private Aluno aluno;
+    private MaskFormatter formatoCpf, formatoRg, formatoDataVencimento, formatoCep, formatoCel, formatoFone, formatoData;
 
     public PesquisaAlunoGUI() {
         initComponents();
         tmrHora3.setDelay(1000);
         tmrHora3.start();
         lblData.setText(Data.mostraData());
-        con = new AlunoDao();
+        conAluno = new AlunoDao();
+        conEndereco = new EnderecoDao();
+        conResponsavel = new ResponsavelDao();
         conRelatorio = new RelatorioDao();
+        setCbmEstadoCivil();
+        setCbmAula();
+        statusComponentes(false);
+
     }
 
-    public void preencherTblAluno(String nome, String matricula) {
+    private void preencherTblAluno(String nome, String matricula) {
         try {
-            con.getAlunos(tblAluno, nome, matricula);
+            conAluno.preencheTable(tblAluno, nome, matricula);
         } catch (SQLException ex) {
             Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void atualizaCampos() throws SQLException {
+
+        aluno = new Aluno();
+        conAluno.selectAuluno(aluno, "14760431756");
+        edtCPF.setText(aluno.getCpf());
+        edtIdentidade.setText(aluno.getRG());
+        edtNomeAluno.setText(aluno.getNome());
+        edtDataNascimento.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataNascimento()));
+        edtEmail.setText(aluno.getEmail());
+        edtCel.setText(aluno.getFoneCelular());
+        edtTelRes.setText(aluno.getFoneResidencial());
+        edtDiaVencimaento.setText(aluno.getVencimento());
+        edtObs.setText(aluno.getObservacao());
+        edtDataAvaliacao.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataAvaliacao()));
+        edtDataExame.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataExame()));
+        edtCep.setText("" + aluno.getEndereco().getCEP());
+        cmbEndereco.setSelectedItem(aluno.getEndereco().getRua());
+        edtComplemento.setText(aluno.getEndereco().getComplemento());
+        edtNumero.setText(aluno.getEndereco().getNumero());
+        conEndereco.selectEndereco(aluno.getEndereco().getCEP(), aluno);
+
+        atualizaCbmDadosAluno();
+
+    }
+
+    private void atualizaCbmDadosAluno() {
+        cmbEstadoCivil.addItem(aluno.getEstadoCivil().getDescricao());
+        cmbEstado.removeAllItems();
+        cmbEstado.addItem(aluno.getEndereco().getEstadoNome());
+        cmbCidade.removeAllItems();
+        cmbCidade.addItem(aluno.getEndereco().getCidadeNome());
+        cmbBairro.removeAllItems();
+        cmbBairro.addItem(aluno.getEndereco().getBairroNome());
+        cmbEndereco.removeAllItems();
+        cmbEndereco.addItem(aluno.getEndereco().getRua());
+    }
+
+    private void statusComponentes(boolean ativo) {
+        edtCPF.setEditable(ativo);
+        edtIdentidade.setEditable(ativo);
+        edtNomeAluno.setEditable(ativo);
+        edtDataNascimento.setEditable(ativo);
+        edtEmail.setEditable(ativo);
+        edtCel.setEditable(ativo);
+        edtTelRes.setEditable(ativo);
+        edtDiaVencimaento.setEditable(ativo);
+        edtObs.setEditable(ativo);
+        edtDataAvaliacao.setEditable(ativo);
+        edtDataExame.setEditable(ativo);
+        edtCep.setEditable(ativo);
+        edtComplemento.setEditable(ativo);
+        edtNumero.setEditable(ativo);
+        cmbEstadoCivil.setEditable(ativo);
+        cmbEstado.setEnabled(ativo);
+        cmbEndereco.setEnabled(ativo);
+        cmbCidade.setEnabled(ativo);
+        cmbBairro.setEnabled(ativo);
+        cmbPacote1.setEnabled(ativo);
+        cmbPacote2.setEnabled(ativo);
+        cmbEstadoCivil.setEnabled(ativo);
+        rdbSexoFem.setEnabled(ativo);
+        rdbSexoMasc.setEnabled(ativo);
+        chbMenorIdade.setEnabled(ativo);
+    }
+
+    private void setCbmAula() {
+        try {
+            cmbPacote1.removeAllItems();
+            cmbPacote2.removeAllItems();
+            Iterator iteratorAula = conAluno.getArrayAula().iterator();
+            while (iteratorAula.hasNext()) {
+                String aula = String.valueOf(iteratorAula.next());
+                cmbPacote1.addItem(aula);
+                cmbPacote2.addItem(aula);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void setCbmEndereco() throws SQLException {
+        cmbEndereco.removeAllItems();
+        try {
+            Iterator iteratorEndereco = conEndereco.getArrayRua((String) cmbBairro.getSelectedItem()).iterator();
+            while (iteratorEndereco.hasNext()) {
+                cmbEndereco.addItem(String.valueOf(iteratorEndereco.next()));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void setCbmCidade() throws SQLException {
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        Iterator iteratorCidade = null;
+        try {
+            iteratorCidade = conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).iterator();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (iteratorCidade.hasNext()) {
+            cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
+        }
+
+        setCbmBairro();
+    }
+
+    private void setCbmBairro() throws SQLException {
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        Iterator iteratorBairro;
+
+        try {
+            iteratorBairro = conEndereco.getArrayBairro((String) cmbCidade.getSelectedItem()).iterator();
+            if (iteratorBairro.hasNext()) {
+                while (iteratorBairro.hasNext()) {
+                    cmbBairro.addItem(String.valueOf(iteratorBairro.next()));
+                }
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, e);
+        }
+        setCbmEndereco();
+    }
+
+    private void setCbmEstado() throws SQLException {
+
+        cmbEstado.removeAllItems();
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        try {
+            iteratorEstado = conEndereco.getArrayEstados().iterator();
+        } catch (SQLException ex) {
+            Logger.getLogger(BairroGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (iteratorEstado.hasNext()) {
+            cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
+        }
+
+        setCbmCidade();
+    }
+
+    private void atualizaCbmEstado() throws SQLException {
+        cmbCidade.removeAllItems();
+        cmbBairro.removeAllItems();
+        cmbEndereco.removeAllItems();
+        setCbmCidade();
+    }
+
+    private void setCbmEstadoCivil() {
+        try {
+            cmbEstadoCivil.removeAllItems();
+            Iterator iteratorEstadoCivil = conAluno.getArrayEstadoCivil().iterator();
+            while (iteratorEstadoCivil.hasNext()) {
+                cmbEstadoCivil.addItem(iteratorEstadoCivil.next());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,17 +242,98 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         tmrHora3 = new org.netbeans.examples.lib.timerbean.Timer();
+        choGrupSexo = new javax.swing.ButtonGroup();
         frmPesquisa = new javax.swing.JInternalFrame();
         edtMatricula = new javax.swing.JTextField();
         edtNome = new javax.swing.JTextField();
         lblPesquisar = new javax.swing.JLabel();
         lblFundoPesquisa = new javax.swing.JLabel();
+        pnlDados = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAluno = new javax.swing.JTable();
+        pnlInformacoes = new javax.swing.JPanel();
+        try
+        {
+            formatoFone = new MaskFormatter("(0xx##)####-####");
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
+        }
+        edtTelRes = new JFormattedTextField(formatoFone);
+        edtNomeAluno = new javax.swing.JTextField();
+        lblIdentidade = new javax.swing.JLabel();
+        try {      formatoRg = new MaskFormatter("#####.###-#");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para RG, "+erro); }
+        edtIdentidade = new JFormattedTextField(formatoRg);
+        lblNome = new javax.swing.JLabel();
+        lblTelResidencial = new javax.swing.JLabel();
+        lblCPF = new javax.swing.JLabel();
+        try
+        {
+            formatoCpf = new MaskFormatter("###.###.###-##");
+        }
+        catch(Exception erro)
+        {
+            JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro);
+        }
+        edtCPF = new JFormattedTextField(formatoCpf);
+        try {      formatoCel = new MaskFormatter
+            ("(0xx##)#####-####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro); }
+        edtCel = new JFormattedTextField(formatoCel);
+        lblTelCelular = new javax.swing.JLabel();
+        edtEmail = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        lblDataNascimento = new javax.swing.JLabel();
+        try {      formatoData = new MaskFormatter("##/##/####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDataNascimento = new JFormattedTextField(formatoData);
+        lblEstadoCivil = new javax.swing.JLabel();
+        cmbEstadoCivil = new javax.swing.JComboBox();
+        lblEndereco = new javax.swing.JLabel();
+        cmbEndereco = new javax.swing.JComboBox();
+        edtComplemento = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        pnlInformacoesAulas = new javax.swing.JPanel();
+        lblExame = new javax.swing.JLabel();
+        try {      formatoData = new MaskFormatter("##/##/####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDataExame = new JFormattedTextField(formatoData);
+        try {      formatoData = new MaskFormatter("##/##/####");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDataAvaliacao = new JFormattedTextField(formatoData);
+        laAvaliacao = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        edtObs = new javax.swing.JTextArea();
+        laObs1 = new javax.swing.JLabel();
+        laSituacao1 = new javax.swing.JLabel();
+        cmbPacote1 = new javax.swing.JComboBox();
+        lblDiaVencimaento = new javax.swing.JLabel();
+        try {     formatoDataVencimento = new MaskFormatter("##");    
+        } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
+        edtDiaVencimaento = new JFormattedTextField(formatoDataVencimento);
+        chbMenorIdade = new javax.swing.JCheckBox();
+        laSituacao2 = new javax.swing.JLabel();
+        cmbPacote2 = new javax.swing.JComboBox();
+        pnlSexo = new javax.swing.JPanel();
+        lblSexo = new javax.swing.JLabel();
+        rdbSexoMasc = new javax.swing.JRadioButton();
+        rdbSexoFem = new javax.swing.JRadioButton();
+        pnlEndereco = new javax.swing.JPanel();
+        try {      formatoCep = new MaskFormatter("#####-###");     } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para cpf, "+erro); }
+        edtCep = new JFormattedTextField(formatoCep);
+        edtNumero = new javax.swing.JTextField();
+        lblCep = new javax.swing.JLabel();
+        lblBairro = new javax.swing.JLabel();
+        cmbBairro = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        cmbEstado = new javax.swing.JComboBox();
+        cmbCidade = new javax.swing.JComboBox();
+        lblCidade = new javax.swing.JLabel();
+        btnNovaCidade = new javax.swing.JButton();
+        btnNovaBairro = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         lblInicio = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
         lblImprimi = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAluno = new javax.swing.JTable();
+        lblEdita = new javax.swing.JLabel();
         lblFundo = new javax.swing.JLabel();
 
         tmrHora3.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
@@ -106,7 +376,500 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         lblFundoPesquisa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         frmPesquisa.getContentPane().add(lblFundoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(frmPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 350, 180));
+        getContentPane().add(frmPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 150, 350, 180));
+
+        pnlDados.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDados.setPreferredSize(new java.awt.Dimension(800, 600));
+        pnlDados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tblAluno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "CPF", "RG", "Data de Nascimento", "Email", "Estado Civil"
+            }
+        ));
+        tblAluno.setSelectionBackground(new java.awt.Color(0, 153, 0));
+        tblAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAlunoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAluno);
+
+        pnlDados.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 200));
+
+        pnlInformacoes.setBackground(new java.awt.Color(255, 255, 255));
+
+        edtTelRes.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        edtNomeAluno.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        lblIdentidade.setText("Identidade");
+
+        edtIdentidade.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        lblNome.setText("Nome");
+
+        lblTelResidencial.setText("Fone Res.:");
+
+        lblCPF.setText("CPF");
+
+        edtCPF.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        edtCel.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        lblTelCelular.setText("Fone Cel.:");
+
+        edtEmail.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        lblEmail.setText("Email");
+
+        lblDataNascimento.setText("Data Nascimento");
+
+        edtDataNascimento.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        lblEstadoCivil.setText(" Estado Civil");
+
+        cmbEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+
+        lblEndereco.setText("Endereço");
+
+        cmbEndereco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione ..." }));
+        cmbEndereco.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                cmbEnderecoFocusGained(evt);
+            }
+        });
+        cmbEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEnderecoActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Complemento");
+
+        javax.swing.GroupLayout pnlInformacoesLayout = new javax.swing.GroupLayout(pnlInformacoes);
+        pnlInformacoes.setLayout(pnlInformacoesLayout);
+        pnlInformacoesLayout.setHorizontalGroup(
+            pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblIdentidade)
+                                    .addComponent(edtIdentidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                    .addComponent(edtDataNascimento))
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(lblCPF)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                                .addComponent(lblEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(edtCPF)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblTelResidencial))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblTelCelular)
+                                    .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(edtEmail)
+                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDataNascimento)
+                                    .addComponent(lblEmail)
+                                    .addComponent(edtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNome))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblEndereco)
+                            .addComponent(cmbEndereco, 0, 373, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
+                            .addComponent(edtComplemento, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+        );
+        pnlInformacoesLayout.setVerticalGroup(
+            pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblNome)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                .addComponent(edtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(lblIdentidade)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtIdentidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(edtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                .addComponent(lblCPF)
+                                .addGap(26, 26, 26)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblDataNascimento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                        .addComponent(lblEstadoCivil)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblEmail)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                        .addComponent(lblTelResidencial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                        .addComponent(lblTelCelular)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblEndereco)
+                .addGap(6, 6, 6)
+                .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(edtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnlDados.add(pnlInformacoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 400, -1));
+
+        pnlInformacoesAulas.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblExame.setText("Validade do Exame Medico");
+
+        edtDataExame.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        edtDataAvaliacao.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        laAvaliacao.setText("Validade da Avaliação Fisica");
+
+        edtObs.setColumns(20);
+        edtObs.setRows(5);
+        edtObs.setSelectionColor(new java.awt.Color(0, 153, 0));
+        jScrollPane3.setViewportView(edtObs);
+
+        laObs1.setText("Observações");
+
+        laSituacao1.setText("1 - Pacote Contratado:");
+
+        cmbPacote1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+
+        lblDiaVencimaento.setText("Data Vencimento:");
+
+        edtDiaVencimaento.setSelectionColor(new java.awt.Color(0, 153, 0));
+
+        chbMenorIdade.setBackground(new java.awt.Color(255, 255, 255));
+        chbMenorIdade.setText("  Menor de Idade");
+        chbMenorIdade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chbMenorIdadeMouseClicked(evt);
+            }
+        });
+
+        laSituacao2.setText("2 - Pacote Contratado:");
+
+        cmbPacote2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+
+        pnlSexo.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblSexo.setText("Sexo");
+
+        rdbSexoMasc.setBackground(new java.awt.Color(255, 255, 255));
+        choGrupSexo.add(rdbSexoMasc);
+        rdbSexoMasc.setSelected(true);
+        rdbSexoMasc.setText("Masculino");
+        rdbSexoMasc.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rdbSexoMasc.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        rdbSexoMasc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdbSexoMascMouseClicked(evt);
+            }
+        });
+
+        rdbSexoFem.setBackground(new java.awt.Color(255, 255, 255));
+        choGrupSexo.add(rdbSexoFem);
+        rdbSexoFem.setText("Feminino");
+        rdbSexoFem.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        rdbSexoFem.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        rdbSexoFem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdbSexoFemMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlSexoLayout = new javax.swing.GroupLayout(pnlSexo);
+        pnlSexo.setLayout(pnlSexoLayout);
+        pnlSexoLayout.setHorizontalGroup(
+            pnlSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSexoLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addGroup(pnlSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSexo)
+                    .addGroup(pnlSexoLayout.createSequentialGroup()
+                        .addComponent(rdbSexoMasc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rdbSexoFem)))
+                .addGap(18, 18, 18))
+        );
+        pnlSexoLayout.setVerticalGroup(
+            pnlSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSexoLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(lblSexo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlSexoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdbSexoFem)
+                    .addComponent(rdbSexoMasc))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlEndereco.setBackground(new java.awt.Color(255, 255, 255));
+
+        edtCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtCepActionPerformed(evt);
+            }
+        });
+
+        edtNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtNumeroActionPerformed(evt);
+            }
+        });
+
+        lblCep.setText("CEP");
+
+        lblBairro.setText("Bairro");
+
+        cmbBairro.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+        cmbBairro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBairroActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Estado");
+
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+        cmbEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstadoActionPerformed(evt);
+            }
+        });
+
+        cmbCidade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
+        cmbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCidadeActionPerformed(evt);
+            }
+        });
+
+        lblCidade.setText("Cidade");
+
+        btnNovaCidade.setBackground(new java.awt.Color(0, 153, 0));
+        btnNovaCidade.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovaCidade.setText("Novo");
+        btnNovaCidade.setActionCommand("");
+        btnNovaCidade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNovaCidadeMouseClicked(evt);
+            }
+        });
+
+        btnNovaBairro.setBackground(new java.awt.Color(0, 153, 0));
+        btnNovaBairro.setForeground(new java.awt.Color(255, 255, 255));
+        btnNovaBairro.setText("Novo");
+        btnNovaBairro.setActionCommand("");
+        btnNovaBairro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNovaBairroMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setText("Numero");
+
+        javax.swing.GroupLayout pnlEnderecoLayout = new javax.swing.GroupLayout(pnlEndereco);
+        pnlEndereco.setLayout(pnlEnderecoLayout);
+        pnlEnderecoLayout.setHorizontalGroup(
+            pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(lblCidade))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEnderecoLayout.createSequentialGroup()
+                                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cmbBairro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlEnderecoLayout.createSequentialGroup()
+                                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblCep))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(0, 24, Short.MAX_VALUE))
+                                            .addComponent(edtNumero))))
+                                .addGap(13, 13, 13)))
+                        .addComponent(btnNovaBairro))
+                    .addGroup(pnlEnderecoLayout.createSequentialGroup()
+                        .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbEstado, 0, 200, Short.MAX_VALUE)
+                            .addComponent(cmbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNovaCidade)))
+                .addContainerGap())
+        );
+        pnlEnderecoLayout.setVerticalGroup(
+            pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEnderecoLayout.createSequentialGroup()
+                .addComponent(jLabel5)
+                .addGap(11, 11, 11)
+                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCidade)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovaCidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblBairro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovaBairro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCep)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlInformacoesAulasLayout = new javax.swing.GroupLayout(pnlInformacoesAulas);
+        pnlInformacoesAulas.setLayout(pnlInformacoesAulasLayout);
+        pnlInformacoesAulasLayout.setHorizontalGroup(
+            pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(laSituacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(edtDataExame, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblExame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(laAvaliacao)
+                                    .addComponent(edtDataAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDiaVencimaento)
+                                    .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(laSituacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                                .addComponent(cmbPacote2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(chbMenorIdade))))
+                    .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addComponent(pnlEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(laObs1))))
+                        .addGap(480, 480, 480))))
+        );
+        pnlInformacoesAulasLayout.setVerticalGroup(
+            pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblExame)
+                    .addComponent(laAvaliacao)
+                    .addComponent(lblDiaVencimaento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtDataExame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtDataAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addComponent(laSituacao1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addComponent(laSituacao2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbPacote2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chbMenorIdade))))
+                .addGap(18, 18, 18)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addComponent(pnlSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
+                        .addComponent(laObs1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlDados.add(pnlInformacoesAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 530, 410));
+
+        getContentPane().add(pnlDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 990, 625));
 
         lblInicio.setToolTipText("");
         lblInicio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -120,7 +883,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblInicioMouseExited(evt);
             }
         });
-        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1077, 472, 120, 47));
+        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 653, 120, 47));
 
         lblHora.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
@@ -145,29 +908,14 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         });
         getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1208, 470, 120, 47));
 
-        tblAluno.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "CPF", "RG", "Data de Nascimento", "Email", "Estado Civil"
+        lblEdita.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditaMouseClicked(evt);
             }
-        ));
-        tblAluno.setSelectionBackground(new java.awt.Color(0, 153, 0));
-        jScrollPane1.setViewportView(tblAluno);
+        });
+        getContentPane().add(lblEdita, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 653, 120, 50));
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 840, 610));
-
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudPesquisa.jpg"))); // NOI18N
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAltera.jpg"))); // NOI18N
         lblFundo.setToolTipText("");
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -214,6 +962,88 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         lblHora.setText(horaformatada.format(le_hora));
     }//GEN-LAST:event_tmrHora3OnTime
 
+    private void cmbEnderecoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cmbEnderecoFocusGained
+
+    }//GEN-LAST:event_cmbEnderecoFocusGained
+
+    private void cmbEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEnderecoActionPerformed
+        try {
+            if (cmbEndereco.getSelectedIndex() >= 0) {
+                edtCep.setText((String) conEndereco.getCep().get(cmbEndereco.getSelectedIndex()));
+            }
+        } catch (NullPointerException e) {
+        }
+    }//GEN-LAST:event_cmbEnderecoActionPerformed
+
+    private void rdbSexoMascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoMascMouseClicked
+
+    }//GEN-LAST:event_rdbSexoMascMouseClicked
+
+    private void rdbSexoFemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoFemMouseClicked
+
+    }//GEN-LAST:event_rdbSexoFemMouseClicked
+
+    private void edtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtCepActionPerformed
+
+    private void cmbBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBairroActionPerformed
+        try {
+            setCbmEndereco();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbBairroActionPerformed
+
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        try {
+            atualizaCbmEstado();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbEstadoActionPerformed
+
+    private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
+        try {
+            setCbmBairro();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbCidadeActionPerformed
+
+    private void btnNovaCidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaCidadeMouseClicked
+        CidadeGUI cidade = new CidadeGUI();
+        cidade.setEstado((String) cmbEstado.getSelectedItem());
+        cidade.setVisible(true);
+    }//GEN-LAST:event_btnNovaCidadeMouseClicked
+
+    private void btnNovaBairroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaBairroMouseClicked
+        BairroGUI bairro = new BairroGUI();
+        bairro.setEstado((String) cmbEstado.getSelectedItem());
+        bairro.setVisible(true);
+    }//GEN-LAST:event_btnNovaBairroMouseClicked
+
+    private void edtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtNumeroActionPerformed
+
+    private void chbMenorIdadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbMenorIdadeMouseClicked
+
+    }//GEN-LAST:event_chbMenorIdadeMouseClicked
+
+    private void tblAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlunoMouseClicked
+        try {
+            atualizaCampos();
+            atualizaCbmDadosAluno();
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblAlunoMouseClicked
+
+    private void lblEditaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseClicked
+        statusComponentes(true);
+    }//GEN-LAST:event_lblEditaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -253,20 +1083,74 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNovaBairro;
+    private javax.swing.JButton btnNovaCidade;
+    private javax.swing.JCheckBox chbMenorIdade;
+    private javax.swing.ButtonGroup choGrupSexo;
+    private javax.swing.JComboBox cmbBairro;
+    private javax.swing.JComboBox cmbCidade;
+    private javax.swing.JComboBox cmbEndereco;
+    private javax.swing.JComboBox cmbEstado;
+    private javax.swing.JComboBox cmbEstadoCivil;
+    private javax.swing.JComboBox cmbPacote1;
+    private javax.swing.JComboBox cmbPacote2;
+    private javax.swing.JTextField edtCPF;
+    private javax.swing.JTextField edtCel;
+    private javax.swing.JFormattedTextField edtCep;
+    private javax.swing.JTextField edtComplemento;
+    private javax.swing.JTextField edtDataAvaliacao;
+    private javax.swing.JTextField edtDataExame;
+    private javax.swing.JFormattedTextField edtDataNascimento;
+    private javax.swing.JTextField edtDiaVencimaento;
+    private javax.swing.JTextField edtEmail;
+    private javax.swing.JTextField edtIdentidade;
     private javax.swing.JTextField edtMatricula;
     private javax.swing.JTextField edtNome;
+    private javax.swing.JTextField edtNomeAluno;
+    private javax.swing.JTextField edtNumero;
+    private javax.swing.JTextArea edtObs;
+    private javax.swing.JTextField edtTelRes;
     private javax.swing.JInternalFrame frmPesquisa;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel laAvaliacao;
+    private javax.swing.JLabel laObs1;
+    private javax.swing.JLabel laSituacao1;
+    private javax.swing.JLabel laSituacao2;
+    private javax.swing.JLabel lblBairro;
+    private javax.swing.JLabel lblCPF;
+    private javax.swing.JLabel lblCep;
+    private javax.swing.JLabel lblCidade;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblDataNascimento;
+    private javax.swing.JLabel lblDiaVencimaento;
+    private javax.swing.JLabel lblEdita;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblEndereco;
+    private javax.swing.JLabel lblEstadoCivil;
+    private javax.swing.JLabel lblExame;
     private javax.swing.JLabel lblFundo;
     private javax.swing.JLabel lblFundoPesquisa;
     private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblIdentidade;
     private javax.swing.JLabel lblImprimi;
     private javax.swing.JLabel lblInicio;
+    private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPesquisar;
+    private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblTelCelular;
+    private javax.swing.JLabel lblTelResidencial;
+    private javax.swing.JPanel pnlDados;
+    private javax.swing.JPanel pnlEndereco;
+    private javax.swing.JPanel pnlInformacoes;
+    private javax.swing.JPanel pnlInformacoesAulas;
+    private javax.swing.JPanel pnlSexo;
+    private javax.swing.JRadioButton rdbSexoFem;
+    private javax.swing.JRadioButton rdbSexoMasc;
     private javax.swing.JTable tblAluno;
-    private org.netbeans.examples.lib.timerbean.Timer tmrHora;
-    private org.netbeans.examples.lib.timerbean.Timer tmrHora1;
     private org.netbeans.examples.lib.timerbean.Timer tmrHora3;
     // End of variables declaration//GEN-END:variables
 }

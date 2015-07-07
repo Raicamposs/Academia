@@ -6,6 +6,7 @@
 package gerenciador.conexaoBD;
 
 import gerenciador.endereco.Endereco;
+import gerenciador.pessoa.Pessoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,6 @@ public class EnderecoDao {
     private final Connection connection;
     private PreparedStatement stmt;
     private ResultSet rs;
-    private Endereco endereco;
     private ArrayList cidades, estados, bairro, rua, cep;
     private final String texto = "Sem Registros!";
 
@@ -31,8 +31,8 @@ public class EnderecoDao {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
     }
 
-    public void selectEndereco(int cep) throws SQLException {
-        String sql = ("call getEnderecoCompleto(?);");
+    public void selectEndereco(int cep, Pessoa pessoa) throws SQLException {
+        String sql = ("call getEnderecoCep(?);");
         try ( // prepared statement para inserção
                 PreparedStatement novoStmt = connection.prepareStatement(sql)) {
             // seta os valores
@@ -42,8 +42,10 @@ public class EnderecoDao {
             rs = novoStmt.executeQuery();
 
             if (rs.first()) {
-                endereco = new Endereco(rs.getString("rua"), rs.getInt("CEP"),
-                        rs.getInt("rua"), rs.getInt("rua"), rs.getString("Estado"));
+                Endereco endereco = new Endereco(rs.getString("Bairro"),
+                        rs.getString("Cidade"), rs.getString("Estado"),
+                        rs.getString("rua"), rs.getInt("CEP"));
+                pessoa.setEndereco(endereco);
 
             }
         } catch (SQLException e) {

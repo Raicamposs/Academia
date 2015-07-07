@@ -33,8 +33,9 @@ public class Estado {
         this.estadoUf = estadoUf;
     }
 
-    public Estado(String estadoUf) {
-        this.estadoUf = estadoUf;
+
+    public Estado(String estadoNome) {
+        this.estadoNome = estadoNome;
     }
    
     //Declaração do método getEstadoId 

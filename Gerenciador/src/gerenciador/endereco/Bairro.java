@@ -20,6 +20,11 @@ public class Bairro extends Cidade {
 
     }
 
+    public Bairro(String bairro, String cidade, String estado) {
+        super(cidade, estado);
+        this.nome = bairro;
+    }
+
     public Bairro(int bairroId, int cidadeId, String estadoUf) {
         super(cidadeId, estadoUf);
         this.id = bairroId;

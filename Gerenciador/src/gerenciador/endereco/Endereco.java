@@ -24,6 +24,12 @@ public class Endereco extends Bairro {
         this.cep = cep;
     }
 
+    public Endereco(String bairro, String cidade, String estado, String endereco, int cep) {
+        super(bairro, cidade, estado);
+        this.rua = endereco;
+        this.cep = cep;
+    }
+
     public Endereco(int id, String endereco, int cep, int bairroId, int cidadeId, String estadoUf) {
         super(bairroId, cidadeId, estadoUf);
         this.rua = endereco;

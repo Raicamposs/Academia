@@ -21,6 +21,12 @@ public abstract class FormataCampo {
         return vetNovaData[2] + "-" + vetNovaData[1] + "-" + vetNovaData[0];
     }
 
+    public static String formataDataBancoAplicacao(String data) {
+        String[] vetData = new String[3];
+        vetData = (data.split("-"));
+        return vetData[2].replace("-", "") + vetData[1].replace("-", "") + vetData[0].replace("-", "");
+    }
+
     public static String formataDocumentosBanco(String doc) {
         doc = doc.replace(".", "");
         doc = doc.replace("-", "");

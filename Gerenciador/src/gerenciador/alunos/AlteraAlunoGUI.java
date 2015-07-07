@@ -27,7 +27,7 @@ public class AlteraAlunoGUI extends javax.swing.JFrame {
 
     public void preencherTblAluno(String nome, String matricula) {
         try {
-            con.getAlunos(tblAluno, nome, matricula);
+            con.preencheTable(tblAluno, nome, matricula);
         } catch (SQLException ex) {
             Logger.getLogger(AlteraAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,6 +1,6 @@
 package gerenciador.funcionario;
 
-import gerenciador.pessoa.EstadoCivil;
+import gerenciador.administrador.Usuario;
 import gerenciador.pessoa.Pessoa;
 
 /*
@@ -9,10 +9,12 @@ import gerenciador.pessoa.Pessoa;
 public class Funcionario extends Pessoa {
 
     private int id, situacao;
+    private Usuario usario;
     private Funcao funcao;
     private Turno turno;
     private String cnt, observacao, dataEntrada;
     private float salario;
+    private boolean usuarioAutorizado;
 
     /**
      *
@@ -31,7 +33,7 @@ public class Funcionario extends Pessoa {
             String cnt,
             float salario) {
         super(cpf, rg, nome, dataNascimento, email, sexo);
-
+        usario = new Usuario();
         this.turno = new Turno();
         this.funcao = new Funcao();
         this.cnt = cnt;
@@ -55,6 +57,22 @@ public class Funcionario extends Pessoa {
     public int getId() {
         return id;
         //retorna o Valor da Variavel  Id
+    }
+
+    public Usuario getUsario() {
+        return usario;
+    }
+
+    public void setUsario(Usuario usario) {
+        this.usario = usario;
+    }
+
+    public void setUsuarioAutorizado(boolean usuario) {
+        this.usuarioAutorizado = usuario;
+    }
+
+    public boolean isUsuarioAutorizado() {
+        return usuarioAutorizado;
     }
 
     //Declaração do método setcnt
