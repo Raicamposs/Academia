@@ -10,6 +10,7 @@ import gerenciador.funcionario.CadastroFuncionarioGUI;
 import gerenciador.alunos.CadastroAlunoGUI;
 import com.sun.glass.events.KeyEvent;
 import gerenciador.alunos.PesquisaAlunoGUI;
+import gerenciador.aula.AlteraAulaGUI;
 import gerenciador.aula.CadastroAulaGUI;
 import java.awt.Cursor;
 import java.util.Date;
@@ -272,6 +273,9 @@ public class PrincipalGUI extends javax.swing.JFrame {
         pnlPrincipal.add(lblSelectTurmaCadastro, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 458, 165, 25));
 
         lblSelectAulaConsulAlter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSelectAulaConsulAlterMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblSelectAulaConsulAlterMouseEntered(evt);
             }
@@ -913,6 +917,10 @@ public class PrincipalGUI extends javax.swing.JFrame {
     private void lblAniversariantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAniversariantesMouseClicked
         fechaMenu();
     }//GEN-LAST:event_lblAniversariantesMouseClicked
+
+    private void lblSelectAulaConsulAlterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSelectAulaConsulAlterMouseClicked
+       new AlteraAulaGUI().setVisible(true);
+    }//GEN-LAST:event_lblSelectAulaConsulAlterMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gerenciador.aula;
 
 /**
@@ -7,54 +11,46 @@ package gerenciador.aula;
  */
 public class Aula {
 
-    protected String dia, horaEntrada, horaSaida, professor, turma;
+    private String nome;
+    private int id;
+    private float valor;
 
-    public Aula(String dia, String horaEntrada, String horaSaida, String professor, String turma) {
-        this.dia = dia;
-        this.horaEntrada = horaEntrada;
-        this.horaSaida = horaSaida;
-        this.professor = professor;
-        this.turma = turma;
+    public Aula() {
     }
 
-    public String getDia() {
-        return dia;
+    public Aula(String nome, int id, float valor) {
+        this.nome = nome;
+        this.id = id;
+        this.valor = valor;
     }
 
-    public String getHoraEntrada() {
-        return horaEntrada;
+    public Aula(String nome, float valor) {
+        this.nome = nome;
+        this.valor = valor;
     }
 
-    public String getHoraSaida() {
-        return horaSaida;
+    public int getId() {
+        return id;
     }
 
-    public String getProfessor() {
-        return professor;
+    public String getNome() {
+        return nome;
     }
 
-    public String getTurma() {
-        return turma;
+    public float getValor() {
+        return valor;
     }
 
-    public void setDia(String dia) {
-        this.dia = dia;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setTurma(String turma) {
-        this.turma = turma;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public void setHoraEntrada(String horaEntrada) {
-        this.horaEntrada = horaEntrada;
-    }
-
-    public void setHoraSaida(String horaSaida) {
-        this.horaSaida = horaSaida;
-    }
-
-    public void setProfessor(String professor) {
-        this.professor = professor;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
 }

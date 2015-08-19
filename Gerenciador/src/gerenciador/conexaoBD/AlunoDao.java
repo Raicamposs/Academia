@@ -32,30 +32,6 @@ public class AlunoDao {
         this.connection = new ConnectionFactory().getConnection("academia", "299071", "root");
     }
 
-    private void getAula() throws SQLException {
-        String sql = ("call academia.getAula();");
-        try ( // prepared statement para inserção
-                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
-            rs = novoStmt.executeQuery();
-
-            if (rs.first()) {
-                aula = new ArrayList<>();
-                while (rs.next()) {
-                    aula.add(rs.getString("aul_nome"));
-
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public ArrayList getArrayAula() throws SQLException {
-        getAula();
-        return aula;
-    }
-
     private void getEstadoCivil() throws SQLException {
         String sql = ("call academia.getEstadoCivil();");
         try ( // prepared statement para inserção
@@ -109,6 +85,7 @@ public class AlunoDao {
 
     }
 
+    @SuppressWarnings("empty-statement")
     public void preencheTable(JTable tblAluno, String nome, String matricula) throws SQLException {
         String sql = ("call academia.getPessoaNomeORCpf(?,?);");
         try ( // prepared statement para inserção
@@ -175,13 +152,36 @@ public class AlunoDao {
                 aluno.setDataAvaliacao(rs.getString("Validade_avaliacao"));
                 aluno.getEndereco().setCEP(rs.getInt("CEP"));
                 aluno.getEndereco().setComplemento(rs.getString("Complemento"));
+                aluno.getEndereco().setEstadoNome(rs.getString("Estado"));
+                aluno.getEndereco().setCidadeNome(rs.getString("Cidade"));
+                aluno.getEndereco().setBairroNome(rs.getString("Bairro"));
+                aluno.getEndereco().setRua(rs.getString("Rua"));
                 aluno.getEndereco().setNumero(rs.getString("Numero"));
-            
+                selectTelefoneAuluno(aluno, rs.getInt("COD"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void selectTelefoneAuluno(Aluno aluno, int id) throws SQLException {
+        String sql = ("call academia.getTelefone(?);");
+        try ( // prepared statement para inserção
+                PreparedStatement novoStmt = connection.prepareStatement(sql)) {
+            novoStmt.setInt(1, id);
+            novoStmt.execute();
+            rs = novoStmt.executeQuery();
+            if (rs.first()) {
+                aluno.setFoneResidencial(rs.getString("Telefone"));
+            }
+            if (rs.next()) {
+                aluno.setFoneCelular(rs.getString("Telefone"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

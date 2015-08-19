@@ -5,19 +5,26 @@
  */
 package gerenciador.telas;
 
+import gerenciador.conexaoBD.FrequenciaDao;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Raiane
  */
 public class FrequenciaGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrequenciaGUI
-     */
+    FrequenciaDao con;
+
     public FrequenciaGUI() {
         initComponents();
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         this.setLocation(500, 300);
+        con = new FrequenciaDao();
     }
 
     /**
@@ -39,6 +46,12 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblGravar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGravarMouseClicked(evt);
+            }
+        });
         getContentPane().add(lblGravar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, 70, 30));
 
         lblMinimiza.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -73,6 +86,17 @@ public class FrequenciaGUI extends javax.swing.JFrame {
         this.setExtendedState(FrequenciaGUI.ICONIFIED);
         this.setExtendedState(PrincipalGUI.ICONIFIED);
     }//GEN-LAST:event_lblMinimizaMouseClicked
+
+    private void lblGravarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGravarMouseClicked
+        try {
+            con.insertFrequencia(edtMatricula.getText());
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Algo deu errado !\nMatricula invalida, tente novamente.");
+        } catch (RuntimeException ex) {
+            JOptionPane.showMessageDialog(null, "Algo deu errado !\nMatricula invalida, tente novamente.");
+            edtMatricula.setText("");
+        }
+    }//GEN-LAST:event_lblGravarMouseClicked
 
     /**
      * @param args the command line arguments

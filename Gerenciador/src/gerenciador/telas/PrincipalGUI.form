@@ -131,6 +131,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblSelectAulaConsulAlter">
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSelectAulaConsulAlterMouseClicked"/>
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSelectAulaConsulAlterMouseEntered"/>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSelectAulaConsulAlterMouseExited"/>
           </Events>

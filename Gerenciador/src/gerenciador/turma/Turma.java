@@ -1,7 +1,6 @@
 package gerenciador.turma;
 
 import gerenciador.alunos.Aluno;
-import gerenciador.aula.Aula;
 
 /*
  * @author Evolute
@@ -10,13 +9,13 @@ import gerenciador.aula.Aula;
 public class Turma {
 
     private Aluno aluno;
-    private Aula aula;
+    private gerenciador.aula.Turma aula;
     private DiasSemana semana;
     private String horario;
 
 
 // Declaração do construtor da classe Turma//
-public Turma (Aluno aluno, Aula aula, DiasSemana semana,String horario){
+public Turma (Aluno aluno, gerenciador.aula.Turma aula, DiasSemana semana,String horario){
 
 this.aluno = aluno;
 this.aula = aula;

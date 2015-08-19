@@ -6,6 +6,7 @@
 package gerenciador.alunos;
 
 import gerenciador.conexaoBD.AlunoDao;
+import gerenciador.conexaoBD.AulaDao;
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.RelatorioDao;
 import gerenciador.conexaoBD.ResponsavelDao;
@@ -34,10 +35,12 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private ResponsavelDao conResponsavel;
     private Iterator iteratorEstado;
     private String formatohora = "HH:mm:ss";
+    private int posicao = -2;
 
     private SimpleDateFormat horaformatada = new SimpleDateFormat(formatohora);
     private Data data = new Data();
     private Aluno aluno;
+    private AulaDao conAula;
     private MaskFormatter formatoCpf, formatoRg, formatoDataVencimento, formatoCep, formatoCel, formatoFone, formatoData;
 
     public PesquisaAlunoGUI() {
@@ -46,6 +49,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         tmrHora3.start();
         lblData.setText(Data.mostraData());
         conAluno = new AlunoDao();
+        conAula = new AulaDao();
         conEndereco = new EnderecoDao();
         conResponsavel = new ResponsavelDao();
         conRelatorio = new RelatorioDao();
@@ -64,40 +68,45 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     }
 
     private void atualizaCampos() throws SQLException {
-
-        aluno = new Aluno();
-        conAluno.selectAuluno(aluno, "14760431756");
-        edtCPF.setText(aluno.getCpf());
-        edtIdentidade.setText(aluno.getRG());
-        edtNomeAluno.setText(aluno.getNome());
-        edtDataNascimento.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataNascimento()));
-        edtEmail.setText(aluno.getEmail());
-        edtCel.setText(aluno.getFoneCelular());
-        edtTelRes.setText(aluno.getFoneResidencial());
-        edtDiaVencimaento.setText(aluno.getVencimento());
-        edtObs.setText(aluno.getObservacao());
-        edtDataAvaliacao.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataAvaliacao()));
-        edtDataExame.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataExame()));
-        edtCep.setText("" + aluno.getEndereco().getCEP());
-        cmbEndereco.setSelectedItem(aluno.getEndereco().getRua());
-        edtComplemento.setText(aluno.getEndereco().getComplemento());
-        edtNumero.setText(aluno.getEndereco().getNumero());
-        conEndereco.selectEndereco(aluno.getEndereco().getCEP(), aluno);
-
-        atualizaCbmDadosAluno();
-
+        int colunaCpf = 2;
+        setCbmEstado();
+        if (tblAluno.getSelectedRow() != -1) {
+            for (int i = 0; i < tblAluno.getColumnCount() - 1; i++) {
+                if (tblAluno.getColumnName(i).equalsIgnoreCase("Cpf")) {
+                    colunaCpf = i;
+                }
+            }
+            aluno = new Aluno();
+            conAluno.selectAuluno(aluno, (String) tblAluno.getValueAt(tblAluno.getSelectedRow(), colunaCpf));
+            edtCPF.setText(aluno.getCpf());
+            edtIdentidade.setText(aluno.getRG());
+            edtNomeAluno.setText(aluno.getNome());
+            edtDataNascimento.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataNascimento()));
+            edtEmail.setText(aluno.getEmail());
+            edtCel.setText(aluno.getFoneCelular());
+            edtTelRes.setText(aluno.getFoneResidencial());
+            edtDiaVencimaento.setText(aluno.getVencimento());
+            edtObs.setText(aluno.getObservacao());
+            edtDataAvaliacao.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataAvaliacao()));
+            edtDataExame.setText(gerenciador.telas.ultilidades.FormataCampo.formataDataBancoAplicacao(aluno.getDataExame()));
+            edtCep.setText("" + aluno.getEndereco().getCEP());
+            edtComplemento.setText(aluno.getEndereco().getComplemento());
+            edtNumero.setText(aluno.getEndereco().getNumero());
+            conEndereco.selectEndereco(aluno.getEndereco().getCEP(), aluno);
+            if (aluno.getSexo() == 'F') {
+                rdbSexoFem.setSelected(true);
+            } else {
+                rdbSexoMasc.setSelected(true);
+            }
+            atualizaCbmDadosAluno(aluno);
+        }
     }
 
-    private void atualizaCbmDadosAluno() {
-        cmbEstadoCivil.addItem(aluno.getEstadoCivil().getDescricao());
-        cmbEstado.removeAllItems();
-        cmbEstado.addItem(aluno.getEndereco().getEstadoNome());
-        cmbCidade.removeAllItems();
-        cmbCidade.addItem(aluno.getEndereco().getCidadeNome());
-        cmbBairro.removeAllItems();
-        cmbBairro.addItem(aluno.getEndereco().getBairroNome());
-        cmbEndereco.removeAllItems();
-        cmbEndereco.addItem(aluno.getEndereco().getRua());
+    private void atualizaCbmDadosAluno(Aluno aluno) {
+        cmbEstado.setSelectedItem(aluno.getEndereco().getEstadoNome());
+        cmbCidade.setSelectedItem(aluno.getEndereco().getCidadeNome());
+        cmbBairro.setSelectedItem(aluno.getEndereco().getBairroNome());
+        cmbEndereco.setSelectedItem(aluno.getEndereco().getRua());
     }
 
     private void statusComponentes(boolean ativo) {
@@ -121,7 +130,6 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         cmbCidade.setEnabled(ativo);
         cmbBairro.setEnabled(ativo);
         cmbPacote1.setEnabled(ativo);
-        cmbPacote2.setEnabled(ativo);
         cmbEstadoCivil.setEnabled(ativo);
         rdbSexoFem.setEnabled(ativo);
         rdbSexoMasc.setEnabled(ativo);
@@ -131,16 +139,16 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private void setCbmAula() {
         try {
             cmbPacote1.removeAllItems();
-            cmbPacote2.removeAllItems();
-            Iterator iteratorAula = conAluno.getArrayAula().iterator();
+            Iterator iteratorAula = conAula.getArrayAula().iterator();
             while (iteratorAula.hasNext()) {
                 String aula = String.valueOf(iteratorAula.next());
                 cmbPacote1.addItem(aula);
-                cmbPacote2.addItem(aula);
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException e) {
         }
     }
 
@@ -171,7 +179,9 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         while (iteratorCidade.hasNext()) {
             cmbCidade.addItem(String.valueOf(iteratorCidade.next()));
         }
-
+        if (conEndereco.getArrayCidade((String) cmbEstado.getSelectedItem()).contains("Guarapari")) {
+            cmbCidade.setSelectedItem("Guarapari");
+        }
         setCbmBairro();
     }
 
@@ -208,7 +218,9 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         while (iteratorEstado.hasNext()) {
             cmbEstado.addItem(String.valueOf(iteratorEstado.next()));
         }
-
+        if (conEndereco.getArrayEstados().contains("Espírito Santo")) {
+            cmbEstado.setSelectedItem("Espírito Santo");
+        }
         setCbmCidade();
     }
 
@@ -249,8 +261,6 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         lblPesquisar = new javax.swing.JLabel();
         lblFundoPesquisa = new javax.swing.JLabel();
         pnlDados = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblAluno = new javax.swing.JTable();
         pnlInformacoes = new javax.swing.JPanel();
         try
         {
@@ -309,8 +319,6 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
         edtDiaVencimaento = new JFormattedTextField(formatoDataVencimento);
         chbMenorIdade = new javax.swing.JCheckBox();
-        laSituacao2 = new javax.swing.JLabel();
-        cmbPacote2 = new javax.swing.JComboBox();
         pnlSexo = new javax.swing.JPanel();
         lblSexo = new javax.swing.JLabel();
         rdbSexoMasc = new javax.swing.JRadioButton();
@@ -334,6 +342,10 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         lblData = new javax.swing.JLabel();
         lblImprimi = new javax.swing.JLabel();
         lblEdita = new javax.swing.JLabel();
+        lblBack = new javax.swing.JLabel();
+        lblNext = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAluno = new javax.swing.JTable();
         lblFundo = new javax.swing.JLabel();
 
         tmrHora3.addTimerListener(new org.netbeans.examples.lib.timerbean.TimerListener() {
@@ -376,38 +388,11 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         lblFundoPesquisa.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         frmPesquisa.getContentPane().add(lblFundoPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(frmPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 150, 350, 180));
+        getContentPane().add(frmPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 350, 180));
 
         pnlDados.setBackground(new java.awt.Color(255, 255, 255));
         pnlDados.setPreferredSize(new java.awt.Dimension(800, 600));
         pnlDados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tblAluno.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "CPF", "RG", "Data de Nascimento", "Email", "Estado Civil"
-            }
-        ));
-        tblAluno.setSelectionBackground(new java.awt.Color(0, 153, 0));
-        tblAluno.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAlunoMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblAluno);
-
-        pnlDados.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 200));
 
         pnlInformacoes.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -464,11 +449,25 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         pnlInformacoesLayout.setHorizontalGroup(
             pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addComponent(lblEndereco))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
+                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(edtComplemento, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbEndereco, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInformacoesLayout.createSequentialGroup()
+                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblDataNascimento)
+                                    .addComponent(lblEmail)
+                                    .addComponent(edtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNome))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInformacoesLayout.createSequentialGroup()
                                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblIdentidade)
                                     .addComponent(edtIdentidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
@@ -488,30 +487,19 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cmbEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlInformacoesLayout.createSequentialGroup()
                                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTelResidencial))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addComponent(lblTelResidencial)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
+                                        .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lblTelCelular)
                                     .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(edtEmail)
-                            .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDataNascimento)
-                                    .addComponent(lblEmail)
-                                    .addComponent(edtNomeAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNome))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblEndereco)
-                            .addComponent(cmbEndereco, 0, 373, Short.MAX_VALUE)
-                            .addComponent(jLabel2)
-                            .addComponent(edtComplemento, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
+                            .addComponent(edtEmail, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap())))
         );
         pnlInformacoesLayout.setVerticalGroup(
             pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,27 +533,25 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(edtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesLayout.createSequentialGroup()
-                        .addComponent(lblTelResidencial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlInformacoesLayout.createSequentialGroup()
-                        .addComponent(lblTelCelular)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTelCelular)
+                    .addComponent(lblTelResidencial))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtTelRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblEndereco)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
-        pnlDados.add(pnlInformacoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 400, -1));
+        pnlDados.add(pnlInformacoes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 440));
 
         pnlInformacoesAulas.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -584,7 +570,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
 
         laObs1.setText("Observações");
 
-        laSituacao1.setText("1 - Pacote Contratado:");
+        laSituacao1.setText("Pacote Contratado:");
 
         cmbPacote1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
 
@@ -599,10 +585,6 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 chbMenorIdadeMouseClicked(evt);
             }
         });
-
-        laSituacao2.setText("2 - Pacote Contratado:");
-
-        cmbPacote2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione..." }));
 
         pnlSexo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -786,7 +768,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 .addGroup(pnlEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInformacoesAulasLayout = new javax.swing.GroupLayout(pnlInformacoesAulas);
@@ -797,15 +779,15 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblExame)
                             .addComponent(laSituacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(edtDataExame, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblExame, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtDataExame, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
+                                .addGap(8, 8, 8)
                                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(laAvaliacao)
                                     .addComponent(edtDataAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -813,11 +795,10 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblDiaVencimaento)
                                     .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(laSituacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
-                                .addComponent(cmbPacote2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(chbMenorIdade))))
+                                .addGap(139, 139, 139)
+                                .addComponent(chbMenorIdade)))
+                        .addContainerGap())
                     .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
                         .addComponent(pnlEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -844,17 +825,11 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                     .addComponent(edtDataAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
-                        .addComponent(laSituacao1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInformacoesAulasLayout.createSequentialGroup()
-                        .addComponent(laSituacao2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmbPacote2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(chbMenorIdade))))
+                .addComponent(laSituacao1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cmbPacote1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chbMenorIdade))
                 .addGap(18, 18, 18)
                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
@@ -862,14 +837,15 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(laObs1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 73, Short.MAX_VALUE))
+                    .addComponent(pnlEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        pnlDados.add(pnlInformacoesAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 530, 410));
+        pnlDados.add(pnlInformacoesAulas, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 550, 410));
 
-        getContentPane().add(pnlDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 990, 625));
+        getContentPane().add(pnlDados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 1030, 460));
 
         lblInicio.setToolTipText("");
         lblInicio.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -883,7 +859,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblInicioMouseExited(evt);
             }
         });
-        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 653, 120, 47));
+        getContentPane().add(lblInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 400, 120, 47));
 
         lblHora.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
         lblHora.setForeground(new java.awt.Color(255, 255, 255));
@@ -906,16 +882,75 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
                 lblImprimiMouseExited(evt);
             }
         });
-        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1208, 470, 120, 47));
+        getContentPane().add(lblImprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 400, 120, 47));
 
         lblEdita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblEditaMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEditaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEditaMouseExited(evt);
+            }
         });
-        getContentPane().add(lblEdita, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 653, 120, 50));
+        getContentPane().add(lblEdita, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 470, 120, 50));
 
-        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAltera.jpg"))); // NOI18N
+        lblBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblBackMouseExited(evt);
+            }
+        });
+        getContentPane().add(lblBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 550, 130, 50));
+
+        lblNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNextMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblNextMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblNextMouseExited(evt);
+            }
+        });
+        getContentPane().add(lblNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 550, 120, 50));
+
+        tblAluno.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "CPF", "RG", "Data de Nascimento", "Email", "Estado Civil"
+            }
+        ));
+        tblAluno.setSelectionBackground(new java.awt.Color(0, 153, 0));
+        tblAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAlunoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAluno);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1030, 220));
+
+        lblFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Telas Fundo/BackgroudAlteraCadastro.jpg"))); // NOI18N
         lblFundo.setToolTipText("");
         getContentPane().add(lblFundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -945,12 +980,26 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_lblImprimiMouseExited
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-
+        try {
+            setCbmEstado();
+            setCbmAula();
+            setCbmEstadoCivil();
+        } catch (SQLException | NullPointerException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowActivated
 
     private void lblPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPesquisarMouseClicked
-        preencherTblAluno(edtNome.getText(), edtMatricula.getText());
-        frmPesquisa.dispose();
+
+        try {
+            posicao = tblAluno.getSelectedRow();
+            preencherTblAluno(edtNome.getText(), edtMatricula.getText());
+            atualizaCampos();
+            frmPesquisa.dispose();
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_lblPesquisarMouseClicked
 
     private void lblImprimiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImprimiMouseClicked
@@ -975,33 +1024,29 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbEnderecoActionPerformed
 
-    private void rdbSexoMascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoMascMouseClicked
-
-    }//GEN-LAST:event_rdbSexoMascMouseClicked
-
-    private void rdbSexoFemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoFemMouseClicked
-
-    }//GEN-LAST:event_rdbSexoFemMouseClicked
-
-    private void edtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCepActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCepActionPerformed
-
-    private void cmbBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBairroActionPerformed
+    private void tblAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlunoMouseClicked
         try {
-            setCbmEndereco();
+            atualizaCampos();
         } catch (SQLException ex) {
-            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cmbBairroActionPerformed
+    }//GEN-LAST:event_tblAlunoMouseClicked
 
-    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
-        try {
-            atualizaCbmEstado();
-        } catch (SQLException ex) {
-            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cmbEstadoActionPerformed
+    private void lblEditaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseClicked
+        statusComponentes(true);
+    }//GEN-LAST:event_lblEditaMouseClicked
+
+    private void btnNovaBairroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaBairroMouseClicked
+        BairroGUI bairro = new BairroGUI();
+        bairro.setEstado((String) cmbEstado.getSelectedItem());
+        bairro.setVisible(true);
+    }//GEN-LAST:event_btnNovaBairroMouseClicked
+
+    private void btnNovaCidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaCidadeMouseClicked
+        CidadeGUI cidade = new CidadeGUI();
+        cidade.setEstado((String) cmbEstado.getSelectedItem());
+        cidade.setVisible(true);
+    }//GEN-LAST:event_btnNovaCidadeMouseClicked
 
     private void cmbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCidadeActionPerformed
         try {
@@ -1011,38 +1056,98 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cmbCidadeActionPerformed
 
-    private void btnNovaCidadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaCidadeMouseClicked
-        CidadeGUI cidade = new CidadeGUI();
-        cidade.setEstado((String) cmbEstado.getSelectedItem());
-        cidade.setVisible(true);
-    }//GEN-LAST:event_btnNovaCidadeMouseClicked
+    private void cmbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstadoActionPerformed
+        try {
+            atualizaCbmEstado();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbEstadoActionPerformed
 
-    private void btnNovaBairroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovaBairroMouseClicked
-        BairroGUI bairro = new BairroGUI();
-        bairro.setEstado((String) cmbEstado.getSelectedItem());
-        bairro.setVisible(true);
-    }//GEN-LAST:event_btnNovaBairroMouseClicked
+    private void cmbBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBairroActionPerformed
+        try {
+            setCbmEndereco();
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbBairroActionPerformed
 
     private void edtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edtNumeroActionPerformed
 
+    private void edtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_edtCepActionPerformed
+
+    private void rdbSexoFemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoFemMouseClicked
+
+    }//GEN-LAST:event_rdbSexoFemMouseClicked
+
+    private void rdbSexoMascMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdbSexoMascMouseClicked
+
+    }//GEN-LAST:event_rdbSexoMascMouseClicked
+
     private void chbMenorIdadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chbMenorIdadeMouseClicked
 
     }//GEN-LAST:event_chbMenorIdadeMouseClicked
 
-    private void tblAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlunoMouseClicked
+    private void lblNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextMouseClicked
         try {
+
+            if (posicao < (tblAluno.getRowCount() - 1)) {
+                posicao = posicao + 1;
+                tblAluno.setRowSelectionInterval(posicao, posicao);
+
+            } else {
+                posicao = 0;
+                tblAluno.setRowSelectionInterval(posicao, posicao);
+            }
             atualizaCampos();
-            atualizaCbmDadosAluno();
         } catch (SQLException ex) {
             Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_tblAlunoMouseClicked
 
-    private void lblEditaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseClicked
-        statusComponentes(true);
-    }//GEN-LAST:event_lblEditaMouseClicked
+    }//GEN-LAST:event_lblNextMouseClicked
+
+    private void lblBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseClicked
+        try {
+            if (posicao > 0) {
+                posicao = posicao - 1;
+                tblAluno.setRowSelectionInterval(posicao, posicao);
+            } else {
+                posicao = (tblAluno.getRowCount() - 1);
+                tblAluno.setRowSelectionInterval(posicao, posicao);
+            }
+            atualizaCampos();
+        } catch (SQLException ex) {
+            Logger.getLogger(PesquisaAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_lblBackMouseClicked
+
+    private void lblBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseEntered
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblBack);        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBackMouseEntered
+
+    private void lblBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackMouseExited
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblBack);
+    }//GEN-LAST:event_lblBackMouseExited
+
+    private void lblNextMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextMouseEntered
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblNext);
+    }//GEN-LAST:event_lblNextMouseEntered
+
+    private void lblNextMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNextMouseExited
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblNext);
+    }//GEN-LAST:event_lblNextMouseExited
+
+    private void lblEditaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseEntered
+        gerenciador.telas.ultilidades.Style.styleBorderEntered(lblEdita);
+    }//GEN-LAST:event_lblEditaMouseEntered
+
+    private void lblEditaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditaMouseExited
+        gerenciador.telas.ultilidades.Style.styleBorderExited(lblEdita);
+    }//GEN-LAST:event_lblEditaMouseExited
 
     /**
      * @param args the command line arguments
@@ -1093,7 +1198,6 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox cmbEstado;
     private javax.swing.JComboBox cmbEstadoCivil;
     private javax.swing.JComboBox cmbPacote1;
-    private javax.swing.JComboBox cmbPacote2;
     private javax.swing.JTextField edtCPF;
     private javax.swing.JTextField edtCel;
     private javax.swing.JFormattedTextField edtCep;
@@ -1119,7 +1223,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel laAvaliacao;
     private javax.swing.JLabel laObs1;
     private javax.swing.JLabel laSituacao1;
-    private javax.swing.JLabel laSituacao2;
+    private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblBairro;
     private javax.swing.JLabel lblCPF;
     private javax.swing.JLabel lblCep;
@@ -1138,6 +1242,7 @@ public class PesquisaAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblIdentidade;
     private javax.swing.JLabel lblImprimi;
     private javax.swing.JLabel lblInicio;
+    private javax.swing.JLabel lblNext;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPesquisar;
     private javax.swing.JLabel lblSexo;

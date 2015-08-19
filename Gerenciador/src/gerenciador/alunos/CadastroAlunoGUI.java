@@ -5,9 +5,9 @@
  */
 package gerenciador.alunos;
 
-
 import gerenciador.conexaoBD.EnderecoDao;
 import gerenciador.conexaoBD.AlunoDao;
+import gerenciador.conexaoBD.AulaDao;
 import gerenciador.conexaoBD.ResponsavelDao;
 import gerenciador.endereco.BairroGUI;
 import gerenciador.endereco.CidadeGUI;
@@ -39,6 +39,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private Data data = new Data();
     private Responsavel responsavel;
     private Iterator iteratorEstado;
+    private AulaDao conAula;
     private char sexo;
     private MaskFormatter formatoCpf, formatoRg, formatoDataVencimento, formatoCep, formatoCel, formatoFone, formatoData;
 
@@ -52,6 +53,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         gerenciador.telas.ultilidades.FuncoesJanelas.setIncone(this);
         edtNome.grabFocus();
         conAluno = new AlunoDao();
+        conAula = new AulaDao();
         conEndereco = new EnderecoDao();
         conResponsavel = new ResponsavelDao();
         pnlResponsavel.setVisible(false);
@@ -68,7 +70,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                     gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataNascimento.getText()), edtEmail.getText(), sexo);
             aluno.setFoneCelular(edtCel.getText());
             aluno.setFoneResidencial(edtTelRes.getText());
-            aluno.setVencimento(edtDiaVencimaento.getText());
+            aluno.setVencimento(edtDiaVencimento.getText());
             aluno.setObservacao(edtObs.getText());
             aluno.setDataAvaliacao(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataAvaliacao.getText()));
             aluno.setDataExame(gerenciador.telas.ultilidades.FormataCampo.formataDataBanco(edtDataExame.getText()));
@@ -98,7 +100,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         try {
             cmbPacote1.removeAllItems();
             cmbPacote2.removeAllItems();
-            Iterator iteratorAula = conAluno.getArrayAula().iterator();
+            Iterator iteratorAula = conAula.getArrayAula().iterator();
             while (iteratorAula.hasNext()) {
                 String aula = String.valueOf(iteratorAula.next());
                 cmbPacote1.addItem(aula);
@@ -290,7 +292,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
         lblDiaVencimaento = new javax.swing.JLabel();
         try {     formatoDataVencimento = new MaskFormatter("##");    
         } catch(Exception erro) {     JOptionPane.showMessageDialog(null,"Não foi possivel setar a mascara para data, "+erro); }
-        edtDiaVencimaento = new JFormattedTextField(formatoDataVencimento);
+        edtDiaVencimento = new JFormattedTextField(formatoDataVencimento);
         chbMenorIdade = new javax.swing.JCheckBox();
         laSituacao2 = new javax.swing.JLabel();
         cmbPacote2 = new javax.swing.JComboBox();
@@ -731,7 +733,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
 
         lblDiaVencimaento.setText("Data Vencimento:");
 
-        edtDiaVencimaento.setSelectionColor(new java.awt.Color(0, 153, 0));
+        edtDiaVencimento.setSelectionColor(new java.awt.Color(0, 153, 0));
 
         chbMenorIdade.setBackground(new java.awt.Color(255, 255, 255));
         chbMenorIdade.setText("  Menor de Idade");
@@ -768,7 +770,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                                 .addGap(41, 41, 41)
                                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblDiaVencimaento)
-                                    .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(edtDiaVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(laSituacao2, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmbPacote2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(laObs1)
@@ -790,7 +792,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtDataExame, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtDataAvaliacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtDiaVencimaento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtDiaVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlInformacoesAulasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacoesAulasLayout.createSequentialGroup()
@@ -964,7 +966,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
             setCbmEstado();
             setCbmAula();
             setCbmEstadoCivil();
-        } catch (SQLException ex) {
+        } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(CadastroAlunoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1075,27 +1077,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroAlunoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
         //</editor-fold>
         //</editor-fold>
 
@@ -1127,7 +1109,7 @@ public class CadastroAlunoGUI extends javax.swing.JFrame {
     private javax.swing.JTextField edtDataAvaliacao;
     private javax.swing.JTextField edtDataExame;
     private javax.swing.JFormattedTextField edtDataNascimento;
-    private javax.swing.JTextField edtDiaVencimaento;
+    private javax.swing.JTextField edtDiaVencimento;
     private javax.swing.JTextField edtEmail;
     private javax.swing.JTextField edtIdentidade;
     private javax.swing.JTextField edtNome;

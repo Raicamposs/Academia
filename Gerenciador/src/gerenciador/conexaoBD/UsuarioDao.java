@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 /**
  *
  * @author Raiane
@@ -63,8 +62,8 @@ public class UsuarioDao {
                 }
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException | RuntimeException e) {
+
         }
         return false;
     }
